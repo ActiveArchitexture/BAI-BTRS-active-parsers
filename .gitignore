@@ -1,0 +1,4 @@
+# for now - ignore the node modules managed by npm install
+# we are using, not developing ohm-js
+# review when fixing this project as an npm package
+node_modules/**
