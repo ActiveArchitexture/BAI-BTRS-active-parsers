@@ -53,3 +53,70 @@ assert(g.match(emptyfile, 'BTRSfile').succeeded(), 'ANSI X9.121–2016 (BTR3) 5.
 // Test grammar for 5.1.1 Empty File - with CR 
 var emptyfile = '01,123456789,NAMENAME,150716,2100,11,,,3/' + '\r' + '99,0,0,2/'
 assert(g.match(emptyfile, 'BTRSfile').succeeded(), 'ANSI X9.121–2016 (BTR3) 5.1.1 Empty File');
+
+/*
+CSV {
+  csv = row (eol ~end row)* eol?
+  row = col ("," col)*
+  col = colChar*
+  colChar = ~(eol | ",") any
+  eol = "\r"? "\n"
+}
+
+var semantics = g.createSemantics().addOperation('value', {
+    csv: function(r, _, rs, eol) {
+      return [r.value()].concat(rs.value());
+    },
+    row: function(c, _, cs) {
+      return [c.value()].concat(cs.value());
+    },
+    col: function(_) {
+      return this.sourceString;
+    }
+});
+*/
+
+/*
+    BTRSfile = FileHeader FileTrailer
+    
+    FileHeader = "01" sep senderID sep receiverID sep fileCreationDate sep fileCreationTime sep fileID sep physicalRecordLength sep blockSize sep versionNumber eor
+    FileTrailer = "99" sep fileControlTotal sep numberofBanks sep numberofRecords eor
+    
+*/
+
+var semantics = g.createSemantics().addOperation('astext', {
+    BTRSfile: function(fh, ft) {
+        return fh.astext() + '\n' + ft.astext();
+    },
+
+    FileHeader: function(_, _, sid, _, rid, _, fcd, _, fct, _, fid, _, _, _, _, _, vn, _) {
+        return this.ctorName + ':' + sid.astext() + rid.astext() + fcd.astext() + fct.astext() + fid.astext() + vn.astext();
+    },
+
+    FileTrailer: function(_, _, fct, _, nob, _, nor, _) {
+      return this.ctorName + ':' + fct.astext() + nob.astext() + nor.astext();
+    },
+
+    fileCreationDate: function(yy, mo, dd) {
+        return this.ctorName + ':' + yy.sourceString + '/' + mo.sourceString + '/' + dd.sourceString + ', ';
+    },
+
+    _nonterminal: function(n) {
+        return this.ctorName + ':' + this.sourceString + ', ';
+    },
+
+    /*
+    _terminal: function() {
+      return this.sourceString;
+    }
+    */
+
+});
+
+function parse(input) {
+    var match = g.match(input);
+    assert(match.succeeded());
+    return semantics(match).astext();
+}
+
+console.log(parse(emptyfile));
