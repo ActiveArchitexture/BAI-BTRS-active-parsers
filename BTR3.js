@@ -97,7 +97,7 @@ var semantics = g.createSemantics().addOperation('astext', {
       return this.ctorName + ':' + fct.astext() + nob.astext() + nor.astext();
     },
 
-    fileCreationDate: function(yy, mo, dd) {
+    date: function(yy, mo, dd) {
         return this.ctorName + ':' + yy.sourceString + '/' + mo.sourceString + '/' + dd.sourceString + ', ';
     },
 

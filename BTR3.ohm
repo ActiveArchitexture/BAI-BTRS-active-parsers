@@ -4,8 +4,8 @@ BTR3 {
     FileHeader = "01" sep senderID sep receiverID sep fileCreationDate sep fileCreationTime sep fileID sep physicalRecordLength sep blockSize sep versionNumber eor
     senderID = alnum +
     receiverID = alnum +
-    fileCreationDate = yy mo dd
-    fileCreationTime = hh mm
+    fileCreationDate = date
+    fileCreationTime = time
     fileID = alnum +
     physicalRecordLength = digit *
     blockSize = digit *
@@ -21,6 +21,9 @@ BTR3 {
     bai1 = "1"
     bai2 = "2"
     bai3 = "3"
+
+    date = yy mo dd
+    time = hh mm
     
     yy = digit digit
     mo = "0".."1" digit
