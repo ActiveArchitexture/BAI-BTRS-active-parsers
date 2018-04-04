@@ -84,21 +84,21 @@ var semantics = g.createSemantics().addOperation('value', {
     
 */
 
-var semantics = g.createSemantics().addOperation('astext', {
+var semantics = g.createSemantics().addOperation('json', {
     BTRSfile: function(fh, ft) {
-        return fh.astext() + '\n' + ft.astext();
+        return fh.json() + '\n' + ft.json();
     },
 
     FileHeader: function(_, _, sid, _, rid, _, fcd, _, fct, _, fid, _, _, _, _, _, vn, _) {
-        return this.ctorName + ':' + sid.astext() + rid.astext() + fcd.astext() + fct.astext() + fid.astext() + vn.astext();
+        return this.ctorName + ':' + sid.json() + rid.json() + fcd.json() + fct.json() + fid.json() + vn.json();
     },
 
     FileTrailer: function(_, _, fct, _, nob, _, nor, _) {
-      return this.ctorName + ':' + fct.astext() + nob.astext() + nor.astext();
+      return this.ctorName + ':' + fct.json() + nob.json() + nor.json();
     },
 
     date: function(yy, mo, dd) {
-        return this.ctorName + ':' + yy.sourceString + '/' + mo.sourceString + '/' + dd.sourceString + ', ';
+        return this.ctorName + ':' + '20' + yy.sourceString + '/' + mo.sourceString + '/' + dd.sourceString + ', ';
     },
 
     _nonterminal: function(n) {
@@ -113,10 +113,68 @@ var semantics = g.createSemantics().addOperation('astext', {
 
 });
 
+function formatKey(key) {
+    return '"' + key + '": ';
+}
+
+var semanticsPartial = g.createSemantics().addOperation('json', {
+
+    FileTrailer: function(_, _, fct, _, nob, _, nor, _) {
+        return formatKey(this.ctorName) + ': {' + fct.json() + nob.json() + nor.json() + '}';
+    },
+
+    optSignedN: function(s, n){
+        // drop the + sign but leave -
+        return this.sourceString;
+    }, // ("-" | "+")? digit+
+
+    optPosN: function(s, n){
+        // drop the + sign
+        return n.sourceString;
+    }, // "+"? digit+
+    
+    fileCreationDate: function(d) {
+        return formatKey(this.ctorName) + d.json();
+    },
+
+    date: function(yy, mo, dd) {
+        // Default Century to 20. So much for learning from Y2K.
+        return '"20' + yy.sourceString + '/' + mo.sourceString + '/' + dd.sourceString + '"';
+    },
+
+    _nonterminal: function(n) {
+        // return this.ctorName + ':' + this.sourceString + ', ';
+        n.ctorName
+        n.numChildren
+
+        return formatKey(this.ctorName) + this + ', ';
+    },
+
+
+
+});
+
+function parsePartial(input, startNode) {
+    var match = g.match(input, startNode);
+    assert(match.succeeded());
+    return semanticsPartial(match).json();
+}
+
+// Test actions for fileCreationDate
+// console.log(parsePartial('201230', 'fileCreationDate'))
+assert.equal(parsePartial('201230', 'fileCreationDate'), '"fileCreationDate": "2020/12/30"');
+
+// Test actions for FileTrailer
+//assert(g.match('99,0,0,2/', 'FileTrailer').succeeded(), 'ANSI X9.121–2016 (BTR3) from 5.1.1 Empty File 99 Record');
+
+console.log(parsePartial('99,1215450000,4,136/', 'FileTrailer'))
+console.log(parsePartial('99,-1215450000,+4,+136/', 'FileTrailer'))
+assert.equal(parsePartial('99,1215450000,4,136/', 'FileTrailer'), '"FileTrailer": { }');
+
 function parse(input) {
     var match = g.match(input);
     assert(match.succeeded());
-    return semantics(match).astext();
+    return semantics(match).json();
 }
 
-console.log(parse(emptyfile));
+// console.log(parse(emptyfile));

@@ -1,7 +1,7 @@
 BTR3 {
 	BTRSfile = FileHeader FileTrailer
     
-    FileHeader = "01" sep senderID sep receiverID sep fileCreationDate sep fileCreationTime sep fileID sep physicalRecordLength sep blockSize sep versionNumber eor
+    FileHeader = "01" delim senderID delim receiverID delim fileCreationDate delim fileCreationTime delim fileID delim physicalRecordLength delim blockSize delim versionNumber eor
     senderID = alnum +
     receiverID = alnum +
     fileCreationDate = date
@@ -11,11 +11,12 @@ BTR3 {
     blockSize = digit *
     versionNumber = bai1 | bai2 | bai3
 
-    FileTrailer = "99" sep fileControlTotal sep numberofBanks sep numberofRecords eor
-    fileControlTotal = optionalsign? digit+ 
-    optionalsign = "-" | "+"
-    numberofBanks = "+"? digit+
-    numberofRecords = "+"? digit+
+    FileTrailer = "99" delim fileControlTotal delim numberofBanks delim numberofRecords eor
+    fileControlTotal = optSignedN
+    numberofBanks = optPosN
+    numberofRecords = optPosN
+    optSignedN = ("-" | "+")? digit+
+    optPosN = "+"? digit+
     
     
     bai1 = "1"
@@ -31,7 +32,7 @@ BTR3 {
     hh = "0".."2" "0".."3"
     mm = "0".."5" "0".."9"
     
-    sep = ","
+    delim = ","
     eor = "/"
     
 }
