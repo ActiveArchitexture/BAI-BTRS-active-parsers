@@ -116,9 +116,33 @@ var semantics = g.createSemantics().addOperation('json', {
 var semanticsPartial = g.createSemantics().addOperation('json', {
 
     FileTrailer: function(_, _, fct, _, nob, _, nor, _) {
-        let keyvalue = `{"${this.ctorName}": "${fct.json()}", "${nob.json()}", "${nor.json()}"}`;
-        console.log(keyvalue);
+        return `{"${this.ctorName}": {${fct.json()}, ${nob.json()}, ${nor.json()}}}`;
+    },
+    
+    fileCreationDate: function(d) {
+        let keyvalue = `"${this.ctorName}": "${d.json()}"`;
         return keyvalue;
+    },
+
+    fileControlTotal: function(d) {
+        let keyvalue = `"${this.ctorName}": ${d.json()}`;
+        return keyvalue;
+    },
+
+    numberofBanks: function(d) {
+        let keyvalue = `"${this.ctorName}": ${d.json()}`;
+        return keyvalue;
+    },
+
+    numberofRecords: function(d) {
+        let keyvalue = `"${this.ctorName}": ${d.json()}`;
+        return keyvalue;
+    },
+
+    date: function(yy, mo, dd) {
+        // Default Century to 20. So much for learning from Y2K.
+        let dateString = `20${yy.sourceString}-${mo.sourceString}-${dd.sourceString}`;
+        return dateString;
     },
 
     optSignedN: function(s, n){
@@ -137,32 +161,6 @@ var semanticsPartial = g.createSemantics().addOperation('json', {
         // best practice is to omit the optional + sign
         return n.sourceString;
     },
-    
-    fileCreationDate: function(d) {
-        let keyvalue = `{"${this.ctorName}": "${d.json()}"}`;
-        return keyvalue;
-    },
-
-    fileControlTotal: function(d) {
-        let keyvalue = `{"${this.ctorName}": ${d.json()}}`;
-        return keyvalue;
-    },
-
-    numberofBanks: function(d) {
-        let keyvalue = `{"${this.ctorName}": ${d.json()}}`;
-        return keyvalue;
-    },
-
-    numberofRecords: function(d) {
-        let keyvalue = `{"${this.ctorName}": ${d.json()}}`;
-        return keyvalue;
-    },
-
-    date: function(yy, mo, dd) {
-        // Default Century to 20. So much for learning from Y2K.
-        let dateString = `20${yy.sourceString}-${mo.sourceString}-${dd.sourceString}`;
-        return dateString;
-    },
 
     _nonterminal: function(n) {
         // return this.ctorName + ':' + this.sourceString + ', ';
@@ -170,11 +168,9 @@ var semanticsPartial = g.createSemantics().addOperation('json', {
         // n.numChildren
         console.log(n);
 
-        let keyvalue = `{"${this.ctorName}": ${n.json()}}`;
+        let keyvalue = `{x"${this.ctorName}": ${n.json()}x}`;
         return keyvalue;
     },
-
-
 
 });
 
@@ -187,17 +183,22 @@ function parsePartial(input, startNode) {
 
 function assertStartNodeExpectedString(inputVal, startNodeVal, expectedString) {
     console.log(parsePartial(inputVal, startNodeVal))
-    assert.deepEqual(parsePartial(inputVal, startNodeVal), `{"${startNodeVal}": "${expectedString}"}`);
+    assert.deepEqual(parsePartial(inputVal, startNodeVal), `"${startNodeVal}": "${expectedString}"`);
 }
 
 function assertStartNodeNumber(inputVal, startNodeVal) {
     console.log(parsePartial(inputVal, startNodeVal))
-    assert.deepEqual(parsePartial(inputVal, startNodeVal), `{"${startNodeVal}": ${inputVal}}`);
+    assert.deepEqual(parsePartial(inputVal, startNodeVal), `"${startNodeVal}": ${inputVal}`);
 }
 
 function assertStartNodeExpectedNumber(inputVal, startNodeVal, expectedNumber) {
     console.log(parsePartial(inputVal, startNodeVal))
-    assert.deepEqual(parsePartial(inputVal, startNodeVal), `{"${startNodeVal}": ${expectedNumber}}`);
+    assert.deepEqual(parsePartial(inputVal, startNodeVal), `"${startNodeVal}": ${expectedNumber}`);
+}
+
+function assertStartNodeExpected(inputVal, startNodeVal, expectedValue) {
+    console.log(parsePartial(inputVal, startNodeVal))
+    assert.deepEqual(parsePartial(inputVal, startNodeVal), `${expectedValue}`);
 }
 
 // Test actions for start nodes
@@ -212,9 +213,10 @@ assertStartNodeExpectedNumber('+136', 'numberofRecords', '136');
 
 
 // Test actions for FileTrailer
-//assert(g.match('99,0,0,2/', 'FileTrailer').succeeded(), 'ANSI X9.121–2016 (BTR3) from 5.1.1 Empty File 99 Record');
+console.log(parsePartial('99,1215450000,4,136/', 'FileTrailer'))
+var expectedFileTrailer = '{"FileTrailer": {"fileControlTotal": 1215450000, "numberofBanks": 4, "numberofRecords": 136}}';
+assertStartNodeExpected('99,1215450000,4,136/', 'FileTrailer', expectedFileTrailer);
 
-// console.log(parsePartial('99,1215450000,4,136/', 'FileTrailer'))
 // console.log(parsePartial('99,-1215450000,+4,+136/', 'FileTrailer'))
 // assert.equal(parsePartial('99,1215450000,4,136/', 'FileTrailer'), '"FileTrailer": { }');
 
