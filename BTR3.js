@@ -120,7 +120,9 @@ function formatKey(key) {
 var semanticsPartial = g.createSemantics().addOperation('json', {
 
     FileTrailer: function(_, _, fct, _, nob, _, nor, _) {
-        return formatKey(this.ctorName) + ': {' + fct.json() + nob.json() + nor.json() + '}';
+        let keyvalue = `{"${this.ctorName}": "${fct.json()}", "${nob.json()}", "${nor.json()}"}`;
+        console.log(keyvalue);
+        return keyvalue;
     },
 
     optSignedN: function(s, n){
@@ -131,28 +133,33 @@ var semanticsPartial = g.createSemantics().addOperation('json', {
     optPosN: function(s, n){
         // drop the + sign
         return n.sourceString;
+        return `"${n.sourceString}"}`;
     }, // "+"? digit+
     
     fileCreationDate: function(d) {
-        //return formatKey(this.ctorName) + d.json();
-        let key = this.ctorName;
-        let value = d.json();
-        return {key: value};
+        let keyvalue = `{"${this.ctorName}": "${d.json()}"}`;
+        return keyvalue;
+    },
+
+    fileControlTotal: function(d) {
+        let keyvalue = `{"${this.ctorName}": ${d.json()}}`;
+        return keyvalue;
     },
 
     date: function(yy, mo, dd) {
         // Default Century to 20. So much for learning from Y2K.
-        let dateString = '20' + yy.sourceString + '-' + mo.sourceString + '-' + dd.sourceString;
-        // console.log(new Date(dateString))
-        return new Date(dateString);
+        let dateString = `20${yy.sourceString}-${mo.sourceString}-${dd.sourceString}`;
+        return dateString;
     },
 
     _nonterminal: function(n) {
         // return this.ctorName + ':' + this.sourceString + ', ';
-        n.ctorName
-        n.numChildren
+        // n.ctorName
+        // n.numChildren
+        console.log(n);
 
-        return formatKey(this.ctorName) + this + ', ';
+        let keyvalue = `{"${this.ctorName}": ${n.json()}}`;
+        return keyvalue;
     },
 
 
@@ -166,17 +173,26 @@ function parsePartial(input, startNode) {
 }
 
 
+function assertStartNodeExpectedString(inputVal, startNodeVal, expectedString) {
+    console.log(parsePartial(inputVal, startNodeVal))
+    assert.deepEqual(parsePartial(inputVal, startNodeVal), `{"${startNodeVal}": "${expectedString}"}`);
+}
 
-// Test actions for fileCreationDate
-console.log(parsePartial('201230', 'fileCreationDate'))
+function assertStartNodeNumber(inputVal, startNodeVal) {
+    console.log(parsePartial(inputVal, startNodeVal))
+    assert.deepEqual(parsePartial(inputVal, startNodeVal), `{"${startNodeVal}": ${inputVal}}`);
+}
 
-assert.deepEqual(parsePartial('201230', 'fileCreationDate'), {key: new Date('2020-12-30')});
+// Test actions for start nodes
+assertStartNodeExpectedString('201230', 'fileCreationDate', '2020-12-30');
+assertStartNodeNumber('1215450000', 'fileControlTotal');
+
 
 // Test actions for FileTrailer
 //assert(g.match('99,0,0,2/', 'FileTrailer').succeeded(), 'ANSI X9.121–2016 (BTR3) from 5.1.1 Empty File 99 Record');
 
-console.log(parsePartial('99,1215450000,4,136/', 'FileTrailer'))
-console.log(parsePartial('99,-1215450000,+4,+136/', 'FileTrailer'))
+// console.log(parsePartial('99,1215450000,4,136/', 'FileTrailer'))
+// console.log(parsePartial('99,-1215450000,+4,+136/', 'FileTrailer'))
 // assert.equal(parsePartial('99,1215450000,4,136/', 'FileTrailer'), '"FileTrailer": { }');
 
 function parse(input) {
