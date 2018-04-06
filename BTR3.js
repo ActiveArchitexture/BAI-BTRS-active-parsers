@@ -115,6 +115,11 @@ var semantics = g.createSemantics().addOperation('json', {
 
 var semanticsPartial = g.createSemantics().addOperation('json', {
 
+    FileHeader: function(_, _, sid, _, rid, _, fcd, _, fct, _, fid, _, _, _, _, _, vn, _) {
+        return this.ctorName + ':' + sid.json() + rid.json() + fcd.json() + fct.json() + fid.json() + vn.json();
+        return `{"${this.ctorName}": {${sid.json()}, ${rid.json()}, ${fcd.json()}, ${fct.json()}, ${fid.json()}, ${vn.json()}}}`;
+    },
+
     FileTrailer: function(_, _, fct, _, nob, _, nor, _) {
         return `{"${this.ctorName}": {${fct.json()}, ${nob.json()}, ${nor.json()}}}`;
     },
@@ -163,13 +168,12 @@ var semanticsPartial = g.createSemantics().addOperation('json', {
     },
 
     _nonterminal: function(n) {
-        // return this.ctorName + ':' + this.sourceString + ', ';
-        // n.ctorName
-        // n.numChildren
+        console.log(this.ctorName);
         console.log(n);
-
-        let keyvalue = `{x"${this.ctorName}": ${n.json()}x}`;
-        return keyvalue;
+        if (n.isIteration()) {
+            // TODO fix actions so that 'boiler plate' is not required
+        }
+        return `{_nonterminal "${this.ctorName}": ${n.json()}x}`;
     },
 
 });
@@ -180,7 +184,9 @@ function parsePartial(input, startNode) {
     return semanticsPartial(match).json();
 }
 
-
+/*
+    Test Helper functions
+*/
 function assertStartNodeExpectedString(inputVal, startNodeVal, expectedString) {
     console.log(parsePartial(inputVal, startNodeVal))
     assert.deepEqual(parsePartial(inputVal, startNodeVal), `"${startNodeVal}": "${expectedString}"`);
@@ -201,7 +207,10 @@ function assertStartNodeExpected(inputVal, startNodeVal, expectedValue) {
     assert.deepEqual(parsePartial(inputVal, startNodeVal), `${expectedValue}`);
 }
 
-// Test actions for start nodes
+/*
+    Test actions
+*/
+// Test actions for FileTrailer start nodes
 assertStartNodeExpectedString('201230', 'fileCreationDate', '2020-12-30');
 assertStartNodeNumber('1215450000', 'fileControlTotal');
 assertStartNodeNumber('-1215450000', 'fileControlTotal');
@@ -211,14 +220,17 @@ assertStartNodeExpectedNumber('+4', 'numberofBanks', '4');
 assertStartNodeNumber('136', 'numberofRecords');
 assertStartNodeExpectedNumber('+136', 'numberofRecords', '136');
 
-
 // Test actions for FileTrailer
-console.log(parsePartial('99,1215450000,4,136/', 'FileTrailer'))
 var expectedFileTrailer = '{"FileTrailer": {"fileControlTotal": 1215450000, "numberofBanks": 4, "numberofRecords": 136}}';
 assertStartNodeExpected('99,1215450000,4,136/', 'FileTrailer', expectedFileTrailer);
+assertStartNodeExpected('99,1215450000,+4,+136/', 'FileTrailer', expectedFileTrailer);
+var expectedFileTrailer = '{"FileTrailer": {"fileControlTotal": -1215450000, "numberofBanks": 4, "numberofRecords": 136}}';
+assertStartNodeExpected('99,-1215450000,+4,+136/', 'FileTrailer', expectedFileTrailer);
 
-// console.log(parsePartial('99,-1215450000,+4,+136/', 'FileTrailer'))
-// assert.equal(parsePartial('99,1215450000,4,136/', 'FileTrailer'), '"FileTrailer": { }');
+// Test actions for FileHeader
+var expectedFileHeader = '';
+assertStartNodeExpected('01,122099999,123456789,150623,0200,1,,,3/', 'FileHeader', expectedFileHeader);
+
 
 function parse(input) {
     var match = g.match(input);
