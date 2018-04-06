@@ -122,14 +122,21 @@ var semanticsPartial = g.createSemantics().addOperation('json', {
     },
 
     optSignedN: function(s, n){
-        // drop the + sign but leave -
-        return this.sourceString;
-    }, // ("-" | "+")? digit+
+        // ("-" | "+")? digit+
+        // best practice is to omit the optional + sign
+        // a - sign is NOT optional
+        if (s.sourceString == '-') {
+            return `-${n.sourceString}`;
+        } else {
+            return n.sourceString;
+        }
+    },
 
     optPosN: function(s, n){
-        // drop the + sign
+        // "+"? digit+
+        // best practice is to omit the optional + sign
         return n.sourceString;
-    }, // "+"? digit+
+    },
     
     fileCreationDate: function(d) {
         let keyvalue = `{"${this.ctorName}": "${d.json()}"}`;
@@ -191,7 +198,8 @@ function assertStartNodeExpectedNumber(inputVal, startNodeVal, expectedNumber) {
 // Test actions for start nodes
 assertStartNodeExpectedString('201230', 'fileCreationDate', '2020-12-30');
 assertStartNodeNumber('1215450000', 'fileControlTotal');
-//assertStartNodeExpectedNumber('+1215450000', 'fileControlTotal', '1215450000');
+assertStartNodeNumber('-1215450000', 'fileControlTotal');
+assertStartNodeExpectedNumber('+1215450000', 'fileControlTotal', '1215450000');
 assertStartNodeNumber('4', 'numberofBanks');
 assertStartNodeExpectedNumber('+4', 'numberofBanks', '4');
 
