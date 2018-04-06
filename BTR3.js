@@ -113,10 +113,6 @@ var semantics = g.createSemantics().addOperation('json', {
 
 });
 
-function formatKey(key) {
-    return '"' + key + '": ';
-}
-
 var semanticsPartial = g.createSemantics().addOperation('json', {
 
     FileTrailer: function(_, _, fct, _, nob, _, nor, _) {
@@ -133,7 +129,6 @@ var semanticsPartial = g.createSemantics().addOperation('json', {
     optPosN: function(s, n){
         // drop the + sign
         return n.sourceString;
-        return `"${n.sourceString}"}`;
     }, // "+"? digit+
     
     fileCreationDate: function(d) {
@@ -142,6 +137,11 @@ var semanticsPartial = g.createSemantics().addOperation('json', {
     },
 
     fileControlTotal: function(d) {
+        let keyvalue = `{"${this.ctorName}": ${d.json()}}`;
+        return keyvalue;
+    },
+
+    numberofBanks: function(d) {
         let keyvalue = `{"${this.ctorName}": ${d.json()}}`;
         return keyvalue;
     },
@@ -183,9 +183,17 @@ function assertStartNodeNumber(inputVal, startNodeVal) {
     assert.deepEqual(parsePartial(inputVal, startNodeVal), `{"${startNodeVal}": ${inputVal}}`);
 }
 
+function assertStartNodeExpectedNumber(inputVal, startNodeVal, expectedNumber) {
+    console.log(parsePartial(inputVal, startNodeVal))
+    assert.deepEqual(parsePartial(inputVal, startNodeVal), `{"${startNodeVal}": ${expectedNumber}}`);
+}
+
 // Test actions for start nodes
 assertStartNodeExpectedString('201230', 'fileCreationDate', '2020-12-30');
 assertStartNodeNumber('1215450000', 'fileControlTotal');
+//assertStartNodeExpectedNumber('+1215450000', 'fileControlTotal', '1215450000');
+assertStartNodeNumber('4', 'numberofBanks');
+assertStartNodeExpectedNumber('+4', 'numberofBanks', '4');
 
 
 // Test actions for FileTrailer
