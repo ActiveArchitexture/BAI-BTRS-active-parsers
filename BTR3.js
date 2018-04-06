@@ -153,6 +153,11 @@ var semanticsPartial = g.createSemantics().addOperation('json', {
         return keyvalue;
     },
 
+    numberofRecords: function(d) {
+        let keyvalue = `{"${this.ctorName}": ${d.json()}}`;
+        return keyvalue;
+    },
+
     date: function(yy, mo, dd) {
         // Default Century to 20. So much for learning from Y2K.
         let dateString = `20${yy.sourceString}-${mo.sourceString}-${dd.sourceString}`;
@@ -202,6 +207,8 @@ assertStartNodeNumber('-1215450000', 'fileControlTotal');
 assertStartNodeExpectedNumber('+1215450000', 'fileControlTotal', '1215450000');
 assertStartNodeNumber('4', 'numberofBanks');
 assertStartNodeExpectedNumber('+4', 'numberofBanks', '4');
+assertStartNodeNumber('136', 'numberofRecords');
+assertStartNodeExpectedNumber('+136', 'numberofRecords', '136');
 
 
 // Test actions for FileTrailer
