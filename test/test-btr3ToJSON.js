@@ -22,10 +22,18 @@ function stripWhiteSpace(inString) {
 function parseFromNode(inputVal, startNodeVal) {
     return btr3ToJSON(inputVal, startNodeVal);
 }
+function parseFromNodeWithoutWhiteSpace(inputVal, startNodeVal) {
+    return stripWhiteSpace(btr3ToJSON(inputVal, startNodeVal));
+}
 
 function expectedString(startNodeVal, expectedString) {
     return `"${startNodeVal}": "${expectedString}"`;
 }
+
+function expectedNumber(startNodeVal, expectedString) {
+    return `"${startNodeVal}": ${expectedString}`;
+}
+
 
 // Test actions for FileTrailer start nodes
 test('action for fileCreationDate', t => {
@@ -34,68 +42,77 @@ test('action for fileCreationDate', t => {
     var expected = '2020-12-30';
     t.deepEqual(parseFromNode(input, startNode), expectedString(startNode, expected));
 });
-
-
-
-
-
-function assertStartNodeExpectedString(inputVal, startNodeVal, expectedString) {
-    var parsed = btr3ToJSON(inputVal, startNodeVal);
-    console.log(parsed);
-    assert.deepEqual(parsed, `"${startNodeVal}": "${expectedString}"`);
-}
-
-function assertStartNodeNumber(inputVal, startNodeVal) {
-    var parsed = btr3ToJSON(inputVal, startNodeVal);
-    console.log(parsed);
-    assert.deepEqual(parsed, `"${startNodeVal}": ${inputVal}`);
-}
-
-function assertStartNodeExpectedNumber(inputVal, startNodeVal, expectedNumber) {
-    var parsed = btr3ToJSON(inputVal, startNodeVal);
-    console.log(parsed);
-    assert.deepEqual(parsed, `"${startNodeVal}": ${expectedNumber}`);
-}
-
-function assertStartNodeExpected(inputVal, startNodeVal, expectedValue) {
-    var parsed = btr3ToJSON(inputVal, startNodeVal);
-    console.log(parsed);
-    var expected = `${expectedValue}`;
-    assert.deepEqual(stripWhiteSpace(parsed), stripWhiteSpace(expected));
-}
-
-/*
-    Test actions
-*/
-// Test actions for FileTrailer start nodes
-assertStartNodeExpectedString('201230', 'fileCreationDate', '2020-12-30');
-assertStartNodeNumber('1215450000', 'fileControlTotal');
-assertStartNodeNumber('-1215450000', 'fileControlTotal');
-assertStartNodeExpectedNumber('+1215450000', 'fileControlTotal', '1215450000');
-assertStartNodeNumber('4', 'numberofBanks');
-assertStartNodeExpectedNumber('+4', 'numberofBanks', '4');
-assertStartNodeNumber('136', 'numberofRecords');
-assertStartNodeExpectedNumber('+136', 'numberofRecords', '136');
+test('action for fileControlTotal', t => {
+    var input = '1215450000';
+    var startNode = 'fileControlTotal';
+    var expected = input;
+    t.deepEqual(parseFromNode(input, startNode), expectedNumber(startNode, expected));
+});
+test('action for negative fileControlTotal', t => {
+    var input = '-1215450000';
+    var startNode = 'fileControlTotal';
+    var expected = input;
+    t.deepEqual(parseFromNode(input, startNode), expectedNumber(startNode, expected));
+});
+test('action for positive fileControlTotal', t => {
+    var input = '+1215450000';
+    var startNode = 'fileControlTotal';
+    var expected = '1215450000';
+    t.deepEqual(parseFromNode(input, startNode), expectedNumber(startNode, expected));
+});
+test('action for numberofBanks', t => {
+    var input = '4';
+    var startNode = 'numberofBanks';
+    var expected = input;
+    t.deepEqual(parseFromNode(input, startNode), expectedNumber(startNode, expected));
+});
+test('action for positive numberofBanks', t => {
+    var input = '+4';
+    var startNode = 'numberofBanks';
+    var expected = '4';
+    t.deepEqual(parseFromNode(input, startNode), expectedNumber(startNode, expected));
+});
+test('action for numberofRecords', t => {
+    var input = '136';
+    var startNode = 'numberofRecords';
+    var expected = input;
+    t.deepEqual(parseFromNode(input, startNode), expectedNumber(startNode, expected));
+});
+test('action for positive numberofRecords', t => {
+    var input = '+136';
+    var startNode = 'numberofRecords';
+    var expected = '136';
+    t.deepEqual(parseFromNode(input, startNode), expectedNumber(startNode, expected));
+});
 
 // Test actions for FileTrailer
-var expectedFileTrailer = '{"FileTrailer": {"fileControlTotal": 1215450000, "numberofBanks": 4, "numberofRecords": 136}}';
-var expectedFileTrailer = `
+var expectedFileTrailer1 = `
     "FileTrailer": {
         "fileControlTotal": 1215450000,
         "numberofBanks": 4,
         "numberofRecords": 136
-    }
-`;
-assertStartNodeExpected('99,1215450000,4,136/', 'FileTrailer', expectedFileTrailer);
-assertStartNodeExpected('99,+1215450000,+4,+136/', 'FileTrailer', expectedFileTrailer);
-var expectedFileTrailer = `
+    }`;
+test('action for FileTrailer', t => {
+    var input = '99,1215450000,4,136/';
+    var startNode = 'FileTrailer';
+    t.deepEqual(parseFromNodeWithoutWhiteSpace(input, startNode), stripWhiteSpace(expectedFileTrailer1));
+});
+test('action for FileTrailer with +', t => {
+    var input = '99,+1215450000,+4,+136/';
+    var startNode = 'FileTrailer';
+    t.deepEqual(parseFromNodeWithoutWhiteSpace(input, startNode), stripWhiteSpace(expectedFileTrailer1));
+});
+var expectedFileTrailer2 = `
     "FileTrailer": {
         "fileControlTotal": -1215450000,
         "numberofBanks": 4,
         "numberofRecords": 136
-    }
-`;
-assertStartNodeExpected('99,-1215450000,+4,+136/', 'FileTrailer', expectedFileTrailer);
+    }`;
+test('action for FileTrailer with +', t => {
+    var input = '99,-1215450000,+4,+136/';
+    var startNode = 'FileTrailer';
+    t.deepEqual(parseFromNodeWithoutWhiteSpace(input, startNode), stripWhiteSpace(expectedFileTrailer2));
+});
 
 // Test actions for FileHeader
 var expectedFileHeader = `
@@ -108,10 +125,13 @@ var expectedFileHeader = `
         "versionNumber": "3"
     }
 `;
-assertStartNodeExpected('01,122099999,123456789,150623,0200,1,,,3/', 'FileHeader', expectedFileHeader);
+test('action for FileHeader', t => {
+    var input = '01,122099999,123456789,150623,0200,1,,,3/';
+    var startNode = 'FileHeader';
+    t.deepEqual(parseFromNodeWithoutWhiteSpace(input, startNode), stripWhiteSpace(expectedFileHeader));
+});
 
-var emptyfile = '01,123456789,NAMENAME,150716,2100,11,,,3/' + '\r\n' + '99,0,0,2/';
-
+// Test actions for BTRSFile
 var expectedEmptyFile = `
 {
     "BTRSfile": {
@@ -131,4 +151,9 @@ var expectedEmptyFile = `
     }
 }
 `;
-assertStartNodeExpected(emptyfile, 'BTRSfile', expectedEmptyFile);
+
+test('action for empty BTRSFile', t => {
+    var input = '01,123456789,NAMENAME,150716,2100,11,,,3/' + '\r\n' + '99,0,0,2/';
+    var startNode = 'BTRSfile';
+    t.deepEqual(parseFromNodeWithoutWhiteSpace(input, startNode), stripWhiteSpace(expectedEmptyFile));
+});
