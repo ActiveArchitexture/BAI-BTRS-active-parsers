@@ -1,0 +1,57 @@
+{
+  "name": "bai-btrs-active-parsers",
+  "description": "Parser and Generators for BAI BTRS files",
+  "version": "0.0.1",
+  "main": "BTR3.js",
+  "directories": {
+    "example": "examples",
+    "test": "test"
+  },
+  "dependencies": {
+    "ohm-js": "^0.14.0"
+  },
+  "devDependencies": {
+    "ava": "^0.25.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ActiveArchitexture/BAI-BTRS-active-parsers.git"
+  },
+  "keywords": [
+    "BAI",
+    "BTRS",
+    "Bank",
+    "Transaction",
+    "Reporting",
+    "Standard",
+    "BAI2",
+    "BAI3",
+    "BTR3"
+  ],
+  "author": "Ross Kendle",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ActiveArchitexture/BAI-BTRS-active-parsers/issues"
+  },
+  "homepage": "https://github.com/ActiveArchitexture/BAI-BTRS-active-parsers#readme",
+  "ava": {
+    "files": [
+      "test/*.js",
+      "!test/files/*.js"
+    ],
+    "source": [
+      "src/**/*.{js,jsx}",
+      "test/files/**/*",
+      "!dist/**/*"
+    ],
+    "concurrency": 5,
+    "failFast": true,
+    "failWithoutAssertions": false,
+    "tap": false,
+    "compileEnhancements": true
+  },
+  "scripts": {
+    "test": "ava",
+    "test:watch": "ava --watch"
+  }
+}

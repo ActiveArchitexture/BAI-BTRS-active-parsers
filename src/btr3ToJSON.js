@@ -11,92 +11,104 @@ var join = require('path').join;
 var fs = require('fs');
 var ohm = require('ohm-js');
 
-var contents = fs.readFileSync(join(__dirname, 'BTR3.ohm'));
+var btr3Contents = fs.readFileSync(join(__dirname, 'BTR3.ohm'));
 
-var g = ohm.grammar(contents);
+var btr3Grammar = ohm.grammar(btr3Contents);
+
+
+// Exports
+// -------
+
+var btr3ToJSON = module.exports = function (source, startNode) {
+    var matchResult = btr3Grammar.match(source, startNode);
+    if (matchResult.failed()) {
+        return matchResult;
+    }
+    return semantics(matchResult).json();
+};
 
 
 // Test grammar for fileCreationDate
-assert(g.match('201230', 'fileCreationDate').succeeded());
-assert(g.match('201240', 'fileCreationDate').failed(), 'dd 40 greater than 31');
+assert(btr3Grammar.match('201230', 'fileCreationDate').succeeded());
+assert(btr3Grammar.match('201240', 'fileCreationDate').failed(), 'dd 40 greater than 31');
 
 // Test grammar for fileCreationTime
-assert(g.match('2359', 'fileCreationTime').succeeded());
-assert(g.match('2400', 'fileCreationTime').failed(), 'hh 24 not in range 00..23');
-assert(g.match('2360', 'fileCreationTime').failed(), 'mm 60 not in range 00..59');
+assert(btr3Grammar.match('2359', 'fileCreationTime').succeeded());
+assert(btr3Grammar.match('2400', 'fileCreationTime').failed(), 'hh 24 not in range 00..23');
+assert(btr3Grammar.match('2360', 'fileCreationTime').failed(), 'mm 60 not in range 00..59');
 
 // Test grammar for FileHeader
-assert(g.match('01,122099999,123456789,150623,0200,1,,,3/', 'FileHeader').succeeded(), 'ANSI X9.121–2016 (BTR3) Sample 01 Record Example Using Only Mandatory Fields');
-assert(g.match('01, 122099999, 123456789, 150623, 0200, 1,,,3/', 'FileHeader').succeeded(), 'ANSI X9.121–2016 (BTR3) Sample 01 Record Example WITH space after commas');
+assert(btr3Grammar.match('01,122099999,123456789,150623,0200,1,,,3/', 'FileHeader').succeeded(), 'ANSI X9.121–2016 (BTR3) Sample 01 Record Example Using Only Mandatory Fields');
+assert(btr3Grammar.match('01, 122099999, 123456789, 150623, 0200, 1,,,3/', 'FileHeader').succeeded(), 'ANSI X9.121–2016 (BTR3) Sample 01 Record Example WITH space after commas');
 
 // Log traces to console - similar to interactive editor outputs
 // console.log(g.trace("2359", "fileCreationTime").toString());
 
 // Test grammar for fileControlTotal
-assert(g.match('1215450000', 'fileControlTotal').succeeded(), 'unsigned total');
-assert(g.match('-1215450000', 'fileControlTotal').succeeded(), 'negative total');
-assert(g.match('+1215450000', 'fileControlTotal').succeeded(), 'positive total');
+assert(btr3Grammar.match('1215450000', 'fileControlTotal').succeeded(), 'unsigned total');
+assert(btr3Grammar.match('-1215450000', 'fileControlTotal').succeeded(), 'negative total');
+assert(btr3Grammar.match('+1215450000', 'fileControlTotal').succeeded(), 'positive total');
 
 // Test grammar for numberofBanks
-assert(g.match('121', 'numberofBanks').succeeded(), 'unsigned numberofBanks');
-assert(g.match('+121', 'numberofBanks').succeeded(), 'positive numberofBanks');
-assert(g.match('-121', 'numberofBanks').failed(), 'negative numberofBanks');
+assert(btr3Grammar.match('121', 'numberofBanks').succeeded(), 'unsigned numberofBanks');
+assert(btr3Grammar.match('+121', 'numberofBanks').succeeded(), 'positive numberofBanks');
+assert(btr3Grammar.match('-121', 'numberofBanks').failed(), 'negative numberofBanks');
 
 // Test grammar for FileTrailer
-assert(g.match('99,1215450000,4,136/', 'FileTrailer').succeeded(), 'ANSI X9.121–2016 (BTR3) Sample 99 Record');
-assert(g.match('99,0,0,2/', 'FileTrailer').succeeded(), 'ANSI X9.121–2016 (BTR3) from 5.1.1 Empty File 99 Record');
+assert(btr3Grammar.match('99,1215450000,4,136/', 'FileTrailer').succeeded(), 'ANSI X9.121–2016 (BTR3) Sample 99 Record');
+assert(btr3Grammar.match('99,0,0,2/', 'FileTrailer').succeeded(), 'ANSI X9.121–2016 (BTR3) from 5.1.1 Empty File 99 Record');
 
 // Test grammar for 5.1.1 Empty File - with CRLF
 var emptyfile = '01,123456789,NAMENAME,150716,2100,11,,,3/' + '\r\n' + '99,0,0,2/'
-assert(g.match(emptyfile, 'BTRSfile').succeeded(), 'ANSI X9.121–2016 (BTR3) 5.1.1 Empty File');
+assert(btr3Grammar.match(emptyfile, 'BTRSfile').succeeded(), 'ANSI X9.121–2016 (BTR3) 5.1.1 Empty File');
 
 // Test grammar for 5.1.1 Empty File - with CR 
 var emptyfile = '01,123456789,NAMENAME,150716,2100,11,,,3/' + '\r' + '99,0,0,2/'
-assert(g.match(emptyfile, 'BTRSfile').succeeded(), 'ANSI X9.121–2016 (BTR3) 5.1.1 Empty File');
+assert(btr3Grammar.match(emptyfile, 'BTRSfile').succeeded(), 'ANSI X9.121–2016 (BTR3) 5.1.1 Empty File');
 
 
-var semantics = g.createSemantics().addOperation('json', {
+var semantics = btr3Grammar.createSemantics().addOperation('json', {
 
-    BTRSfile: function(fh, ft) {
+    BTRSfile: function (fh, ft) {
         // Only the top level rule returns {a complete JSON object}
         return `{"${this.ctorName}": {${fh.json()}, ${ft.json()}}}`;
     },
 
-    FileHeader: function(_, _, sid, _, rid, _, fcd, _, fct, _, fid, _, _, _, _, _, vn, _) {
+    FileHeader: function (_, _, sid, _, rid, _, fcd, _, fct, _, fid, _, _, _, _, _, vn, _) {
         return `"${this.ctorName}": {${sid.json()}, ${rid.json()}, ${fcd.json()}, ${fct.json()}, ${fid.json()}, ${vn.json()}}`;
     },
 
-    FileTrailer: function(_, _, fct, _, nob, _, nor, _) {
+    FileTrailer: function (_, _, fct, _, nob, _, nor, _) {
         return `"${this.ctorName}": {${fct.json()}, ${nob.json()}, ${nor.json()}}`;
     },
-    
-    fileCreationDate: function(d) {
+
+    fileCreationDate: function (d) {
         let keyvalue = `"${this.ctorName}": "${d.json()}"`;
         return keyvalue;
     },
 
-    fileControlTotal: function(d) {
+    fileControlTotal: function (d) {
         let keyvalue = `"${this.ctorName}": ${d.json()}`;
         return keyvalue;
     },
 
-    numberofBanks: function(d) {
+    numberofBanks: function (d) {
         let keyvalue = `"${this.ctorName}": ${d.json()}`;
         return keyvalue;
     },
 
-    numberofRecords: function(d) {
+    numberofRecords: function (d) {
         let keyvalue = `"${this.ctorName}": ${d.json()}`;
         return keyvalue;
     },
 
-    date: function(yy, mo, dd) {
+    date: function (yy, mo, dd) {
         // Default Century to 20. So much for learning from Y2K.
         let dateString = `20${yy.sourceString}-${mo.sourceString}-${dd.sourceString}`;
         return dateString;
     },
 
-    optSignedN: function(s, n){
+    optSignedN: function (s, n) {
         // ("-" | "+")? digit+
         // best practice is to omit the optional + sign
         // a - sign is NOT optional
@@ -107,13 +119,13 @@ var semantics = g.createSemantics().addOperation('json', {
         }
     },
 
-    optPosN: function(s, n){
+    optPosN: function (s, n) {
         // "+"? digit+
         // best practice is to omit the optional + sign
         return n.sourceString;
     },
 
-    _nonterminal: function(n) {
+    _nonterminal: function (n) {
         //console.log(this.ctorName);
         //console.log(n);
         // returns a string
@@ -122,11 +134,6 @@ var semantics = g.createSemantics().addOperation('json', {
 
 });
 
-function parse(input, startNode) {
-    var match = g.match(input, startNode);
-    assert(match.succeeded());
-    return semantics(match).json();
-}
 
 /*
     Test Helper functions
@@ -137,25 +144,25 @@ function stripWhiteSpace(inString) {
 }
 
 function assertStartNodeExpectedString(inputVal, startNodeVal, expectedString) {
-    var parsed = parse(inputVal, startNodeVal);
+    var parsed = btr3ToJSON(inputVal, startNodeVal);
     console.log(parsed);
     assert.deepEqual(parsed, `"${startNodeVal}": "${expectedString}"`);
 }
 
 function assertStartNodeNumber(inputVal, startNodeVal) {
-    var parsed = parse(inputVal, startNodeVal);
+    var parsed = btr3ToJSON(inputVal, startNodeVal);
     console.log(parsed);
     assert.deepEqual(parsed, `"${startNodeVal}": ${inputVal}`);
 }
 
 function assertStartNodeExpectedNumber(inputVal, startNodeVal, expectedNumber) {
-    var parsed = parse(inputVal, startNodeVal);
+    var parsed = btr3ToJSON(inputVal, startNodeVal);
     console.log(parsed);
     assert.deepEqual(parsed, `"${startNodeVal}": ${expectedNumber}`);
 }
 
 function assertStartNodeExpected(inputVal, startNodeVal, expectedValue) {
-    var parsed = parse(inputVal, startNodeVal);
+    var parsed = btr3ToJSON(inputVal, startNodeVal);
     console.log(parsed);
     var expected = `${expectedValue}`;
     assert.deepEqual(stripWhiteSpace(parsed), stripWhiteSpace(expected));
@@ -227,3 +234,19 @@ expectedEmptyFile = `
 }
 `;
 assertStartNodeExpected(emptyfile, 'BTRSfile', expectedEmptyFile);
+
+// Main
+// ----
+// if (require.main === module) {
+//     var filename = process.argv[2];
+//     var source = fs.readFileSync(filename).toString();
+//     var result = btr3ToJSON(source, 'BTRSfile');
+//     /* eslint-disable no-console, no-process-exit */
+//     if (typeof result === 'string') {
+//         console.log(result);
+//     } else {
+//         console.error('Not a BTR3 file: ' + filename);
+//         console.error(result.message);
+//         process.exit(1);
+//     }
+// }
