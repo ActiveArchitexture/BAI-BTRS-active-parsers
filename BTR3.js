@@ -55,7 +55,7 @@ var emptyfile = '01,123456789,NAMENAME,150716,2100,11,,,3/' + '\r' + '99,0,0,2/'
 assert(g.match(emptyfile, 'BTRSfile').succeeded(), 'ANSI X9.121–2016 (BTR3) 5.1.1 Empty File');
 
 
-var semanticsPartial = g.createSemantics().addOperation('json', {
+var semantics = g.createSemantics().addOperation('json', {
 
     BTRSfile: function(fh, ft) {
         // Only the top level rule returns {a complete JSON object}
@@ -121,10 +121,10 @@ var semanticsPartial = g.createSemantics().addOperation('json', {
 
 });
 
-function parsePartial(input, startNode) {
+function parse(input, startNode) {
     var match = g.match(input, startNode);
     assert(match.succeeded());
-    return semanticsPartial(match).json();
+    return semantics(match).json();
 }
 
 /*
@@ -136,25 +136,25 @@ function stripWhiteSpace(inString) {
 }
 
 function assertStartNodeExpectedString(inputVal, startNodeVal, expectedString) {
-    var parsed = parsePartial(inputVal, startNodeVal);
+    var parsed = parse(inputVal, startNodeVal);
     console.log(parsed);
     assert.deepEqual(parsed, `"${startNodeVal}": "${expectedString}"`);
 }
 
 function assertStartNodeNumber(inputVal, startNodeVal) {
-    var parsed = parsePartial(inputVal, startNodeVal);
+    var parsed = parse(inputVal, startNodeVal);
     console.log(parsed);
     assert.deepEqual(parsed, `"${startNodeVal}": ${inputVal}`);
 }
 
 function assertStartNodeExpectedNumber(inputVal, startNodeVal, expectedNumber) {
-    var parsed = parsePartial(inputVal, startNodeVal);
+    var parsed = parse(inputVal, startNodeVal);
     console.log(parsed);
     assert.deepEqual(parsed, `"${startNodeVal}": ${expectedNumber}`);
 }
 
 function assertStartNodeExpected(inputVal, startNodeVal, expectedValue) {
-    var parsed = parsePartial(inputVal, startNodeVal);
+    var parsed = parse(inputVal, startNodeVal);
     console.log(parsed);
     var expected = `${expectedValue}`;
     assert.deepEqual(stripWhiteSpace(parsed), stripWhiteSpace(expected));
