@@ -6,30 +6,33 @@ var ohm = require('ohm-js');
 var btr3Contents = fs.readFileSync(join('src', 'BTR3.ohm'));
 var btr3Grammar = ohm.grammar(btr3Contents);
 
+/*
+    $ npm test -- --watch
+*/
+
 import test from 'ava';
 
-test('grammar for valid fileCreationDate succeeds', t => {
+test('grammar for valid fileCreationDate', t => {
     t.true(btr3Grammar.match('201230', 'fileCreationDate').succeeded());
 });
-test('grammar for invalid fileCreationDate fails for dd 40 greater than 31', t => {
+test('grammar for invalid fileCreationDate - dd 40 greater than 31', t => {
     t.true(btr3Grammar.match('201240', 'fileCreationDate').failed());
 });
 
-test('grammar for valid fileCreationTime succeeds', t => {
+test('grammar for valid fileCreationTime', t => {
     t.true(btr3Grammar.match('2359', 'fileCreationTime').succeeded());
 });
-test('grammar for invalid fileCreationTime fails - hh 24 not in range 00..23', t => {
+test('grammar for invalid fileCreationTime - hh 24 not in range 00..23', t => {
     t.true(btr3Grammar.match('2400', 'fileCreationTime').failed());
 });
-test('grammar for invalid fileCreationTime fails - mm 60 not in range 00..59', t => {
+test('grammar for invalid fileCreationTime - mm 60 not in range 00..59', t => {
     t.true(btr3Grammar.match('2360', 'fileCreationTime').failed());
 });
 
-
-test('grammar for valid FileHeader succeds - ANSI X9.121–2016 (BTR3) Sample 01 Record Example Using Only Mandatory Fields', t => {
+test('grammar for valid FileHeader - ANSI X9.121–2016 (BTR3) Sample 01 Record Example Using Only Mandatory Fields', t => {
     t.true(btr3Grammar.match('01,122099999,123456789,150623,0200,1,,,3/', 'FileHeader').succeeded());
 });
-test('grammar for valid FileHeader succeds - ANSI X9.121–2016 (BTR3) Sample 01 Record Example Using Only Mandatory Fields WITH space after commas', t => {
+test('grammar for valid FileHeader - ANSI X9.121–2016 (BTR3) Sample 01 Record Example Using Only Mandatory Fields WITH space after commas', t => {
     t.true(btr3Grammar.match('01, 122099999, 123456789, 150623, 0200, 1,,,3/', 'FileHeader').succeeded());
 });
 
@@ -37,24 +40,24 @@ test('grammar for valid FileHeader succeds - ANSI X9.121–2016 (BTR3) Sample 01
 // console.log(g.trace("2359", "fileCreationTime").toString());
 
 // Test grammar for fileControlTotal
-test('grammar for valid fileControlTotal succeeds with unsigned total', t => {
+test('grammar for valid fileControlTotal with unsigned total', t => {
     t.true(btr3Grammar.match('1215450000', 'fileControlTotal').succeeded());
 });
-test('grammar for valid fileControlTotal succeeds with negative total', t => {
+test('grammar for valid fileControlTotal with negative total', t => {
     t.true(btr3Grammar.match('-1215450000', 'fileControlTotal').succeeded());
 });
-test('grammar for valid fileControlTotal succeeds with positive total', t => {
+test('grammar for valid fileControlTotal with positive total', t => {
     t.true(btr3Grammar.match('+1215450000', 'fileControlTotal').succeeded());
 });
 
 // Test grammar for numberofBanks
-test('grammar for valid fileControlTotal succeeds with unsigned numberofBanks', t => {
+test('grammar for valid fileControlTotal with unsigned numberofBanks', t => {
     t.true(btr3Grammar.match('121', 'numberofBanks').succeeded());
 });
-test('grammar for valid fileControlTotal succeeds with positive numberofBanks', t => {
+test('grammar for valid fileControlTotal with positive numberofBanks', t => {
     t.true(btr3Grammar.match('+121', 'numberofBanks').succeeded());
 });
-test('grammar for invalid fileControlTotal fails with negative numberofBanks', t => {
+test('grammar for invalid fileControlTotal with negative numberofBanks', t => {
     t.true(btr3Grammar.match('-121', 'numberofBanks').failed());
 });
 
