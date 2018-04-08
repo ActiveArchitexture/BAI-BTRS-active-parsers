@@ -116,7 +116,6 @@ var semantics = g.createSemantics().addOperation('json', {
 var semanticsPartial = g.createSemantics().addOperation('json', {
 
     FileHeader: function(_, _, sid, _, rid, _, fcd, _, fct, _, fid, _, _, _, _, _, vn, _) {
-        return this.ctorName + ':' + sid.json() + rid.json() + fcd.json() + fct.json() + fid.json() + vn.json();
         return `{"${this.ctorName}": {${sid.json()}, ${rid.json()}, ${fcd.json()}, ${fct.json()}, ${fid.json()}, ${vn.json()}}}`;
     },
 
@@ -168,12 +167,9 @@ var semanticsPartial = g.createSemantics().addOperation('json', {
     },
 
     _nonterminal: function(n) {
-        console.log(this.ctorName);
-        console.log(n);
-        if (n.isIteration()) {
-            // TODO fix actions so that 'boiler plate' is not required
-        }
-        return `{_nonterminal "${this.ctorName}": ${n.json()}x}`;
+        //console.log(this.ctorName);
+        //console.log(n);
+        return `"${this.ctorName}": ${this.sourceString}`;
     },
 
 });
@@ -187,24 +183,34 @@ function parsePartial(input, startNode) {
 /*
     Test Helper functions
 */
+
+function stripWhiteSpace(inString) {
+    return inString.replace(/\s/g, '');
+}
+
 function assertStartNodeExpectedString(inputVal, startNodeVal, expectedString) {
-    console.log(parsePartial(inputVal, startNodeVal))
-    assert.deepEqual(parsePartial(inputVal, startNodeVal), `"${startNodeVal}": "${expectedString}"`);
+    var parsed = parsePartial(inputVal, startNodeVal);
+    console.log(parsed);
+    assert.deepEqual(parsed, `"${startNodeVal}": "${expectedString}"`);
 }
 
 function assertStartNodeNumber(inputVal, startNodeVal) {
-    console.log(parsePartial(inputVal, startNodeVal))
-    assert.deepEqual(parsePartial(inputVal, startNodeVal), `"${startNodeVal}": ${inputVal}`);
+    var parsed = parsePartial(inputVal, startNodeVal);
+    console.log(parsed);
+    assert.deepEqual(parsed, `"${startNodeVal}": ${inputVal}`);
 }
 
 function assertStartNodeExpectedNumber(inputVal, startNodeVal, expectedNumber) {
-    console.log(parsePartial(inputVal, startNodeVal))
-    assert.deepEqual(parsePartial(inputVal, startNodeVal), `"${startNodeVal}": ${expectedNumber}`);
+    var parsed = parsePartial(inputVal, startNodeVal);
+    console.log(parsed);
+    assert.deepEqual(parsed, `"${startNodeVal}": ${expectedNumber}`);
 }
 
 function assertStartNodeExpected(inputVal, startNodeVal, expectedValue) {
-    console.log(parsePartial(inputVal, startNodeVal))
-    assert.deepEqual(parsePartial(inputVal, startNodeVal), `${expectedValue}`);
+    var parsed = parsePartial(inputVal, startNodeVal);
+    console.log(parsed);
+    var expected = `${expectedValue}`;
+    assert.deepEqual(stripWhiteSpace(parsed), stripWhiteSpace(expected));
 }
 
 /*
@@ -222,13 +228,40 @@ assertStartNodeExpectedNumber('+136', 'numberofRecords', '136');
 
 // Test actions for FileTrailer
 var expectedFileTrailer = '{"FileTrailer": {"fileControlTotal": 1215450000, "numberofBanks": 4, "numberofRecords": 136}}';
+var expectedFileTrailer = `
+{
+    "FileTrailer": {
+        "fileControlTotal": 1215450000,
+        "numberofBanks": 4,
+        "numberofRecords": 136
+    }
+}
+`;
 assertStartNodeExpected('99,1215450000,4,136/', 'FileTrailer', expectedFileTrailer);
-assertStartNodeExpected('99,1215450000,+4,+136/', 'FileTrailer', expectedFileTrailer);
-var expectedFileTrailer = '{"FileTrailer": {"fileControlTotal": -1215450000, "numberofBanks": 4, "numberofRecords": 136}}';
+assertStartNodeExpected('99,+1215450000,+4,+136/', 'FileTrailer', expectedFileTrailer);
+var expectedFileTrailer = `
+{
+    "FileTrailer": {
+        "fileControlTotal": -1215450000,
+        "numberofBanks": 4,
+        "numberofRecords": 136
+    }
+}
+`;
 assertStartNodeExpected('99,-1215450000,+4,+136/', 'FileTrailer', expectedFileTrailer);
 
 // Test actions for FileHeader
-var expectedFileHeader = '';
+var expectedFileHeader = `{
+    "FileHeader": {
+        "senderID": 122099999,
+        "receiverID": 123456789,
+        "fileCreationDate": "2015-06-23",
+        "fileCreationTime": 0200,
+        "fileID": 1,
+        "versionNumber": 3
+    }
+}
+`;
 assertStartNodeExpected('01,122099999,123456789,150623,0200,1,,,3/', 'FileHeader', expectedFileHeader);
 
 
