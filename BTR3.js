@@ -115,12 +115,17 @@ var semantics = g.createSemantics().addOperation('json', {
 
 var semanticsPartial = g.createSemantics().addOperation('json', {
 
+    BTRSfile: function(fh, ft) {
+        // Only the top level rule returns {a complete JSON object}
+        return `{"${this.ctorName}": {${fh.json()}, ${ft.json()}}}`;
+    },
+
     FileHeader: function(_, _, sid, _, rid, _, fcd, _, fct, _, fid, _, _, _, _, _, vn, _) {
-        return `{"${this.ctorName}": {${sid.json()}, ${rid.json()}, ${fcd.json()}, ${fct.json()}, ${fid.json()}, ${vn.json()}}}`;
+        return `"${this.ctorName}": {${sid.json()}, ${rid.json()}, ${fcd.json()}, ${fct.json()}, ${fid.json()}, ${vn.json()}}`;
     },
 
     FileTrailer: function(_, _, fct, _, nob, _, nor, _) {
-        return `{"${this.ctorName}": {${fct.json()}, ${nob.json()}, ${nor.json()}}}`;
+        return `"${this.ctorName}": {${fct.json()}, ${nob.json()}, ${nor.json()}}`;
     },
     
     fileCreationDate: function(d) {
@@ -229,29 +234,25 @@ assertStartNodeExpectedNumber('+136', 'numberofRecords', '136');
 // Test actions for FileTrailer
 var expectedFileTrailer = '{"FileTrailer": {"fileControlTotal": 1215450000, "numberofBanks": 4, "numberofRecords": 136}}';
 var expectedFileTrailer = `
-{
     "FileTrailer": {
         "fileControlTotal": 1215450000,
         "numberofBanks": 4,
         "numberofRecords": 136
     }
-}
 `;
 assertStartNodeExpected('99,1215450000,4,136/', 'FileTrailer', expectedFileTrailer);
 assertStartNodeExpected('99,+1215450000,+4,+136/', 'FileTrailer', expectedFileTrailer);
 var expectedFileTrailer = `
-{
     "FileTrailer": {
         "fileControlTotal": -1215450000,
         "numberofBanks": 4,
         "numberofRecords": 136
     }
-}
 `;
 assertStartNodeExpected('99,-1215450000,+4,+136/', 'FileTrailer', expectedFileTrailer);
 
 // Test actions for FileHeader
-var expectedFileHeader = `{
+var expectedFileHeader = `
     "FileHeader": {
         "senderID": 122099999,
         "receiverID": 123456789,
@@ -260,10 +261,29 @@ var expectedFileHeader = `{
         "fileID": 1,
         "versionNumber": 3
     }
-}
 `;
 assertStartNodeExpected('01,122099999,123456789,150623,0200,1,,,3/', 'FileHeader', expectedFileHeader);
 
+expectedEmptyFile = `
+{
+    "BTRSfile": {
+        "FileHeader": {
+            "senderID": 123456789,
+            "receiverID": NAMENAME,
+            "fileCreationDate": "2015-07-16",
+            "fileCreationTime": 2100,
+            "fileID": 11,
+            "versionNumber": 3
+        },
+        "FileTrailer": {
+            "fileControlTotal": 0,
+            "numberofBanks": 0,
+            "numberofRecords": 2
+        }
+    }
+}
+`;
+assertStartNodeExpected(emptyfile, 'BTRSfile', expectedEmptyFile);
 
 function parse(input) {
     var match = g.match(input);
