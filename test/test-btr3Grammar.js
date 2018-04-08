@@ -7,6 +7,7 @@ var btr3Contents = fs.readFileSync(join('src', 'BTR3.ohm'));
 var btr3Grammar = ohm.grammar(btr3Contents);
 
 import test from 'ava';
+
 test('grammar for valid fileCreationDate succeeds', t => {
     t.true(btr3Grammar.match('201230', 'fileCreationDate').succeeded());
 });

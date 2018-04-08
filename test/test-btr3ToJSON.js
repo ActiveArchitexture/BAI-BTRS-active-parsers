@@ -5,6 +5,12 @@ var ohm = require('ohm-js');
 
 var btr3ToJSON = require('../src/btr3ToJSON');
 
+import test from 'ava';
+
+/*
+    $ npm test -- --watch
+*/
+
 /*
     Test Helper functions
 */
@@ -12,6 +18,26 @@ var btr3ToJSON = require('../src/btr3ToJSON');
 function stripWhiteSpace(inString) {
     return inString.replace(/\s/g, '');
 }
+
+function parseFromNode(inputVal, startNodeVal) {
+    return btr3ToJSON(inputVal, startNodeVal);
+}
+
+function expectedString(startNodeVal, expectedString) {
+    return `"${startNodeVal}": "${expectedString}"`;
+}
+
+// Test actions for FileTrailer start nodes
+test('action for fileCreationDate', t => {
+    var input = '201230';
+    var startNode = 'fileCreationDate';
+    var expected = '2020-12-30';
+    t.deepEqual(parseFromNode(input, startNode), expectedString(startNode, expected));
+});
+
+
+
+
 
 function assertStartNodeExpectedString(inputVal, startNodeVal, expectedString) {
     var parsed = btr3ToJSON(inputVal, startNodeVal);
