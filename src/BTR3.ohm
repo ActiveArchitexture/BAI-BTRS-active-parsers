@@ -28,7 +28,7 @@ BTR3 {
     
     yy = digit digit
     mo = "0".."1" digit
-    dd = "1".."3" digit
+    dd = "0".."3" digit
     hh = "0".."2" "0".."3"
     mm = "0".."5" "0".."9"
     

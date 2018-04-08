@@ -132,7 +132,7 @@ test('action for FileHeader', t => {
 });
 
 // Test actions for BTRSFile
-var expectedEmptyFile = `
+var expectedEmptyFile1 = `
 {
     "BTRSfile": {
         "FileHeader": {
@@ -155,5 +155,34 @@ var expectedEmptyFile = `
 test('action for empty BTRSFile', t => {
     var input = '01,123456789,NAMENAME,150716,2100,11,,,3/' + '\r\n' + '99,0,0,2/';
     var startNode = 'BTRSfile';
-    t.deepEqual(parseFromNodeWithoutWhiteSpace(input, startNode), stripWhiteSpace(expectedEmptyFile));
+    t.deepEqual(parseFromNodeWithoutWhiteSpace(input, startNode), stripWhiteSpace(expectedEmptyFile1));
 });
+
+var expectedEmptyFile2 = `
+{
+    "BTRSfile": {
+        "FileHeader": {
+            "senderID": "senderID",
+            "receiverID": "Receiver",
+            "fileCreationDate": "2016-06-05",
+            "fileCreationTime": "1200",
+            "fileID": "87",
+            "versionNumber": "3"
+        },
+        "FileTrailer": {
+            "fileControlTotal": 0,
+            "numberofBanks": 0,
+            "numberofRecords": 3
+        }
+    }
+}
+`;
+
+test('action for empty BTRSFile', t => {
+    var input = '01,senderID,Receiver,160605,1200,87,,,3/' + '\r\n' + '99,0,0,3/';
+    var startNode = 'BTRSfile';
+    //console.log(parseFromNode(input, startNode));
+    t.deepEqual(parseFromNodeWithoutWhiteSpace(input, startNode), stripWhiteSpace(expectedEmptyFile2));
+});
+
+

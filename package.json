@@ -52,6 +52,8 @@
   },
   "scripts": {
     "test": "ava",
-    "test:watch": "ava -- --watch"
+    "test:watch": "ava -- --watch",
+    "empty2": "node src/btr3ToJSON.js test/files/BAI2 BTRS Validator samples/valid/BTRS_valid.txt",
+    "empty1": "node src/btr3ToJSON.js test/files/emptyfile.txt"
   }
 }
