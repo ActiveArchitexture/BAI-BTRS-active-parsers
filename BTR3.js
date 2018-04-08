@@ -54,64 +54,6 @@ assert(g.match(emptyfile, 'BTRSfile').succeeded(), 'ANSI X9.121–2016 (BTR3) 5.
 var emptyfile = '01,123456789,NAMENAME,150716,2100,11,,,3/' + '\r' + '99,0,0,2/'
 assert(g.match(emptyfile, 'BTRSfile').succeeded(), 'ANSI X9.121–2016 (BTR3) 5.1.1 Empty File');
 
-/*
-CSV {
-  csv = row (eol ~end row)* eol?
-  row = col ("," col)*
-  col = colChar*
-  colChar = ~(eol | ",") any
-  eol = "\r"? "\n"
-}
-
-var semantics = g.createSemantics().addOperation('value', {
-    csv: function(r, _, rs, eol) {
-      return [r.value()].concat(rs.value());
-    },
-    row: function(c, _, cs) {
-      return [c.value()].concat(cs.value());
-    },
-    col: function(_) {
-      return this.sourceString;
-    }
-});
-*/
-
-/*
-    BTRSfile = FileHeader FileTrailer
-    
-    FileHeader = "01" sep senderID sep receiverID sep fileCreationDate sep fileCreationTime sep fileID sep physicalRecordLength sep blockSize sep versionNumber eor
-    FileTrailer = "99" sep fileControlTotal sep numberofBanks sep numberofRecords eor
-    
-*/
-
-var semantics = g.createSemantics().addOperation('json', {
-    BTRSfile: function(fh, ft) {
-        return fh.json() + '\n' + ft.json();
-    },
-
-    FileHeader: function(_, _, sid, _, rid, _, fcd, _, fct, _, fid, _, _, _, _, _, vn, _) {
-        return this.ctorName + ':' + sid.json() + rid.json() + fcd.json() + fct.json() + fid.json() + vn.json();
-    },
-
-    FileTrailer: function(_, _, fct, _, nob, _, nor, _) {
-      return this.ctorName + ':' + fct.json() + nob.json() + nor.json();
-    },
-
-    date: function(yy, mo, dd) {
-        return this.ctorName + ':' + '20' + yy.sourceString + '/' + mo.sourceString + '/' + dd.sourceString + ', ';
-    },
-
-    _nonterminal: function(n) {
-        return this.ctorName + ':' + this.sourceString + ', ';
-    },
-
-    /*
-    _terminal: function() {
-      return this.sourceString;
-    }
-    */
-
-});
 
 var semanticsPartial = g.createSemantics().addOperation('json', {
 
@@ -284,11 +226,3 @@ expectedEmptyFile = `
 }
 `;
 assertStartNodeExpected(emptyfile, 'BTRSfile', expectedEmptyFile);
-
-function parse(input) {
-    var match = g.match(input);
-    assert(match.succeeded());
-    return semantics(match).json();
-}
-
-// console.log(parse(emptyfile));
