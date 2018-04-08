@@ -2,7 +2,7 @@
   "name": "bai-btrs-active-parsers",
   "description": "Parser and Generators for BAI BTRS files",
   "version": "0.0.1",
-  "main": "BTR3.js",
+  "main": "src/btr3ToJSON.js",
   "directories": {
     "example": "examples",
     "test": "test"
