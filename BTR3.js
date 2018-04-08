@@ -116,7 +116,8 @@ var semantics = g.createSemantics().addOperation('json', {
     _nonterminal: function(n) {
         //console.log(this.ctorName);
         //console.log(n);
-        return `"${this.ctorName}": ${this.sourceString}`;
+        // returns a string
+        return `"${this.ctorName}": "${this.sourceString}"`;
     },
 
 });
@@ -196,12 +197,12 @@ assertStartNodeExpected('99,-1215450000,+4,+136/', 'FileTrailer', expectedFileTr
 // Test actions for FileHeader
 var expectedFileHeader = `
     "FileHeader": {
-        "senderID": 122099999,
-        "receiverID": 123456789,
+        "senderID": "122099999",
+        "receiverID": "123456789",
         "fileCreationDate": "2015-06-23",
-        "fileCreationTime": 0200,
-        "fileID": 1,
-        "versionNumber": 3
+        "fileCreationTime": "0200",
+        "fileID": "1",
+        "versionNumber": "3"
     }
 `;
 assertStartNodeExpected('01,122099999,123456789,150623,0200,1,,,3/', 'FileHeader', expectedFileHeader);
@@ -210,12 +211,12 @@ expectedEmptyFile = `
 {
     "BTRSfile": {
         "FileHeader": {
-            "senderID": 123456789,
-            "receiverID": NAMENAME,
+            "senderID": "123456789",
+            "receiverID": "NAMENAME",
             "fileCreationDate": "2015-07-16",
-            "fileCreationTime": 2100,
-            "fileID": 11,
-            "versionNumber": 3
+            "fileCreationTime": "2100",
+            "fileID": "11",
+            "versionNumber": "3"
         },
         "FileTrailer": {
             "fileControlTotal": 0,
