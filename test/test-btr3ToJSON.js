@@ -166,7 +166,7 @@ function macroPartial(t, testset, eol) {
 
     t.deepEqual(stripWhiteSpace(actual), stripWhiteSpace(expected));
 }
-macroPartial.title = (providedTitle) => `${providedTitle}`;
+// macroPartial.title = (providedTitle) => `${providedTitle}`;
 
 function macroFull(t, testset, eol) {
     // console.log("-----");
@@ -184,15 +184,15 @@ function macroFull(t, testset, eol) {
 
     t.deepEqual(stripWhiteSpace(actual), stripWhiteSpace(expected));
 }
-macroFull.title = (providedTitle) => `${providedTitle}`;
+// macroFull.title = (providedTitle) => `${providedTitle}`;
 
 
-test(btr3Examples.FileHeader.description, macroPartial, btr3Examples.FileHeader, CRLF);
+test(macroPartial, btr3Examples.FileHeader, CRLF);
 
-test(btr3Examples.emptyfile.description, macroFull, btr3Examples.emptyfile, CRLF);
+test(macroFull, btr3Examples.emptyfile, CRLF);
 
 // console.log(btr3Examples.btr3emptyfile.expected);
-test(btr3Examples.btr3emptyfile.description, macroFull, btr3Examples.btr3emptyfile, CRLF);
+test(macroFull, btr3Examples.btr3emptyfile, CRLF);
 
 
 
