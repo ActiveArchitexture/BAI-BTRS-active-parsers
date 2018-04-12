@@ -83,51 +83,7 @@ test('action for positive numberofRecords', t => {
     t.deepEqual(parseFromNode(input, startNode), expectedNumber(startNode, expected));
 });
 
-// Test actions for FileTrailer
-var expectedFileTrailer1 = `
-    "FileTrailer": {
-        "fileControlTotal": 1215450000,
-        "numberofBanks": 4,
-        "numberofRecords": 136
-    }`;
-test('action for FileTrailer', t => {
-    var input = '99,1215450000,4,136/';
-    var startNode = 'FileTrailer';
-    t.deepEqual(parseFromNodeWithoutWhiteSpace(input, startNode), stripWhiteSpace(expectedFileTrailer1));
-});
-test('action for FileTrailer with +', t => {
-    var input = '99,+1215450000,+4,+136/';
-    var startNode = 'FileTrailer';
-    t.deepEqual(parseFromNodeWithoutWhiteSpace(input, startNode), stripWhiteSpace(expectedFileTrailer1));
-});
-var expectedFileTrailer2 = `
-    "FileTrailer": {
-        "fileControlTotal": -1215450000,
-        "numberofBanks": 4,
-        "numberofRecords": 136
-    }`;
-test('action for FileTrailer with +', t => {
-    var input = '99,-1215450000,+4,+136/';
-    var startNode = 'FileTrailer';
-    t.deepEqual(parseFromNodeWithoutWhiteSpace(input, startNode), stripWhiteSpace(expectedFileTrailer2));
-});
 
-// Test actions for FileHeader
-var expectedFileHeader = `
-    "FileHeader": {
-        "senderID": "122099999",
-        "receiverID": "123456789",
-        "fileCreationDate": "2015-06-23",
-        "fileCreationTime": "0200",
-        "fileID": "1",
-        "versionNumber": "3"
-    }
-`;
-test('action for FileHeader', t => {
-    var input = '01,122099999,123456789,150623,0200,1,,,3/';
-    var startNode = 'FileHeader';
-    t.deepEqual(parseFromNodeWithoutWhiteSpace(input, startNode), stripWhiteSpace(expectedFileHeader));
-});
 
 
 
@@ -185,6 +141,54 @@ function macroFull(t, testset, eol) {
     t.deepEqual(stripWhiteSpace(actual), stripWhiteSpace(expected));
 }
 // macroFull.title = (providedTitle) => `${providedTitle}`;
+
+// strip the rubbish - use the macro Luke
+
+// Test actions for FileTrailer
+var expectedFileTrailer1 = `
+    "FileTrailer": {
+        "fileControlTotal": 1215450000,
+        "numberofBanks": 4,
+        "numberofRecords": 136
+    }`;
+test('action for FileTrailer', t => {
+    var input = '99,1215450000,4,136/';
+    var startNode = 'FileTrailer';
+    t.deepEqual(parseFromNodeWithoutWhiteSpace(input, startNode), stripWhiteSpace(expectedFileTrailer1));
+});
+test('action for FileTrailer with +', t => {
+    var input = '99,+1215450000,+4,+136/';
+    var startNode = 'FileTrailer';
+    t.deepEqual(parseFromNodeWithoutWhiteSpace(input, startNode), stripWhiteSpace(expectedFileTrailer1));
+});
+var expectedFileTrailer2 = `
+    "FileTrailer": {
+        "fileControlTotal": -1215450000,
+        "numberofBanks": 4,
+        "numberofRecords": 136
+    }`;
+test('action for FileTrailer with +', t => {
+    var input = '99,-1215450000,+4,+136/';
+    var startNode = 'FileTrailer';
+    t.deepEqual(parseFromNodeWithoutWhiteSpace(input, startNode), stripWhiteSpace(expectedFileTrailer2));
+});
+
+// Test actions for FileHeader
+var expectedFileHeader = `
+    "FileHeader": {
+        "senderID": "122099999",
+        "receiverID": "123456789",
+        "fileCreationDate": "2015-06-23",
+        "fileCreationTime": "0200",
+        "fileID": "1",
+        "versionNumber": "3"
+    }
+`;
+test('action for FileHeader', t => {
+    var input = '01,122099999,123456789,150623,0200,1,,,3/';
+    var startNode = 'FileHeader';
+    t.deepEqual(parseFromNodeWithoutWhiteSpace(input, startNode), stripWhiteSpace(expectedFileHeader));
+});
 
 
 test(macroPartial, btr3Examples.FileHeader, CRLF);
