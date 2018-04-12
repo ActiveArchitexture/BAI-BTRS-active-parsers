@@ -6,6 +6,7 @@
     ],
     "emptyfile": {
         "description": "ANSI X9.121–2016 (BTR3) 5.1.1 Empty File",
+        "startnode": "BTRSfile",
         "example": [
             "01,123456789,NAMENAME,150716,2100,11,,,3/",
             "99,0,0,2/"

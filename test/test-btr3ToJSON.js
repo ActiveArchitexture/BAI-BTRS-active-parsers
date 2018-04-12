@@ -23,9 +23,6 @@ function stripWhiteSpace(inString) {
 function parseFromNode(inputVal, startNodeVal) {
     return btr3ToJSON(inputVal, startNodeVal);
 }
-function parseFromNodeWithoutWhiteSpace(inputVal, startNodeVal) {
-    return stripWhiteSpace(btr3ToJSON(inputVal, startNodeVal));
-}
 
 function expectedString(startNodeVal, expectedString) {
     return `"${startNodeVal}": "${expectedString}"`;
@@ -186,11 +183,43 @@ test('action for empty BTRSFile', t => {
     // TODO
     // Use a test macro
     // convert example array to string
-    console.log("-----");
-    console.log(btr3Examples.emptyfile.description);
-    console.log(btr3Examples.emptyfile.example);
-    console.log(btr3Examples.emptyfile.expected);
+    // btr3Examples.emptyfile
     t.deepEqual(parseFromNodeWithoutWhiteSpace(input, startNode), stripWhiteSpace(expectedEmptyFile2));
 });
+
+function parseFromNodeWithoutWhiteSpace(inputVal, startNodeVal) {
+    return stripWhiteSpace(btr3ToJSON(inputVal, startNodeVal));
+}
+
+function arrayOfLinesToString(lines, eol){
+    var strung = "";
+    for (var line of lines) {
+        strung += line + eol;
+    }
+    return strung;
+}
+
+const CR = '\r';
+const CRLF = '\r\n';
+
+function macro(t, testset, eol) {
+    // console.log("-----");
+    // console.log(testset.description);
+    // console.log(testset.startnode);
+    // console.log(testset.example);
+    // console.log(testset.expected);
+    
+    var input = arrayOfLinesToString(testset.example, eol);
+    // console.log(input);
+
+    var actual = stripWhiteSpace(btr3ToJSON(input, testset.startnode));
+    var expected = JSON.stringify(testset.expected);
+
+    t.deepEqual(actual, expected);
+}
+
+test('TtestnameT', macro, btr3Examples.emptyfile, CRLF);
+// test('TtestnameTT', macro, btr3Examples.emptyfile, 'CRLF');
+
 
 
