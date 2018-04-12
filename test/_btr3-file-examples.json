@@ -1,9 +1,4 @@
 {
-    "source": [
-        "ANSI X9.121–2016 (BTR3)",
-        "5 File and Record Construction with Delimiters",
-        "5.1 Specialty File Types"
-    ],
     "btr3emptyfile": {
         "description": "ANSI X9.121–2016 (BTR3) 5.1.1 Empty File",
         "startnode": "BTRSfile",
@@ -26,23 +21,6 @@
                     "numberofBanks": 0,
                     "numberofRecords": 2
                 }
-            }
-        }
-    },
-    "FileHeader": {
-        "description": "FileHeader",
-        "startnode": "FileHeader",
-        "example": [
-            "01,122099999,123456789,150623,0200,1,,,3/"
-        ],
-        "expected": {
-            "FileHeader": {
-                "senderID": "122099999",
-                "receiverID": "123456789",
-                "fileCreationDate": "2015-06-23",
-                "fileCreationTime": "0200",
-                "fileID": "1",
-                "versionNumber": "3"
             }
         }
     },

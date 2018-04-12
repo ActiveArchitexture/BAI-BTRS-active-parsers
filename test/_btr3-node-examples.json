@@ -1,0 +1,19 @@
+{
+    "FileHeader": {
+        "description": "FileHeader",
+        "startnode": "FileHeader",
+        "example": [
+            "01,122099999,123456789,150623,0200,1,,,3/"
+        ],
+        "expected": {
+            "FileHeader": {
+                "senderID": "122099999",
+                "receiverID": "123456789",
+                "fileCreationDate": "2015-06-23",
+                "fileCreationTime": "0200",
+                "fileID": "1",
+                "versionNumber": "3"
+            }
+        }
+    }
+}
