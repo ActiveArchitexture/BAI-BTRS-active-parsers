@@ -1,0 +1,17 @@
+{
+    "BTRSfile": {
+        "FileHeader": {
+            "senderID": "123456789",
+            "receiverID": "NAMENAME",
+            "fileCreationDate": "2015-07-16",
+            "fileCreationTime": "2100",
+            "fileID": "11",
+            "versionNumber": "3"
+        },
+        "FileTrailer": {
+            "fileControlTotal": 0,
+            "numberofBanks": 0,
+            "numberofRecords": 2
+        }
+    }
+}

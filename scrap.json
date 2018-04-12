@@ -15,3 +15,24 @@
         }
     }
 }
+
+https://www.mocky.io/v2/5acd38ac32000076007766d4
+
+
+{
+    "BTRSfile": {
+        "FileHeader": {
+            "senderID": "senderID",
+            "receiverID": "Receiver",
+            "fileCreationDate": "2016-06-05",
+            "fileCreationTime": "1200",
+            "fileID": "87",
+            "versionNumber": "3"
+        },
+        "FileTrailer": {
+            "fileControlTotal": 0,
+            "numberofBanks": 0,
+            "numberofRecords": 3
+        }
+    }
+}

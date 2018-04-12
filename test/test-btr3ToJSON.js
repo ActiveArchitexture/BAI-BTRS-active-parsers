@@ -4,6 +4,7 @@ var fs = require('fs');
 var ohm = require('ohm-js');
 
 var btr3ToJSON = require('../src/btr3ToJSON');
+var btr3FileExamples = require('./_btr3-file-examples.js');
 
 import test from 'ava';
 
@@ -181,7 +182,7 @@ var expectedEmptyFile2 = `
 test('action for empty BTRSFile', t => {
     var input = '01,senderID,Receiver,160605,1200,87,,,3/' + '\r\n' + '99,0,0,3/';
     var startNode = 'BTRSfile';
-    //console.log(parseFromNode(input, startNode));
+    console.log(parseFromNode(input, startNode));
     t.deepEqual(parseFromNodeWithoutWhiteSpace(input, startNode), stripWhiteSpace(expectedEmptyFile2));
 });
 
