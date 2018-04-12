@@ -11,6 +11,7 @@ var btr3Examples = JSON.parse(btr3Contents);
 
 // console.log("-----");
 // console.log(btr3Examples.emptyfile.description);
+// console.log(btr3Examples.emptyfile.startnode);
 // console.log(btr3Examples.emptyfile.example);
 // console.log(btr3Examples.emptyfile.expected);
 

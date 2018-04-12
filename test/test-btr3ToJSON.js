@@ -218,8 +218,10 @@ function macro(t, testset, eol) {
     t.deepEqual(actual, expected);
 }
 
-test('TtestnameT', macro, btr3Examples.emptyfile, CRLF);
-// test('TtestnameTT', macro, btr3Examples.emptyfile, 'CRLF');
+macro.title = (providedTitle) => `${providedTitle}`;
+
+test(btr3Examples.emptyfile.description, macro, btr3Examples.emptyfile, CRLF);
+
 
 
 
