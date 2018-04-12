@@ -4,7 +4,7 @@ var fs = require('fs');
 var ohm = require('ohm-js');
 
 var btr3ToJSON = require('../src/btr3ToJSON');
-var btr3Examples = require('./_btr3-file-examples.js');
+var btr3FileExamples = require('./_btr3-file-examples.js');
 
 import test from 'ava';
 
@@ -59,9 +59,13 @@ function macroFile(t, testset, eol) {
     // console.log(input);
 
     var actual = btr3ToJSON(input, testset.startnode);
-    var expected = JSON.stringify(testset.expected);
-
-    t.deepEqual(stripWhiteSpace(actual), stripWhiteSpace(expected));
+    // check that example parses
+    if (typeof actual === 'string') {
+        var expected = JSON.stringify(testset.expected);
+        t.deepEqual(stripWhiteSpace(actual), stripWhiteSpace(expected));
+    } else {
+        t.fail(actual.message)
+    }
 }
 
 // Is this needed? Is setting this.title in the macro equivalent?
@@ -71,9 +75,9 @@ function macroFile(t, testset, eol) {
 /*
     run specific test examples
 */
-test(macroFile, btr3Examples.emptyfile, CRLF);
+test(macroFile, btr3FileExamples.emptyfile, CRLF);
 
-test(macroFile, btr3Examples.btr3emptyfile, CRLF);
+test(macroFile, btr3FileExamples.btr3emptyfile, CRLF);
 
 
 /* TODO test array of examples
