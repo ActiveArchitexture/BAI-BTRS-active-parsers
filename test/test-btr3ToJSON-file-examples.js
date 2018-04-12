@@ -8,6 +8,10 @@ var btr3Examples = require('./_btr3-file-examples.js');
 
 import test from 'ava';
 
+
+const CR = '\r';
+const CRLF = '\r\n';
+
 /*
     $ npm test -- --watch
 */
@@ -16,35 +20,20 @@ import test from 'ava';
     Test Helper functions
 */
 
+/**
+ * 
+ * @param {*} inString 
+ */
 function stripWhiteSpace(inString) {
     return inString.replace(/\s/g, '');
 }
 
-function parseFromNode(inputVal, startNodeVal) {
-    return btr3ToJSON(inputVal, startNodeVal);
-}
-
-function expectedString(startNodeVal, expectedString) {
-    return `"${startNodeVal}": "${expectedString}"`;
-}
-
-function expectedNumber(startNodeVal, expectedString) {
-    return `"${startNodeVal}": ${expectedString}`;
-}
-
-
-
-
-
-
-
-
-
-function parseFromNodeWithoutWhiteSpace(inputVal, startNodeVal) {
-    return stripWhiteSpace(btr3ToJSON(inputVal, startNodeVal));
-}
-
-function arrayOfLinesToString(lines, eol){
+/**
+ * 
+ * @param {*} lines 
+ * @param {*} eol 
+ */
+function arrayOfLinesToString(lines, eol) {
     var strung = "";
     for (var line of lines) {
         strung += line + eol;
@@ -52,20 +41,21 @@ function arrayOfLinesToString(lines, eol){
     return strung;
 }
 
-const CR = '\r';
-const CRLF = '\r\n';
-
-
-
-function macroFull(t, testset, eol) {
+/**
+ * 
+ * @param {*} t 
+ * @param {*} testset 
+ * @param {*} eol 
+ */
+function macroFile(t, testset, eol) {
     // console.log("-----");
     // console.log(testset.description);
     // console.log(testset.startnode);
     // console.log(testset.example);
     // console.log(testset.expected);
     this.title = testset.description;
-    
-    var input = arrayOfLinesToString(testset.example, eol);
+
+    var input = arrayOfLinesToString(testset.examplelines, eol);
     // console.log(input);
 
     var actual = btr3ToJSON(input, testset.startnode);
@@ -73,18 +63,18 @@ function macroFull(t, testset, eol) {
 
     t.deepEqual(stripWhiteSpace(actual), stripWhiteSpace(expected));
 }
+
+// Is this needed? Is setting this.title in the macro equivalent?
 // macroFull.title = (providedTitle) => `${providedTitle}`;
 
-// strip the rubbish - use the macro Luke
+
+/*
+    run specific test examples
+*/
+test(macroFile, btr3Examples.emptyfile, CRLF);
+
+test(macroFile, btr3Examples.btr3emptyfile, CRLF);
 
 
-
-test(macroFull, btr3Examples.emptyfile, CRLF);
-
-// console.log(btr3Examples.btr3emptyfile.expected);
-test(macroFull, btr3Examples.btr3emptyfile, CRLF);
-
-
-
-
-
+/* TODO test array of examples
+*/

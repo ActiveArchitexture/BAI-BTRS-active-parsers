@@ -2,7 +2,7 @@
     "btr3emptyfile": {
         "description": "ANSI X9.121–2016 (BTR3) 5.1.1 Empty File",
         "startnode": "BTRSfile",
-        "example": [
+        "examplelines": [
             "01,123456789,NAMENAME,150716,2100,11,,,3/",
             "99,0,0,2/"
         ],
@@ -27,7 +27,7 @@
     "emptyfile": {
         "description": "Another Empty File",
         "startnode": "BTRSfile",
-        "example": [
+        "examplelines": [
             "01,senderID,Receiver,160605,1200,87,,,3/",
             "99,0,0,3/"
         ],
