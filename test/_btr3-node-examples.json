@@ -14,6 +14,14 @@
             }
         }
     },
+    "fileCreationDate": {
+        "description": "fileCreationDate",
+        "startnode": "fileCreationDate",
+        "example": "201230",
+        "expected": {
+            "fileCreationDate": "2020-12-30"
+        }
+    },
     "FileTrailer": {
         "description": "FileTrailer",
         "startnode": "FileTrailer",
@@ -48,6 +56,62 @@
                 "numberofBanks": 4,
                 "numberofRecords": 136
             }
+        }
+    },
+    "fileControlTotal": {
+        "description": "fileControlTotal",
+        "startnode": "fileControlTotal",
+        "example": "1215450000",
+        "expected": {
+            "fileControlTotal": 1215450000
+        }
+    },
+    "fileControlTotalPositive": {
+        "description": "fileControlTotal",
+        "startnode": "fileControlTotal",
+        "example": "+1215450000",
+        "expected": {
+            "fileControlTotal": 1215450000
+        }
+    },
+    "fileControlTotalNegative": {
+        "description": "fileControlTotal",
+        "startnode": "fileControlTotal",
+        "example": "-1215450000",
+        "expected": {
+            "fileControlTotal": -1215450000
+        }
+    },
+    "numberofBanks": {
+        "description": "numberofBanks",
+        "startnode": "numberofBanks",
+        "example": "4",
+        "expected": {
+            "numberofBanks": 4
+        }
+    },
+    "numberofBanksPositive": {
+        "description": "numberofBanks",
+        "startnode": "numberofBanks",
+        "example": "+4",
+        "expected": {
+            "numberofBanks": 4
+        }
+    },
+    "numberofRecords": {
+        "description": "numberofRecords",
+        "startnode": "numberofRecords",
+        "example": "136",
+        "expected": {
+            "numberofRecords": 136
+        }
+    },
+    "numberofRecordsPositive": {
+        "description": "numberofRecords",
+        "startnode": "numberofRecords",
+        "example": "+136",
+        "expected": {
+            "numberofRecords": 136
         }
     }
 }

@@ -12,81 +12,9 @@ import test from 'ava';
     $ npm test -- --watch
 */
 
-/*
-    Test Helper functions
-*/
-
 function stripWhiteSpace(inString) {
     return inString.replace(/\s/g, '');
 }
-
-function parseFromNode(inputVal, startNodeVal) {
-    return btr3ToJSON(inputVal, startNodeVal);
-}
-
-function expectedString(startNodeVal, expectedString) {
-    return `"${startNodeVal}": "${expectedString}"`;
-}
-
-function expectedNumber(startNodeVal, expectedString) {
-    return `"${startNodeVal}": ${expectedString}`;
-}
-
-
-
-// Test actions for FileTrailer start nodes
-test('action for fileCreationDate', t => {
-    var input = '201230';
-    var startNode = 'fileCreationDate';
-    var expected = '2020-12-30';
-    t.deepEqual(parseFromNode(input, startNode), expectedString(startNode, expected));
-});
-test('action for fileControlTotal', t => {
-    var input = '1215450000';
-    var startNode = 'fileControlTotal';
-    var expected = input;
-    t.deepEqual(parseFromNode(input, startNode), expectedNumber(startNode, expected));
-});
-test('action for negative fileControlTotal', t => {
-    var input = '-1215450000';
-    var startNode = 'fileControlTotal';
-    var expected = input;
-    t.deepEqual(parseFromNode(input, startNode), expectedNumber(startNode, expected));
-});
-test('action for positive fileControlTotal', t => {
-    var input = '+1215450000';
-    var startNode = 'fileControlTotal';
-    var expected = '1215450000';
-    t.deepEqual(parseFromNode(input, startNode), expectedNumber(startNode, expected));
-});
-test('action for numberofBanks', t => {
-    var input = '4';
-    var startNode = 'numberofBanks';
-    var expected = input;
-    t.deepEqual(parseFromNode(input, startNode), expectedNumber(startNode, expected));
-});
-test('action for positive numberofBanks', t => {
-    var input = '+4';
-    var startNode = 'numberofBanks';
-    var expected = '4';
-    t.deepEqual(parseFromNode(input, startNode), expectedNumber(startNode, expected));
-});
-test('action for numberofRecords', t => {
-    var input = '136';
-    var startNode = 'numberofRecords';
-    var expected = input;
-    t.deepEqual(parseFromNode(input, startNode), expectedNumber(startNode, expected));
-});
-test('action for positive numberofRecords', t => {
-    var input = '+136';
-    var startNode = 'numberofRecords';
-    var expected = '136';
-    t.deepEqual(parseFromNode(input, startNode), expectedNumber(startNode, expected));
-});
-
-
-
-
 
 function macroNode(t, testset) {
     // console.log("-----");
@@ -107,13 +35,26 @@ function macroNode(t, testset) {
     } else {
         t.fail(actual.message)
     }
-
 }
 // macroPartial.title = (providedTitle) => `${providedTitle}`;
 
 
+// Test actions for FileHeader start nodes
+test(macroNode, btr3NodeExamples.fileCreationDate);
 
+// Test actions for FileHeader
 test(macroNode, btr3NodeExamples.FileHeader);
+
+// Test actions for FileTrailer start nodes
+test(macroNode, btr3NodeExamples.fileControlTotal);
+test(macroNode, btr3NodeExamples.fileControlTotalPositive);
+test(macroNode, btr3NodeExamples.fileControlTotalNegative);
+test(macroNode, btr3NodeExamples.numberofBanks);
+test(macroNode, btr3NodeExamples.numberofBanksPositive);
+test(macroNode, btr3NodeExamples.numberofRecords);
+test(macroNode, btr3NodeExamples.numberofRecordsPositive);
+
+// Test actions for FileTrailer
 test(macroNode, btr3NodeExamples.FileTrailer);
 test(macroNode, btr3NodeExamples.FileTrailerPositive);
 test(macroNode, btr3NodeExamples.FileTrailerNegative);
