@@ -88,31 +88,15 @@ test('action for positive numberofRecords', t => {
 
 
 
-
-function parseFromNodeWithoutWhiteSpace(inputVal, startNodeVal) {
-    return stripWhiteSpace(btr3ToJSON(inputVal, startNodeVal));
-}
-
-function arrayOfLinesToString(lines, eol) {
-    var strung = "";
-    for (var line of lines) {
-        strung += line + eol;
-    }
-    return strung;
-}
-
-const CR = '\r';
-const CRLF = '\r\n';
-
-function macroPartial(t, testset, eol) {
-    console.log("-----");
-    console.log(testset.description);
-    console.log(testset.startnode);
-    console.log(testset.example);
-    console.log(testset.expected);
+function macroNode(t, testset) {
+    // console.log("-----");
+    // console.log(testset.description);
+    // console.log(testset.startnode);
+    // console.log(testset.example);
+    // console.log(testset.expected);
 
     var exp = testset.expected[testset.startnode];
-    console.log(exp);
+    // console.log(exp);
     this.title = testset.description;
 
     var actual = btr3ToJSON(testset.example, testset.startnode);
@@ -128,37 +112,8 @@ function macroPartial(t, testset, eol) {
 // macroPartial.title = (providedTitle) => `${providedTitle}`;
 
 
-// Test actions for FileTrailer
-var expectedFileTrailer1 = `
-    "FileTrailer": {
-        "fileControlTotal": 1215450000,
-        "numberofBanks": 4,
-        "numberofRecords": 136
-    }`;
-test('action for FileTrailer', t => {
-    var input = '99,1215450000,4,136/';
-    var startNode = 'FileTrailer';
-    t.deepEqual(parseFromNodeWithoutWhiteSpace(input, startNode), stripWhiteSpace(expectedFileTrailer1));
-});
-test('action for FileTrailer with +', t => {
-    var input = '99,+1215450000,+4,+136/';
-    var startNode = 'FileTrailer';
-    t.deepEqual(parseFromNodeWithoutWhiteSpace(input, startNode), stripWhiteSpace(expectedFileTrailer1));
-});
-var expectedFileTrailer2 = `
-    "FileTrailer": {
-        "fileControlTotal": -1215450000,
-        "numberofBanks": 4,
-        "numberofRecords": 136
-    }`;
-test('action for FileTrailer with +', t => {
-    var input = '99,-1215450000,+4,+136/';
-    var startNode = 'FileTrailer';
-    t.deepEqual(parseFromNodeWithoutWhiteSpace(input, startNode), stripWhiteSpace(expectedFileTrailer2));
-});
 
-
-
-
-test(macroPartial, btr3NodeExamples.FileHeader, CRLF);
-test(macroPartial, btr3NodeExamples.FileTrailer, CRLF);
+test(macroNode, btr3NodeExamples.FileHeader);
+test(macroNode, btr3NodeExamples.FileTrailer);
+test(macroNode, btr3NodeExamples.FileTrailerPositive);
+test(macroNode, btr3NodeExamples.FileTrailerNegative);

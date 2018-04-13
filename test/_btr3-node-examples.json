@@ -17,6 +17,30 @@
     "FileTrailer": {
         "description": "FileTrailer",
         "startnode": "FileTrailer",
+        "example": "99,1215450000,4,136/",
+        "expected": {
+            "FileTrailer": {
+                "fileControlTotal": 1215450000,
+                "numberofBanks": 4,
+                "numberofRecords": 136
+            }
+        }
+    },
+    "FileTrailerPositive": {
+        "description": "FileTrailer",
+        "startnode": "FileTrailer",
+        "example": "99,+1215450000,+4,+136/",
+        "expected": {
+            "FileTrailer": {
+                "fileControlTotal": 1215450000,
+                "numberofBanks": 4,
+                "numberofRecords": 136
+            }
+        }
+    },
+    "FileTrailerNegative": {
+        "description": "FileTrailer",
+        "startnode": "FileTrailer",
         "example": "99,-1215450000,4,136/",
         "expected": {
             "FileTrailer": {
