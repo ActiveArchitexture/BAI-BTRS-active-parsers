@@ -1,7 +1,12 @@
-var assert = require('assert');
-var join = require('path').join;
-var fs = require('fs');
-var ohm = require('ohm-js');
+/**
+ * Test the translation of complete examples of the BTR3 grammar to JSON.
+ * The examples are stored in a JSON file.
+ * The examples must represent complete BTR3 files. 
+ * 
+ * Two formats of AVA tests are supported:
+ * 1.   tests for specific examples from the JSON file
+ * 2.   tests for every example in the JSON file
+ */
 
 var btr3ToJSON = require('../src/btr3ToJSON');
 var btr3FileExamples = require('./_btr3-file-examples.js');
@@ -73,12 +78,26 @@ function macroFile(t, testset, eol) {
 
 
 /*
-    run specific test examples
+  run tests for specific examples from the JSON file. 
 */
 test(macroFile, btr3FileExamples.emptyfile, CRLF);
-
+test(macroFile, btr3FileExamples.emptyfile, CR);
 test(macroFile, btr3FileExamples.btr3emptyfile, CRLF);
 
+/*
+ run tests for every example in the JSON file using CRLF as the end of line delimiter. 
+ */
+for (var fileExample in btr3FileExamples) {
+    var entry = btr3FileExamples[fileExample];
+    // console.log(entry);
+    // console.log(entry.example);
+    test(macroFile, entry, CRLF);
+}
 
-/* TODO test array of examples
-*/
+/*
+ run tests for every example in the JSON file using CR as the end of line delimiter. 
+ */
+for (var fileExample in btr3FileExamples) {
+    var entry = btr3FileExamples[fileExample];
+    test(macroFile, entry, CR);
+}
