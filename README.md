@@ -1,10 +1,11 @@
 # BAI-BTRS-active-parsers
 
-Convert [BTRS - Balance Transaction and Reporting Standard](https://x9.org/standards/btrs/) files to other formats.
+BAI-BTRS-active-parsers can be used to convert [BTRS - Balance Transaction and Reporting Standard](https://x9.org/standards/btrs/) files.
 
-Input files in [X9.121 BTRS Version 3 Format](https://x9.org/wp-content/uploads/2017/05/X9.121-2016-BTRS-Version-3.0.pdf) are represented as an [Ohm grammar](TODO).
+BAI-BTRS-active-parsers:
 
-Each output format is implemented as a Semantics of the grammar.
+- Input files are parsed using an [Ohm grammar](TODO) to implement the [X9.121 BTRS Version 3 - Format Guide](https://x9.org/wp-content/uploads/2017/05/X9.121-2016-BTRS-Version-3.0.pdf).
+- Each output format is generated using a [Semantics](TODO) of the Ohm grammar.
 
 The output formats supported are:
 
@@ -13,7 +14,7 @@ The output formats supported are:
 
 ## Ohm
 
-[Ohm](https://github.com/harc/ohm) is a parser generator consisting of a library and a domain-specific language. 
+[Ohm](https://github.com/harc/ohm) is a parser generator consisting of a library and a domain-specific language.
 You can use it to parse custom file formats or quickly build parsers, interpreters, and compilers for programming languages.
 The Ohm language is based on [parsing expression grammars](http://en.wikipedia.org/wiki/Parsing_expression_grammar) (PEGs),
 which are a formal way of describing syntax, similar to regular expressions and context-free grammars.
@@ -35,7 +36,7 @@ TODO
 
 ## Running Tests
 
-[Javascript Testing with AVA | Aten Design Group](https://atendesigngroup.com/blog/javascript-testing-ava)
+Tests are implemented using [AVA the futuristic JavaScript test runner](https://github.com/avajs/ava)
 
 The following scripts are in package.json:
 
@@ -72,3 +73,11 @@ To run the AVA test for file-examples:
 Which is equivalent to (without the verbosity flag):
 
     npm run ava test/test-btr3ToJSON-file-examples.js
+
+## Acknowledgements
+
+Thanks to [Peter Weber from the Aten Design Group](https://atendesigngroup.com/about/peter-weber) for [Javascript Testing with AVA](https://atendesigngroup.com/blog/javascript-testing-ava).
+It is a great article and it helped me with:
+
+- configuring the test scripts in [Running Tests](TODO local link)
+- removing repetitive test boiler plate by iterating over every example in the JSON file.
