@@ -6,7 +6,8 @@ var ohm = require('ohm-js');
 var btr3ToJSON = require('../src/btr3ToJSON');
 var btr3NodeExamples = require('./_btr3-node-examples.js');
 
-import test from 'ava';
+// import test from 'ava';
+var test = require('ava');
 
 /*
     $ npm test -- --watch
@@ -39,6 +40,9 @@ function macroNode(t, testset) {
 // macroPartial.title = (providedTitle) => `${providedTitle}`;
 
 
+/*
+ run tests for specific examples from the JSON file. 
+ */
 // Test actions for FileHeader start nodes
 test(macroNode, btr3NodeExamples.fileCreationDate);
 
@@ -58,3 +62,15 @@ test(macroNode, btr3NodeExamples.numberofRecordsPositive);
 test(macroNode, btr3NodeExamples.FileTrailer);
 test(macroNode, btr3NodeExamples.FileTrailerPositive);
 test(macroNode, btr3NodeExamples.FileTrailerNegative);
+
+/*
+ run a test for each example in the JSON file. 
+ */
+for (var nodeExample in btr3NodeExamples) {
+    // console.log('-----');
+    // console.log(nodeExample);
+    var entry = btr3NodeExamples[nodeExample];
+    // console.log(entry);
+    // console.log(entry.example);
+    test(macroNode, entry);
+}
