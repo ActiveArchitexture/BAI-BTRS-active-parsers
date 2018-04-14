@@ -51,9 +51,13 @@
     "compileEnhancements": true
   },
   "scripts": {
-    "test": "ava",
-    "test:watch": "ava -- --watch",
+    "test": "ava test/**/*.js --verbose",
+    "test:watch": "ava test/**/*.js --verbose --watch",
+    "test:file-examples": "ava test/test-btr3ToJSON-file-examples.js --verbose",
+    "ava": "ava --verbose",
+
     "empty2": "node src/btr3ToJSON.js test/files/BAI2 BTRS Validator samples/valid/BTRS_valid.txt",
     "empty1": "node src/btr3ToJSON.js test/files/emptyfile.txt"
   }
+
 }
