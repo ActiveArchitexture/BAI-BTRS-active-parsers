@@ -1,9 +1,11 @@
 /**
- * Test the translation from example nodes of the BTR3 to JSON.
- * Three formats of AVA tests are supported:
- * 1.   tests for specific examples NOT from the JSON file
- * 2.   tests for specific examples from the JSON file
- * 3.   tests for every example in the JSON file
+ * Test the translation from example nodes of the BTR3 grammar to JSON.
+ * The example nodes are stored in a JSON file.
+ * The examples can be any subnode of BTR3 but NOT an example of a complete BTR3 file. 
+ * 
+ * Two formats of AVA tests are supported:
+ * 1.   tests for specific examples from the JSON file
+ * 2.   tests for every example in the JSON file
  */
 var btr3ToJSON = require('../src/btr3ToJSON');
 var btr3NodeExamples = require('./_btr3-node-examples.js');
@@ -14,31 +16,6 @@ var test = require('ava');
 /*
     $ npm test -- --watch
 */
-
-function macroNodeX(t, startnode, input, expectedOutput, testTitle) {
-     this.title = testTitle;
-    var expected = `"${startnode}": ${expectedOutput}`;
-
-    var actual = btr3ToJSON(input, startnode);
-    // check that example parses
-    if (typeof actual === 'string') {
-        t.deepEqual(actual, expected);
-    } else {
-        t.fail(actual.message)
-    }
-}
-
-/*
- run tests for specific examples NOT from the JSON file. 
- */
-// grammar nodes that return strings
-test(macroNodeX, 'senderID', '122099999', '"122099999"', 'senderID');
-test(macroNodeX, 'fileCreationDate', '201230', '"2020-12-30"', 'fileCreationDate');
-test(macroNodeX, 'fileCreationTime', '0200', '"0200"', 'fileCreationTime');
-
-// grammar nodes that return numbers
-test(macroNodeX, 'numberofRecords', '136', '136', 'numberofRecords');
-test(macroNodeX, 'numberofRecords', '+136', '136', 'numberofRecords Positive');
 
 
 function stripWhiteSpace(inString) {
