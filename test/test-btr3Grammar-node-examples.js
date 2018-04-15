@@ -1,14 +1,23 @@
-
+/**
+ * Tests the BTR3 grammar on example nodes both
+ *   inline and
+ *   stored in a JSON file.
+ * 
+ * Three formats of AVA tests are supported:
+ * 1.   inline tests
+ * 2.   tests for specific examples from the JSON file
+ * 3.   tests for every example in the JSON file
+ */
 
 var btr3Grammar = require('../src/btr3Grammar');
-
-
-/*
-    $ npm test -- --watch
-*/
+var btr3NodeExamples = require('./_btr3-node-examples.js');
 
 import test from 'ava';
 
+/*
+    inline tests for success and failure
+    Many of these are redundant - replaced by tests from examples store in JSON file.
+*/
 test('grammar for valid fileCreationDate', t => {
     t.true(btr3Grammar.match('201230', 'fileCreationDate').succeeded());
 });
@@ -81,3 +90,60 @@ test('grammar for valid BTRSfile succeeds for ANSI X9.121–2016 (BTR3) 5.1.1 Em
     t.true(btr3Grammar.match(emptyCRfile, 'BTRSfile').succeeded());
 });
 
+
+function btr3Parse(source, startNode) {
+    return btr3Grammar.match(source, startNode);
+}
+
+function macroNode(t, nodeExample, testset) {
+    // console.log("-----");
+    // console.log(testset.description);
+    // console.log(testset.startnode);
+    // console.log(testset.example);
+
+    this.title = `from node-example "${nodeExample}": ${testset.description}`;
+
+    var matchResult = btr3Parse(testset.example, testset.startnode);
+    if (matchResult.succeeded()) {
+        t.pass();
+    }
+    else {
+        t.fail(matchResult.message);
+    }
+}
+
+
+/*
+ run tests for specific examples from the JSON file. 
+ */
+// // Test actions for FileHeader start nodes
+// test(macroNode, btr3NodeExamples.fileCreationDate);
+
+// // Test actions for FileHeader
+// test(macroNode, btr3NodeExamples.FileHeader);
+
+// // Test actions for FileTrailer start nodes
+// test(macroNode, btr3NodeExamples.fileControlTotal);
+// test(macroNode, btr3NodeExamples.fileControlTotalPositive);
+// test(macroNode, btr3NodeExamples.fileControlTotalNegative);
+// test(macroNode, btr3NodeExamples.numberofBanks);
+// test(macroNode, btr3NodeExamples.numberofBanksPositive);
+// test(macroNode, btr3NodeExamples.numberofRecords);
+// test(macroNode, btr3NodeExamples.numberofRecordsPositive);
+
+// // Test actions for FileTrailer
+// test(macroNode, btr3NodeExamples.FileTrailer);
+// test(macroNode, btr3NodeExamples.FileTrailerPositive);
+// test(macroNode, btr3NodeExamples.FileTrailerNegative);
+
+/*
+ run tests for every example in the JSON file. 
+ */
+for (var nodeExample in btr3NodeExamples) {
+    // console.log('-----');
+    // console.log(nodeExample);
+    var entry = btr3NodeExamples[nodeExample];
+    // console.log(entry);
+    // console.log(entry.example);
+    test(macroNode, nodeExample, entry);
+}

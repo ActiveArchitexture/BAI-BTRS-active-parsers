@@ -113,5 +113,49 @@
         "expected": {
             "numberofRecords": 136
         }
+    },
+    "BankHeader Only Mandatory Fields": {
+        "description": "(BTR3) 3.2.1 Sample 02 Record - Example Using Only Mandatory Fields",
+        "startnode": "BankHeader",
+        "example": "02,,122099999,1,150622,,,2/",
+        "expected": {
+            "BankHeader": {
+                "ultimateReceiverID": "",
+                "bankID": "122099999",
+                "groupStatus": "1",
+                "asofDate": "150622",
+                "asofTime": "",
+                "currencyCode": "",
+                "asofDateModifier": "2"
+            }
+        }
+    },
+    "BankHeader All Fields": {
+        "description": "(BTR3) 3.2.1 Sample 02 Record - Example Using All Fields",
+        "startnode": "BankHeader",
+        "example": "02,SWXXXXXX,122099999,1,150622,2359,,2/",
+        "expected": {
+            "BankHeader": {
+                "ultimateReceiverID": "SWXXXXXX",
+                "bankID": "122099999",
+                "groupStatus": "1",
+                "asofDate": "150622",
+                "asofTime": "2359",
+                "currencyCode": "",
+                "asofDateModifier": "2"
+            }
+        }
+    },
+    "BankTrailer": {
+        "description": "(BTR3) 3.6.1 Sample 98 Record",
+        "startnode": "BankTrailer",
+        "example": "98,118650000,2,126/",
+        "expected": {
+            "BankTrailer": {
+                "groupControlTotal": 118650000,
+                "numberofAccounts": 2,
+                "numberofRecords": 126
+            }
+        }
     }
 }

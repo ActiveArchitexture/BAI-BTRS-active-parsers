@@ -44,6 +44,27 @@ var semantics = btr3Grammar.createSemantics().addOperation('json', {
         return keyvalue;
     },
 
+    // BankHeader = "02" delim ultimateReceiverID delim bankID delim groupStatus delim asofDate delim asofTime delim currencyCode delim asofDateModifier eor
+    BankHeader: function (_, _, urid, _, bid, _, gs, _, asod, _, asot, _, cc, _, asodm, _) {
+        return `"${this.ctorName}": {${urid.json()}, ${bid.json()}, ${gs.json()}, ${asod.json()}, ${asot.json()}, ${cc.json()}, ${asodm.json()}}`;
+    },
+
+    // BankTrailer = "98" delim groupControlTotal delim numberofAccounts delim numberofRecords eor
+    BankTrailer: function (_, _, gct, _, noa, _, nor, _) {
+        return `"${this.ctorName}": {${gct.json()}, ${noa.json()}, ${nor.json()}}`;
+    },
+
+    groupControlTotal: function (d) {
+        let keyvalue = `"${this.ctorName}": ${d.json()}`;
+        return keyvalue;
+    },
+
+    numberofAccounts: function (d) {
+        let keyvalue = `"${this.ctorName}": ${d.json()}`;
+        return keyvalue;
+    },
+
+    // 
     date: function (yy, mo, dd) {
         // Default Century to 20. So much for learning from Y2K.
         let dateString = `20${yy.sourceString}-${mo.sourceString}-${dd.sourceString}`;
@@ -68,6 +89,14 @@ var semantics = btr3Grammar.createSemantics().addOperation('json', {
     },
 
     _nonterminal: function (n) {
+        // console.log('-----');
+        // console.log(this.ctorName);
+        // console.log(n);
+        // returns a string
+        return `"${this.ctorName}": "${this.sourceString}"`;
+    },
+
+    _terminal: function () {
         //console.log(this.ctorName);
         //console.log(n);
         // returns a string
