@@ -90,6 +90,8 @@ test('grammar for valid BTRSfile succeeds for ANSI X9.121–2016 (BTR3) 5.1.1 Em
     t.true(btr3Grammar.match(emptyCRfile, 'BTRSfile').succeeded());
 });
 
+test.todo("customerAccountNumber = alnum *");
+
 
 function btr3Parse(source, startNode) {
     return btr3Grammar.match(source, startNode);

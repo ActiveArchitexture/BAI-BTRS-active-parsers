@@ -21,13 +21,13 @@ BTR3 {
 
     Bank = BankHeader
 
-    BankHeader = "02" delim ultimateReceiverID delim bankID delim groupStatus delim asofDate delim asofTime delim currencyCode delim asofDateModifier eor
+    BankHeader = "02" delim ultimateReceiverID delim bankID delim groupStatus delim asofDate delim asofTime delim currencyCodeNull delim asofDateModifier eor
     ultimateReceiverID = alnum *
     bankID = alnum +
     groupStatus = "1"
     asofDate = date
     asofTime = time?
-    currencyCode = ""
+    currencyCodeNull = ""
     asofDateModifier = finalPreviousDay | interimSameDay | finalSameDay
     
     finalPreviousDay = "2"
@@ -38,6 +38,25 @@ BTR3 {
     groupControlTotal = optSignedN
     numberofAccounts = optPosN
 
+    AccountHeader = "03" delim customerAccountNumber delim currencyCode delim (statusCodeFormat | summaryCodeFormat) eor
+    customerAccountNumber = alnum *
+    currencyCode = letter +
+
+    statusCodeFormat = statusTypeCode delim amount delim itemCountNull delim fundsTypeNull
+    statusTypeCode = "010" | "015"
+    amount = optSign digit+
+    itemCountNull = ""
+    fundsTypeNull = ""
+
+
+    summaryCodeFormat = summaryTypeCode delim amountOpt delim itemCountOpt delim fundsTypeOpt
+    summaryTypeCode = ("100" | "190")?
+    amountOpt = optSign digit*
+    itemCountOpt = digit*
+    fundsTypeOpt = alnum?
+
+
+    optSign = ("-" | "+")?
     
     bai1 = "1"
     bai2 = "2"

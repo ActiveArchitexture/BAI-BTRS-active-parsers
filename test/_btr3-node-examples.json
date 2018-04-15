@@ -157,5 +157,20 @@
                 "numberofRecords": 126
             }
         }
+    },
+    "AccountHeader Only Mandatory Fields": {
+        "description": "(BTR3) 3.3.1 Sample 03 Record - Example Using Only Mandatory Fields",
+        "startnode": "AccountHeader",
+        "example": "03,0987654321,GBP,,,,/",
+        "expected": {
+            "AccountHeader": {
+                "customerAccountNumber": "0987654321",
+                "currencyCode": "GBP",
+                "typeCode": "",
+                "amount": "",
+                "itemCountNull": "",
+                "fundsType": ""
+            }
+        }
     }
 }
