@@ -1,10 +1,7 @@
-var assert = require('assert');
-var join = require('path').join;
-var fs = require('fs');
-var ohm = require('ohm-js');
 
-var btr3Contents = fs.readFileSync(join('src', 'BTR3.ohm'));
-var btr3Grammar = ohm.grammar(btr3Contents);
+
+var btr3Grammar = require('../src/btr3Grammar');
+
 
 /*
     $ npm test -- --watch

@@ -6,13 +6,7 @@
     
 
 */
-var assert = require('assert');
-var join = require('path').join;
-var fs = require('fs');
-var ohm = require('ohm-js');
-
-var btr3Contents = fs.readFileSync(join(__dirname, 'BTR3.ohm'));
-var btr3Grammar = ohm.grammar(btr3Contents);
+var btr3Grammar = require('../src/btr3Grammar');
 
 
 var semantics = btr3Grammar.createSemantics().addOperation('json', {
@@ -82,18 +76,21 @@ var semantics = btr3Grammar.createSemantics().addOperation('json', {
 
 });
 
-// Exports
-// -------
+
+function btr3Parser(source, startNode){
+    return btr3Grammar.match(source, startNode);
+}
+
+
 var btr3ToJSON = module.exports = function (source, startNode) {
-    var matchResult = btr3Grammar.match(source, startNode);
+    var matchResult = btr3Parser(source, startNode);
     if (matchResult.failed()) {
         return matchResult;
     }
     return semantics(matchResult).json();
 };
 
-// Main
-// ----
+
 if (require.main === module) {
     var filename = process.argv[2];
     var source = fs.readFileSync(filename).toString();
