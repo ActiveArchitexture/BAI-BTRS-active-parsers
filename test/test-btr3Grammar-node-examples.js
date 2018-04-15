@@ -90,7 +90,8 @@ test('grammar for valid BTRSfile succeeds for ANSI X9.121–2016 (BTR3) 5.1.1 Em
     t.true(btr3Grammar.match(emptyCRfile, 'BTRSfile').succeeded());
 });
 
-test.todo("customerAccountNumber = alnum *");
+test.todo("3.3 ACCOUNT HEADER – Record 03 customerAccountNumber Must not contain comma , or slash / delimiters.");
+test.todo("3.3.1 Sample 03 Record Example Splitting a Summary Code (400) Across 2 Lines");
 
 
 function btr3Parse(source, startNode) {

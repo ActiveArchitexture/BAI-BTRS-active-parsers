@@ -38,19 +38,27 @@ BTR3 {
     groupControlTotal = optSignedN
     numberofAccounts = optPosN
 
-    AccountHeader = "03" delim customerAccountNumber delim currencyCode delim (statusCodeFormat | summaryCodeFormat) eor
+    AccountHeader = "03" delim customerAccountNumber delim currencyCode delim statusOrSummaryCodeFormatOptRepeat eor
+    statusOrSummaryCodeFormatOptRepeat = statusOrSummaryCodeFormat (delim statusOrSummaryCodeFormat)*
+    statusOrSummaryCodeFormat = statusCodeFormat | summaryCodeFormat
     customerAccountNumber = alnum *
     currencyCode = letter +
 
     statusCodeFormat = statusTypeCode delim amount delim itemCountNull delim fundsTypeNull
-    statusTypeCode = "010" | "015"
+    statusTypeCode = "010"|"015"|"020"|"025"|"030"|"035"|"040"|"045"|"050"|"055"|"057"|"060"|"070"|"072"|"073"|"074"|
+"076"|"077"|"078"|"079"|"080"|"081"|"701"|"703"|"705"|"707"|"709"
+
     amount = optSign digit+
     itemCountNull = ""
     fundsTypeNull = ""
 
 
     summaryCodeFormat = summaryTypeCode delim amountOpt delim itemCountOpt delim fundsTypeOpt
-    summaryTypeCode = ("100" | "190")?
+    summaryTypeCode = ("100"|"110"|"138"|"140"|"159"|"167"|"170"|"190"|"199"|"207"|"210"|"215"|"230"|"250"|"251"|"256"|
+"270"|"280"|"294"|"307"|"355"|"356"|"371"|"390"|"400"|"416"|"438"|"450"|"459"|"467"|"470"|"490"|
+"499"|"507"|"510"|"515"|"530"|"550"|"551"|"556"|"570"|"580"|"583"|"584"|"585"|"587"|"594"|"602"|
+"628"|"630"|"632"|"655"|"671"|"690"|"720"|"760"|"920"|"921")?
+
     amountOpt = optSign digit*
     itemCountOpt = digit*
     fundsTypeOpt = alnum?

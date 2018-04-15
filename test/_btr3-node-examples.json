@@ -158,7 +158,7 @@
             }
         }
     },
-    "AccountHeader Only Mandatory Fields": {
+    "AccountHeader Using Only Mandatory Fields": {
         "description": "(BTR3) 3.3.1 Sample 03 Record - Example Using Only Mandatory Fields",
         "startnode": "AccountHeader",
         "example": "03,0987654321,GBP,,,,/",
@@ -166,6 +166,36 @@
             "AccountHeader": {
                 "customerAccountNumber": "0987654321",
                 "currencyCode": "GBP",
+                "typeCode": "",
+                "amount": "",
+                "itemCountNull": "",
+                "fundsType": ""
+            }
+        }
+    },
+    "AccountHeader Using 1 Status and 1 Summary Field": {
+        "description": "(BTR3) 3.3.1 Sample 03 Record - Example Using 1 Status and 1 Summary Field",
+        "startnode": "AccountHeader",
+        "example": "03,987654321,CAD,010,500000,,,190,70000000,4,0/",
+        "expected": {
+            "AccountHeader": {
+                "customerAccountNumber": "987654321",
+                "currencyCode": "CAD",
+                "typeCode": "",
+                "amount": "",
+                "itemCountNull": "",
+                "fundsType": ""
+            }
+        }
+    },
+    "AccountHeader Using 1 Status and 1 Summary Field": {
+        "description": "(BTR3) 3.3.1 Sample 03 Record - Example Using many Status and many Summary Fields",
+        "startnode": "AccountHeader",
+        "example": "03,1234567890,USD,010,0,,,015,0,,,040,0,,,045,0,,,050,0,,,055,1000000,,,072,0,,,073,0,,,074,0,,,100,99666666,3,,190,99666666,3,,400,99666666,1,,570,99666666,1,/",
+        "expected": {
+            "AccountHeader": {
+                "customerAccountNumber": "987654321",
+                "currencyCode": "CAD",
                 "typeCode": "",
                 "amount": "",
                 "itemCountNull": "",
