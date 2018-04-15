@@ -141,7 +141,7 @@
                 "groupStatus": "1",
                 "asofDate": "150622",
                 "asofTime": "2359",
-                "currencyCode": "",
+                "currencyCodeNull": "",
                 "asofDateModifier": "2"
             }
         }
