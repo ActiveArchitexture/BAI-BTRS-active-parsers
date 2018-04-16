@@ -93,6 +93,7 @@ test('grammar for valid BTRSfile succeeds for ANSI X9.121–2016 (BTR3) 5.1.1 Em
 test.todo("3.3 ACCOUNT HEADER – Record 03 customerAccountNumber Must not contain comma , or slash / delimiters.");
 test.todo("3.3.1 Sample 03 Record Example Splitting a Summary Code (400) Across 2 Lines");
 test.todo("Extract statusTypeCode and summaryTypeCode and descriptions to separate grammars");
+test.todo("Decide if Amounts and Control Totals will be treated as strings (to avoid floating point errors) or numbers")
 
 
 function btr3Parse(source, startNode) {

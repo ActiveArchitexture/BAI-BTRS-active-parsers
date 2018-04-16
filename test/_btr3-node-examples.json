@@ -366,5 +366,16 @@
                 ]
             }
         }
+    },
+    "AccountTrailer": {
+        "description": "(BTR3) 3.5.1 Sample 49 Record",
+        "startnode": "AccountTrailer",
+        "example": "49,18650000,23/",
+        "expected": {
+            "AccountTrailer": {
+                "accountControlTotal": "18650000",
+                "numberofRecords": 23
+            }
+        }
     }
 }

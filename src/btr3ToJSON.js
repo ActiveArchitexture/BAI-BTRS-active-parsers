@@ -141,7 +141,10 @@ var semantics = btr3Grammar.createSemantics().addOperation('json', {
         return `"Amount": "${value}"`;
     },
 
-
+    // AccountTrailer = "49" delim accountControlTotal delim numberofRecords eor
+    AccountTrailer: function (_, _, act, _, nor, _) {
+        return `"${this.ctorName}": {${act.json()}, ${nor.json()}}`;
+    },
 
     // 
     date: function (yy, mo, dd) {

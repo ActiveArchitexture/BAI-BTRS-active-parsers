@@ -63,6 +63,8 @@ BTR3 {
     itemCount = digit*
     fundsType = alnum?
 
+    AccountTrailer = "49" delim accountControlTotal delim numberofRecords eor
+    accountControlTotal = optSignedN
 
     optSign = ("-" | "+")?
     
