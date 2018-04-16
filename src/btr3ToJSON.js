@@ -64,6 +64,85 @@ var semantics = btr3Grammar.createSemantics().addOperation('json', {
         return keyvalue;
     },
 
+    // AccountHeader = "03" delim customerAccountNumber delim currencyCode delim statusOrSummaryCodeFormatOptRepeat eor
+    AccountHeader: function (_, _, can, _, cc, _, sos, _) {
+        return `"${this.ctorName}": {${can.json()}, ${cc.json()}, ${sos.json()}}`;
+    },
+
+    // statusOrSummaryCodeFormatOptRepeat = statusOrSummaryCodeFormat (delim statusOrSummaryCodeFormat)*
+    statusOrSummaryCodeFormatOptRepeat: function (sos, _, soso) {
+        // there is a comma between only if the soso can be iterated.
+        console.log(soso.isIteration());
+        console.log(soso.numChildren);
+        if (soso.numChildren > 0) {
+            return `"AccountStatusesSummaries": [${sos.json()}, ${soso.json()}]`;
+        }
+        else {
+            return `"AccountStatusesSummaries": [${sos.json()}]`;
+        }
+    },
+
+    // statusOrSummaryCodeFormat = statusCodeFormat | summaryCodeFormat
+    statusOrSummaryCodeFormat: function (scf) {
+        return `{${scf.json()}}`;
+    },
+
+    // statusCodeFormat = statusTypeCode delim amount delim itemCountNull delim fundsTypeNull
+    statusCodeFormat: function (stc, _, amount, _, ic, _, ft) {
+        return `"AccountStatus": {${stc.json()}, ${amount.json()}, ${ic.json()}, ${ft.json()}}`;
+    },
+
+    // summaryCodeFormat = summaryTypeCode delim amount? delim itemCount delim fundsType
+    summaryCodeFormat: function (stc, _, amount, _, ic, _, ft) {
+        return `"AccountSummary": {${stc.json()}, ${amount.json()}, ${ic.json()}, ${ft.json()}}`;
+    },
+
+    statusTypeCode: function (tc) {
+        return `"TypeCode": "${tc.sourceString}"`;
+    },
+
+    summaryTypeCode: function (tc) {
+        return `"TypeCode": "${tc.sourceString}"`;
+    },
+
+    itemCountNull: function (_) {
+        return `"itemCount": ""`;
+    },
+
+    fundsTypeNull: function (_) {
+        return `"fundsType": ""`;
+    },
+
+    // amount = optSign digit+
+    amount: function (s, n) {
+        // "+"? digit+
+        // best practice is to omit the optional + sign
+        let value = '';
+        if (s.sourceString == '-') {
+            value = `-${n.sourceString}`;
+        } else {
+            value = n.sourceString;
+        }
+        // TODO format amounts with number of decimal places for currency
+        return `"Amount": "${value}"`;
+    },
+
+    // TODO refactor common code
+    amountOpt: function (s, n) {
+        // "+"? digit+
+        // best practice is to omit the optional + sign
+        let value = '';
+        if (s.sourceString == '-') {
+            value = `-${n.sourceString}`;
+        } else {
+            value = n.sourceString;
+        }
+        // TODO format amounts with number of decimal places for currency
+        return `"Amount": "${value}"`;
+    },
+
+
+
     // 
     date: function (yy, mo, dd) {
         // Default Century to 20. So much for learning from Y2K.
@@ -88,6 +167,8 @@ var semantics = btr3Grammar.createSemantics().addOperation('json', {
         return n.sourceString;
     },
 
+
+
     _nonterminal: function (n) {
         // console.log('-----');
         // console.log(this.ctorName);
@@ -106,7 +187,7 @@ var semantics = btr3Grammar.createSemantics().addOperation('json', {
 });
 
 
-function btr3Parser(source, startNode){
+function btr3Parser(source, startNode) {
     return btr3Grammar.match(source, startNode);
 }
 

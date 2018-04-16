@@ -53,15 +53,15 @@ BTR3 {
     fundsTypeNull = ""
 
 
-    summaryCodeFormat = summaryTypeCode delim amountOpt delim itemCountOpt delim fundsTypeOpt
+    summaryCodeFormat = summaryTypeCode delim amountOpt delim itemCount delim fundsType
     summaryTypeCode = ("100"|"110"|"138"|"140"|"159"|"167"|"170"|"190"|"199"|"207"|"210"|"215"|"230"|"250"|"251"|"256"|
 "270"|"280"|"294"|"307"|"355"|"356"|"371"|"390"|"400"|"416"|"438"|"450"|"459"|"467"|"470"|"490"|
 "499"|"507"|"510"|"515"|"530"|"550"|"551"|"556"|"570"|"580"|"583"|"584"|"585"|"587"|"594"|"602"|
 "628"|"630"|"632"|"655"|"671"|"690"|"720"|"760"|"920"|"921")?
 
     amountOpt = optSign digit*
-    itemCountOpt = digit*
-    fundsTypeOpt = alnum?
+    itemCount = digit*
+    fundsType = alnum?
 
 
     optSign = ("-" | "+")?
