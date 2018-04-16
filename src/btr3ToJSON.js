@@ -72,8 +72,8 @@ var semantics = btr3Grammar.createSemantics().addOperation('json', {
     // statusOrSummaryCodeFormatOptRepeat = statusOrSummaryCodeFormat (delim statusOrSummaryCodeFormat)*
     statusOrSummaryCodeFormatOptRepeat: function (sos, _, soso) {
         // there is a comma between only if the soso can be iterated.
-        console.log(soso.isIteration());
-        console.log(soso.numChildren);
+        // console.log(soso.isIteration());
+        // console.log(soso.numChildren);
         if (soso.numChildren > 0) {
             return `"AccountStatusesSummaries": [${sos.json()}, ${soso.json()}]`;
         }

@@ -158,6 +158,27 @@
             }
         }
     },
+    "AccountHeader Using Only Mandatory Fields": {
+        "description": "(BTR3) 3.3.1 Sample 03 Record - Example Using Only Mandatory Fields",
+        "startnode": "AccountHeader",
+        "example": "03,0987654321,GBP,,,,/",
+        "expected": {
+            "AccountHeader": {
+                "customerAccountNumber": "0987654321",
+                "currencyCode": "GBP",
+                "AccountStatusesSummaries": [
+                    {
+                        "AccountSummary": {
+                            "TypeCode": "",
+                            "Amount": "",
+                            "itemCount": "",
+                            "fundsType": ""
+                        }
+                    }
+                ]
+            }
+        }
+    },
     "AccountHeader Using 1 Status Field": {
         "description": "(BTR3) 3.3.1 Sample 03 Record - Example variation Using 1 Status Field",
         "startnode": "AccountHeader",
@@ -339,27 +360,6 @@
                             "TypeCode": "570",
                             "Amount": "99666666",
                             "itemCount": "1",
-                            "fundsType": ""
-                        }
-                    }
-                ]
-            }
-        }
-    },
-    "AccountHeader Using Only Mandatory Fields": {
-        "description": "(BTR3) 3.3.1 Sample 03 Record - Example Using Only Mandatory Fields",
-        "startnode": "AccountHeader",
-        "example": "03,0987654321,GBP,,,,/",
-        "expected": {
-            "AccountHeader": {
-                "customerAccountNumber": "0987654321",
-                "currencyCode": "GBP",
-                "AccountStatusesSummaries": [
-                    {
-                        "AccountSummary": {
-                            "TypeCode": "",
-                            "Amount": "",
-                            "itemCount": "",
                             "fundsType": ""
                         }
                     }
