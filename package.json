@@ -55,7 +55,10 @@
         "test:watch": "ava test/**/*.js --verbose --watch",
         "test:file-examples": "ava test/test-btr3ToJSON-file-examples.js --verbose",
         "ava": "ava --verbose",
-        "empty2": "node src/btr3ToJSON.js test/files/BAI2 BTRS Validator samples/valid/BTRS_valid.txt",
-        "empty1": "node src/btr3ToJSON.js test/files/emptyfile.txt"
+        "BTRS-valid": "node src/btr3ToJSON.js 'test/files/BAI2 BTRS Validator samples/valid/BTRS_valid.txt'",
+        "BAI2-valid": "node src/btr3ToJSON.js 'test/files/BAI2 BTRS Validator samples/valid/BAI2_valid.txt'",
+        "BAI2-valid-mod": "node src/btr3ToJSON.js 'test/files/BAI2_valid_modified.txt'",
+        "empty1": "node src/btr3ToJSON.js test/files/emptyfile.txt",
+        "CBA01": "node src/btr3ToJSON.js test/confidential/180328.c01"
     }
 }
