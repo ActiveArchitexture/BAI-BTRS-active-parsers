@@ -34,7 +34,7 @@ function stripWhiteSpace(inString) {
 }
 
 /**
- * 
+ * TODO refactor into helpers
  * @param {*} lines 
  * @param {*} eol 
  */
@@ -89,8 +89,6 @@ test(macroFile, btr3FileExamples.btr3EmptyFile, CRLF);
  */
 for (var fileExample in btr3FileExamples) {
     var entry = btr3FileExamples[fileExample];
-    // console.log(entry);
-    // console.log(entry.example);
     test(macroFile, entry, CRLF);
 }
 

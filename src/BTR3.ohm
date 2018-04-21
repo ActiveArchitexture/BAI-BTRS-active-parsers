@@ -1,5 +1,10 @@
 BTR3 {
-	BTRSfile = FileHeader FileTrailer
+	BTRSfile = FileHeader Bank* FileTrailer
+
+    Bank = BankHeader Account* BankTrailer
+
+    Account = AccountHeader AccountTrailer
+
     
     FileHeader = "01" delim senderID delim receiverID delim fileCreationDate delim fileCreationTime delim fileID delim physicalRecordLength delim blockSize delim versionNumber eor
     senderID = alnum +
@@ -19,7 +24,6 @@ BTR3 {
     optSignedN = ("-" | "+")? digit+
     optPosN = "+"? digit+
 
-    Bank = BankHeader
 
     BankHeader = "02" delim ultimateReceiverID delim bankID delim groupStatus delim asofDate delim asofTime delim currencyCodeNull delim asofDateModifier eor
     ultimateReceiverID = alnum *

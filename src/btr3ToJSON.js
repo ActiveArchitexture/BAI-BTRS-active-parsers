@@ -12,9 +12,10 @@ var btr3Grammar = require('../src/btr3Grammar');
 
 var semantics = btr3Grammar.createSemantics().addOperation('json', {
 
-    BTRSfile: function (fh, ft) {
+    // BTRSfile = FileHeader Bank* FileTrailer
+    BTRSfile: function (fh, bank, ft) {
         // Only the top level rule returns {a complete JSON object}
-        return `{"${this.ctorName}": {${fh.json()}, ${ft.json()}}}`;
+        return `{"${this.ctorName}": {${fh.json()} ${bank.json()}, ${ft.json()}}}`;
     },
 
     FileHeader: function (_, _, sid, _, rid, _, fcd, _, fct, _, fid, _, _, _, _, _, vn, _) {
@@ -45,6 +46,11 @@ var semantics = btr3Grammar.createSemantics().addOperation('json', {
         return keyvalue;
     },
 
+    // Bank = BankHeader Account* BankTrailer
+    Bank: function (bh, account, bt) {
+        return `,"${this.ctorName}": {${bh.json()}, "Accounts": [${account.json()}], ${bt.json()}}`;
+    },
+
     // BankHeader = "02" delim ultimateReceiverID delim bankID delim groupStatus delim asofDate delim asofTime delim currencyCode delim asofDateModifier eor
     BankHeader: function (_, _, urid, _, bid, _, gs, _, asod, _, asot, _, cc, _, asodm, _) {
         return `"${this.ctorName}": {${urid.json()}, ${bid.json()}, ${gs.json()}, ${asod.json()}, ${asot.json()}, ${cc.json()}, ${asodm.json()}}`;
@@ -63,6 +69,11 @@ var semantics = btr3Grammar.createSemantics().addOperation('json', {
     numberofAccounts: function (d) {
         let keyvalue = `"${this.ctorName}": ${d.json()}`;
         return keyvalue;
+    },
+
+    // Account = AccountHeader AccountTrailer
+    Account: function (ah, at) {
+        return `{"${this.ctorName}": {${ah.json()}, ${at.json()}}}`;
     },
 
     // AccountHeader = "03" delim customerAccountNumber delim currencyCode delim statusOrSummaryCodeFormatOptRepeat eor
