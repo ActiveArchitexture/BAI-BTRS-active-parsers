@@ -34,7 +34,7 @@ The Ohm library provides a JavaScript interface (known as Ohm/JS) for creating p
 
 TODO
 
-## Running Tests
+## Running Scripts
 
 Tests are implemented using [AVA the futuristic JavaScript test runner](https://github.com/avajs/ava)
 
@@ -45,9 +45,14 @@ The following scripts are in package.json:
         "test:watch": "ava test/**/*.js --verbose --watch",
         "test:file-examples": "ava test/test-btr3ToJSON-file-examples.js --verbose",
         "ava": "ava --verbose",
-        "empty2": "node src/btr3ToJSON.js test/files/BAI2 BTRS Validator samples/valid/BTRS_valid.txt",
-        "empty1": "node src/btr3ToJSON.js test/files/emptyfile.txt"
+        "BTRS-valid": "node src/btr3ToJSON.js 'test/files/BAI2 BTRS Validator samples/valid/BTRS_valid.txt'",
+        "BAI2-valid": "node src/btr3ToJSON.js 'test/files/BAI2 BTRS Validator samples/valid/BAI2_valid.txt'",
+        "BAI2-valid-mod": "node src/btr3ToJSON.js 'test/files/BAI2_valid_modified.txt'",
+        "empty1": "node src/btr3ToJSON.js test/files/emptyfile.txt",
+        "CBA01": "node src/btr3ToJSON.js test/confidential/180328.c01"
     }
+
+### Tests
 
 The --verbose flag can be removed
 , and --watch is handy if you want AVA to continually check your work. Sometimes it’s useful to just have the ava command so you can test a single file.
@@ -73,6 +78,12 @@ To run the AVA test for file-examples:
 Which is equivalent to (without the verbosity flag):
 
     npm run ava test/test-btr3ToJSON-file-examples.js
+
+### Others
+
+    npm run BTRS-valid
+    npm run empty1
+    npm run CBA01
 
 ## Acknowledgements
 
