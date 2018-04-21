@@ -56,7 +56,7 @@ function macroFile(t, testset, eol) {
     // console.log("-----");
     // console.log(testset.description);
     // console.log(testset.startnode);
-    // console.log(testset.example);
+    // console.log(testset.examplelines);
     // console.log(testset.expected);
     this.title = testset.description;
 
@@ -82,7 +82,7 @@ function macroFile(t, testset, eol) {
 */
 test(macroFile, btr3FileExamples.emptyfile, CRLF);
 test(macroFile, btr3FileExamples.emptyfile, CR);
-test(macroFile, btr3FileExamples.btr3emptyfile, CRLF);
+test(macroFile, btr3FileExamples.btr3EmptyFile, CRLF);
 
 /*
  run tests for every example in the JSON file using CRLF as the end of line delimiter. 
