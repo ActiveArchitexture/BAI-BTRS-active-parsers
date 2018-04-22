@@ -171,10 +171,6 @@ var semantics = btr3Grammar.createSemantics().addOperation('json', {
         return `"${this.ctorName}": "${vd.json()}"`;
     },
 
-    // availableImmediate: function (ai) {
-    //     return `"${this.ctorName}": ${ai.json()}`;
-    // },
-
     // detailAvailableAmount = optSign digit*
     detailAvailableAmount: function (s, n) {
         return `"${amountSigned(s.sourceString, n.sourceString)}"`;
@@ -193,17 +189,12 @@ var semantics = btr3Grammar.createSemantics().addOperation('json', {
         return dateString;
     },
 
+    // optSignedN = ("-" | "+")? digit+
     optSignedN: function (s, n) {
-        // ("-" | "+")? digit+
-        // best practice is to omit the optional + sign
-        // a - sign is NOT optional
-        if (s.sourceString == '-') {
-            return `-${n.sourceString}`;
-        } else {
-            return n.sourceString;
-        }
+        return `${amountSigned(s.sourceString, n.sourceString)}`;
     },
 
+    // optPosN = "+"? digit+
     optPosN: function (s, n) {
         // "+"? digit+
         // best practice is to omit the optional + sign
