@@ -70,6 +70,30 @@ BTR3 {
     AccountTrailer = "49" delim accountControlTotal delim numberofRecords eor
     accountControlTotal = optSignedN
 
+    TransactionDetail = "16" delim detailTypeCode delim detailAmount delim detailFundsType delim bankReferenceNumber delim customerReferenceNumber delim detailText eor
+    detailTypeCode = "115" | "399" | "495"
+    detailAmount = optPos digit*
+    detailFundsType = detailFundsTypeZ012 | detailFundsTypeS | detailFundsTypeV
+
+    detailFundsTypeZ012 = "Z" | "0" | "1" | "2"
+
+    detailFundsTypeS = "S" delim availableImmediate delim available1Day delim available2PlusDays
+    availableImmediate = detailAvailableAmount
+    available1Day = detailAvailableAmount
+    available2PlusDays = detailAvailableAmount
+
+    detailFundsTypeV = "V" delim valueDate delim valueTime
+    valueDate = date
+    valueTime = time
+
+    detailAvailableAmount = optSign digit*
+
+    bankReferenceNumber = alnum*
+    customerReferenceNumber = alnum*
+    detailText = alnum*
+
+
+    optPos = "+"?
     optSign = ("-" | "+")?
     
     bai1 = "1"
@@ -80,10 +104,10 @@ BTR3 {
     time = hh mm
     
     yy = digit digit
-    mo = "0".."1" digit
+    mo = ("0" digit) | ("1" "0" .. "2")
     dd = "0".."3" digit
-    hh = "0".."2" "0".."3"
-    mm = "0".."5" "0".."9"
+    hh = ("0".."1" digit) | ("2" "0" .. "3")
+    mm = "0".."5" digit
     
     delim = ","
     eor = "/"

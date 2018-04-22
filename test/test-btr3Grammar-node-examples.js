@@ -93,7 +93,17 @@ test('grammar for valid BTRSfile succeeds for ANSI X9.121–2016 (BTR3) 5.1.1 Em
 test.todo("3.3 ACCOUNT HEADER – Record 03 customerAccountNumber Must not contain comma , or slash / delimiters.");
 test.todo("3.3.1 Sample 03 Record Example Splitting a Summary Code (400) Across 2 Lines");
 test.todo("Extract statusTypeCode and summaryTypeCode and descriptions to separate grammars");
-test.todo("Decide if Amounts and Control Totals will be treated as strings (to avoid floating point errors) or numbers")
+test.todo("Decide if Amounts and Control Totals will be treated as strings (to avoid floating point errors) or numbers");
+test.todo("3.4 TRANSACTION DETAIL – Record 16 - Record Code - Placement 1: Follows a ’03, ‘16’, or ‘88’ Record");
+test.todo("3.4 TRANSACTION DETAIL – Record 16 - Record Code - Placement 2: If a “message only” file, the Record 16 with a code 890 (information text) can follow the Record 01.");
+test.todo("3.4 TRANSACTION DETAIL – Record 16 - Detail Type Code");
+test.todo("3.4 TRANSACTION DETAIL – Record 16 - Amount - Note: Only optional for Detail Type 890 , see “Type Code for Non-monetary Information");
+test.todo('3.4 TRANSACTION DETAIL – Record 16 - Bank Reference Number - Rule: Must not contain a comma “,” or a slash “/”');
+test.todo('3.4 TRANSACTION DETAIL – Record 16 - Customer Reference Number - Rule: Must not contain a comma “,” or a slash “/”');
+test.todo('3.4 TRANSACTION DETAIL – Record 16 - Text - Rule: Must not begin with a comma “,” or a slash “/”, but may contain a comma “,” or a slash “/” after the first character.');
+test.todo('3.4 TRANSACTION DETAIL – Record 16 - Text - Best Practice: Text begins on separate Record 88 rather than the Record 16');
+test.todo("?");
+
 
 
 function btr3Parse(source, startNode) {

@@ -377,5 +377,55 @@
                 "numberofRecords": 23
             }
         }
+    },
+    "TransactionDetailOnlyMandatoryFundsType0": {
+        "description": "(BTR3) 3.5.1 3.4.1 Sample 16 Record - Example Using Only Mandatory Fields (Funds Type = 0)",
+        "startnode": "TransactionDetail",
+        "example": "16,399,25000,0,,,/",
+        "expected": {
+            "TransactionDetail": {
+                "detailTypeCode": "399",
+                "detailAmount": "25000",
+                "detailFundsType": "0",
+                "bankReferenceNumber": "",
+                "customerReferenceNumber": "",
+                "detailText": ""
+            }
+        }
+    },
+    "TransactionDetailOnlyMandatoryFundsTypeS": {
+        "description": "(BTR3) 3.5.1 3.4.1 Sample 16 Record - Example Using Only Mandatory Fields (Funds Type = S)",
+        "startnode": "TransactionDetail",
+        "example": "16,115,25000,S,10000,10000,5000,,,/",
+        "expected": {
+            "TransactionDetail": {
+                "detailTypeCode": "115",
+                "detailAmount": "25000",
+                "detailFundsType": "S",
+                "availableImmediate": "10000",
+                "available1Day": "10000",
+                "available2PlusDays": "5000",
+                "bankReferenceNumber": "",
+                "customerReferenceNumber": "",
+                "detailText": ""
+            }
+        }
+    },
+    "TransactionDetailOnlyMandatoryFundsTypeV": {
+        "description": "(BTR3) 3.5.1 3.4.1 Sample 16 Record - Example Using Only Mandatory Fields (Funds Type = V)",
+        "startnode": "TransactionDetail",
+        "example": "16,495,55000,V,150930,0521,,,/",
+        "expected": {
+            "TransactionDetail": {
+                "detailTypeCode": "495",
+                "detailAmount": "55000",
+                "detailFundsType": "V",
+                "valueDate": "2015-09-30",
+                "valueTime": "0521",
+                "bankReferenceNumber": "",
+                "customerReferenceNumber": "",
+                "detailText": ""
+            }
+        }
     }
 }

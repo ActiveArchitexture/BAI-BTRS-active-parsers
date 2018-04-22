@@ -128,34 +128,62 @@ var semantics = btr3Grammar.createSemantics().addOperation('json', {
     // amount = optSign digit+
     amount: function (s, n) {
         // "+"? digit+
-        // best practice is to omit the optional + sign
-        let value = '';
-        if (s.sourceString == '-') {
-            value = `-${n.sourceString}`;
-        } else {
-            value = n.sourceString;
-        }
-        // TODO format amounts with number of decimal places for currency
-        return `"Amount": "${value}"`;
+        return `"Amount": "${amountSigned(s.sourceString, n.sourceString)}"`;
     },
 
-    // TODO refactor common code
+    // amountOpt = optSign digit*
     amountOpt: function (s, n) {
         // "+"? digit+
-        // best practice is to omit the optional + sign
-        let value = '';
-        if (s.sourceString == '-') {
-            value = `-${n.sourceString}`;
-        } else {
-            value = n.sourceString;
-        }
-        // TODO format amounts with number of decimal places for currency
-        return `"Amount": "${value}"`;
+        return `"Amount": "${amountSigned(s.sourceString, n.sourceString)}"`;
     },
 
     // AccountTrailer = "49" delim accountControlTotal delim numberofRecords eor
     AccountTrailer: function (_, _, act, _, nor, _) {
         return `"${this.ctorName}": {${act.json()}, ${nor.json()}}`;
+    },
+
+    // TransactionDetail = "16" delim detailTypeCode delim detailAmount delim detailFundsType delim bankReferenceNumber delim customerReferenceNumber delim detailText eor
+    TransactionDetail: function (_, _, dtc, _, da, _, dft, _, brn, _, crn, _, dt, _) {
+        return `"${this.ctorName}": {${dtc.json()}, ${da.json()}, ${dft.json()}, ${brn.json()}, ${crn.json()}, ${dt.json()}}`;
+    },
+
+    // detailFundsType = detailFundsTypeZ012 | detailFundsTypeS | detailFundsTypeV
+    detailFundsType: function (dft) {
+        return `"${this.ctorName}": ${dft.json()}`;
+    },
+
+    detailFundsTypeZ012: function (ft) {
+        return `"${ft.sourceString}"`;
+    },
+
+    // detailFundsTypeS = "S" delim availableImmediate delim available1Day delim available2PlusDays
+    detailFundsTypeS: function (ft, _, ai, _, a1d, _, a2d) {
+        return `"${ft.sourceString}", ${ai.json()}, ${a1d.json()}, ${a2d.json()}`;
+    },
+
+    // detailFundsTypeV = "V" delim valueDate delim valueTime
+    detailFundsTypeV: function (ft, _, vd, _, vt) {
+        return `"${ft.sourceString}", ${vd.json()}, ${vt.json()}`;
+    },
+
+    // valueDate = date
+    valueDate: function (vd) {
+        return `"${this.ctorName}": "${vd.json()}"`;
+    },
+
+    // availableImmediate: function (ai) {
+    //     return `"${this.ctorName}": ${ai.json()}`;
+    // },
+
+    // detailAvailableAmount = optSign digit*
+    detailAvailableAmount: function (s, n) {
+        return `"${amountSigned(s.sourceString, n.sourceString)}"`;
+    },
+
+    // amountOpt = optSign digit*
+    amountOpt: function (s, n) {
+        // "+"? digit+
+        return `"Amount": "${amountSigned(s.sourceString, n.sourceString)}"`;
     },
 
     // 
@@ -201,6 +229,17 @@ var semantics = btr3Grammar.createSemantics().addOperation('json', {
 
 });
 
+function amountSigned(sString, nString) {
+    // best practice is to omit the optional + sign
+    // TODO format amounts with number of decimal places for currency
+    let value = '';
+    if (sString == '-') {
+        value = `-${nString}`;
+    } else {
+        value = nString;
+    }
+    return value;
+}
 
 function btr3Parser(source, startNode) {
     return btr3Grammar.match(source, startNode);
