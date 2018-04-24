@@ -59,6 +59,6 @@
         "BAI2-valid": "node src/btr3ToJSON.js 'test/files/BAI2 BTRS Validator samples/valid/BAI2_valid.txt'",
         "BAI2-valid-mod": "node src/btr3ToJSON.js 'test/files/BAI2_valid_modified.txt'",
         "empty1": "node src/btr3ToJSON.js test/files/emptyfile.txt",
-        "CBA01": "node src/btr3ToJSON.js test/confidential/180328.c01"
+        "CBA01": "node src/btr3ToJSON.js test/confidential/CBA/180328.c01"
     }
 }

@@ -176,6 +176,11 @@ var semantics = btr3Grammar.createSemantics().addOperation('json', {
         return `"${amountSigned(s.sourceString, n.sourceString)}"`;
     },
 
+    // // detailText = ~(delim | eor) any
+    // detailText: function (_, dt) {
+    //     return `"${this.ctorName}": "${dt.json()}"`;
+    // },
+
     // amountOpt = optSign digit*
     amountOpt: function (s, n) {
         // "+"? digit+
