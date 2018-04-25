@@ -10,6 +10,8 @@
                 "fileCreationDate": "2015-06-23",
                 "fileCreationTime": "0200",
                 "fileIdentificationNumber": "1",
+                "physicalRecordLength": "",
+                "blockSize": "",
                 "versionNumber": "3"
             }
         }
@@ -454,6 +456,8 @@
                 "fileCreationDate": "2012-01-07",
                 "fileCreationTime": "0137",
                 "fileIdentificationNumber": "1",
+                "physicalRecordLength": "",
+                "blockSize": "",
                 "versionNumber": "2"
             }
         }

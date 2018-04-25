@@ -14,6 +14,8 @@
                     "fileCreationDate": "2015-07-16",
                     "fileCreationTime": "2100",
                     "fileIdentificationNumber": "11",
+                    "physicalRecordLength": "",
+                    "blockSize": "",
                     "versionNumber": "3"
                 },
                 "FileTrailer": {
@@ -39,6 +41,8 @@
                     "fileCreationDate": "2016-06-05",
                     "fileCreationTime": "1200",
                     "fileIdentificationNumber": "87",
+                    "physicalRecordLength": "",
+                    "blockSize": "",
                     "versionNumber": "3"
                 },
                 "FileTrailer": {
@@ -68,6 +72,8 @@
                     "fileCreationDate": "2015-04-30",
                     "fileCreationTime": "1201",
                     "fileIdentificationNumber": "970",
+                    "physicalRecordLength": "",
+                    "blockSize": "",
                     "versionNumber": "3"
                 },
                 "Bank": {
@@ -155,6 +161,8 @@
                     "fileCreationDate": "2015-04-30",
                     "fileCreationTime": "1201",
                     "fileIdentificationNumber": "970",
+                    "physicalRecordLength": "",
+                    "blockSize": "",
                     "versionNumber": "3"
                 },
                 "Bank": {
