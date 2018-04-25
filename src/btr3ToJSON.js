@@ -58,8 +58,16 @@ var semantics = btr3Grammar.createSemantics().addOperation('json', {
     },
 
     // BankTrailer = "98" delim groupControlTotal delim numberofAccounts delim numberofRecords eor
+    /*
+        BankTrailer (Number of Accounts is in BTR3 but not in BAI2)
+                = "98" delim groupControlTotal delim (numberofAccounts delim)? numberofRecords eor
+    */
     BankTrailer: function (_, _, gct, _, noa, _, nor, _) {
-        return `"${this.ctorName}": {${gct.json()}, ${noa.json()}, ${nor.json()}}`;
+        if (noa.sourceString == "") {
+            return `"${this.ctorName}": {${gct.json()}, ${nor.json()}}`;    
+        } else {
+            return `"${this.ctorName}": {${gct.json()}, ${noa.json()}, ${nor.json()}}`;
+        }
     },
 
     groupControlTotal: function (d) {
@@ -145,7 +153,7 @@ var semantics = btr3Grammar.createSemantics().addOperation('json', {
 
     // TransactionDetail = "16" delim detailTypeCode delim detailAmount delim detailFundsType delim bankReferenceNumber delim customerReferenceNumber delim detailText eor
     TransactionDetail: function (_, _, dtc, _, da, _, dft, _, brn, _, crn, _, dt, _) {
-        return `"${this.ctorName}": {${dtc.json()}, ${da.json()}, ${dft.json()}, ${brn.json()}, ${crn.json()}, ${dt.json()}}`;
+        return `{"${this.ctorName}": {${dtc.json()}, ${da.json()}, ${dft.json()}, ${brn.json()}, ${crn.json()}, ${dt.json()}}}`;
     },
 
     // detailFundsType = detailFundsTypeZ012 | detailFundsTypeS | detailFundsTypeV

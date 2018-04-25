@@ -301,5 +301,308 @@
                 }
             }
         }
+    },
+    "CommBizAppendix2.1SampleBAI2file": {
+        "description": "CommBiz 2.1 BAI2 Data Format Sample BAI2 file (using alpha transaction codes for the Bank Reference Number field)",
+        "startnode": "BTRSfile",
+        "examplelines": [
+            "01,CBA,CLIENTNM,120107,0137,1,,,2/",
+            "02,,CBA,1,120106,,AUD,2/",
+            "03,301010011001,,015,7898196,,,100,2321053,8,,400,240850,3,,900,000,,,901,000,,,902,000,,,903,000,,,904,,,,905,,,/",
+            "16,399,118100,,AGN,54,/",
+            "16,399,139840,,AGN,935892,POINT OF SALE/",
+            "16,399,26500,,AGN,54,1/",
+            "16,399,92272,,MIS,,9791112535 AMEX GR/",
+            "16,699,15300,,CHQ,000000160,/",
+            "49,13027407,13/",
+            "03,300010011010,,015,8200918,,,100,2167770,7,,400,417131,3,,900,000,,,901,000,,,902,000,,,903,000,,,904,,,,905,,,/",
+            "16,399,118100,,AGN,54,/",
+            "16,399,139840,,AGN,935892,POINT OF SALE/",
+            "49,13379837,12/",
+            "98,26407244,27/",
+            "99,26407244,1,29/"
+        ],
+        "expected": {
+            "BTRSfile": {
+                "FileHeader": {
+                    "senderIdentification": "CBA",
+                    "receiverIdentification": "CLIENTNM",
+                    "fileCreationDate": "2012-01-07",
+                    "fileCreationTime": "0137",
+                    "fileIdentificationNumber": "1",
+                    "physicalRecordLength": "",
+                    "blockSize": "",
+                    "versionNumber": "2"
+                },
+                "Bank": {
+                    "BankHeader": {
+                        "ultimateReceiverIdentification": "",
+                        "bankIdentification": "CBA",
+                        "groupStatus": "1",
+                        "asofDate": "120106",
+                        "asofTime": "",
+                        "currencyCodeBank": "AUD",
+                        "asofDateModifier": "2"
+                    },
+                    "Accounts": [
+                        {
+                            "Account": {
+                                "AccountHeader": {
+                                    "customerAccountNumber": "301010011001",
+                                    "currencyCodeAccount": "",
+                                    "AccountStatusesSummaries": [
+                                        {
+                                            "AccountStatus": {
+                                                "TypeCode": "015",
+                                                "Amount": "7898196",
+                                                "itemCount": "",
+                                                "fundsType": ""
+                                            }
+                                        },
+                                        {
+                                            "AccountSummary": {
+                                                "TypeCode": "100",
+                                                "Amount": "2321053",
+                                                "itemCount": "8",
+                                                "fundsType": ""
+                                            }
+                                        },
+                                        {
+                                            "AccountSummary": {
+                                                "TypeCode": "400",
+                                                "Amount": "240850",
+                                                "itemCount": "3",
+                                                "fundsType": ""
+                                            }
+                                        },
+                                        {
+                                            "AccountStatus": {
+                                                "TypeCode": "900",
+                                                "Amount": "000",
+                                                "itemCount": "",
+                                                "fundsType": ""
+                                            }
+                                        },
+                                        {
+                                            "AccountStatus": {
+                                                "TypeCode": "901",
+                                                "Amount": "000",
+                                                "itemCount": "",
+                                                "fundsType": ""
+                                            }
+                                        },
+                                        {
+                                            "AccountStatus": {
+                                                "TypeCode": "902",
+                                                "Amount": "000",
+                                                "itemCount": "",
+                                                "fundsType": ""
+                                            }
+                                        },
+                                        {
+                                            "AccountStatus": {
+                                                "TypeCode": "903",
+                                                "Amount": "000",
+                                                "itemCount": "",
+                                                "fundsType": ""
+                                            }
+                                        },
+                                        {
+                                            "AccountStatus": {
+                                                "TypeCode": "904",
+                                                "Amount": "",
+                                                "itemCount": "",
+                                                "fundsType": ""
+                                            }
+                                        },
+                                        {
+                                            "AccountStatus": {
+                                                "TypeCode": "905",
+                                                "Amount": "",
+                                                "itemCount": "",
+                                                "fundsType": ""
+                                            }
+                                        }
+                                    ]
+                                },
+                                "TransactionDetails": [
+                                    {
+                                        "TransactionDetail": {
+                                            "detailTypeCode": "399",
+                                            "detailAmount": "118100",
+                                            "detailFundsType": "",
+                                            "bankReferenceNumber": "AGN",
+                                            "customerReferenceNumber": "54",
+                                            "detailText": ""
+                                        }
+                                    },
+                                    {
+                                        "TransactionDetail": {
+                                            "detailTypeCode": "399",
+                                            "detailAmount": "139840",
+                                            "detailFundsType": "",
+                                            "bankReferenceNumber": "AGN",
+                                            "customerReferenceNumber": "935892",
+                                            "detailText": "POINT OF SALE"
+                                        }
+                                    },
+                                    {
+                                        "TransactionDetail": {
+                                            "detailTypeCode": "399",
+                                            "detailAmount": "26500",
+                                            "detailFundsType": "",
+                                            "bankReferenceNumber": "AGN",
+                                            "customerReferenceNumber": "54",
+                                            "detailText": "1"
+                                        }
+                                    },
+                                    {
+                                        "TransactionDetail": {
+                                            "detailTypeCode": "399",
+                                            "detailAmount": "92272",
+                                            "detailFundsType": "",
+                                            "bankReferenceNumber": "MIS",
+                                            "customerReferenceNumber": "",
+                                            "detailText": "9791112535 AMEX GR"
+                                        }
+                                    },
+                                    {
+                                        "TransactionDetail": {
+                                            "detailTypeCode": "699",
+                                            "detailAmount": "15300",
+                                            "detailFundsType": "",
+                                            "bankReferenceNumber": "CHQ",
+                                            "customerReferenceNumber": "000000160",
+                                            "detailText": ""
+                                        }
+                                    }
+                                ],
+                                "AccountTrailer": {
+                                    "accountControlTotal": "13027407",
+                                    "numberofRecords": 13
+                                }
+                            }
+                        },
+                        {
+                            "Account": {
+                                "AccountHeader": {
+                                    "customerAccountNumber": "300010011010",
+                                    "currencyCodeAccount": "",
+                                    "AccountStatusesSummaries": [
+                                        {
+                                            "AccountStatus": {
+                                                "TypeCode": "015",
+                                                "Amount": "8200918",
+                                                "itemCount": "",
+                                                "fundsType": ""
+                                            }
+                                        },
+                                        {
+                                            "AccountSummary": {
+                                                "TypeCode": "100",
+                                                "Amount": "2167770",
+                                                "itemCount": "7",
+                                                "fundsType": ""
+                                            }
+                                        },
+                                        {
+                                            "AccountSummary": {
+                                                "TypeCode": "400",
+                                                "Amount": "417131",
+                                                "itemCount": "3",
+                                                "fundsType": ""
+                                            }
+                                        },
+                                        {
+                                            "AccountStatus": {
+                                                "TypeCode": "900",
+                                                "Amount": "000",
+                                                "itemCount": "",
+                                                "fundsType": ""
+                                            }
+                                        },
+                                        {
+                                            "AccountStatus": {
+                                                "TypeCode": "901",
+                                                "Amount": "000",
+                                                "itemCount": "",
+                                                "fundsType": ""
+                                            }
+                                        },
+                                        {
+                                            "AccountStatus": {
+                                                "TypeCode": "902",
+                                                "Amount": "000",
+                                                "itemCount": "",
+                                                "fundsType": ""
+                                            }
+                                        },
+                                        {
+                                            "AccountStatus": {
+                                                "TypeCode": "903",
+                                                "Amount": "000",
+                                                "itemCount": "",
+                                                "fundsType": ""
+                                            }
+                                        },
+                                        {
+                                            "AccountStatus": {
+                                                "TypeCode": "904",
+                                                "Amount": "",
+                                                "itemCount": "",
+                                                "fundsType": ""
+                                            }
+                                        },
+                                        {
+                                            "AccountStatus": {
+                                                "TypeCode": "905",
+                                                "Amount": "",
+                                                "itemCount": "",
+                                                "fundsType": ""
+                                            }
+                                        }
+                                    ]
+                                },
+                                "TransactionDetails": [
+                                    {
+                                        "TransactionDetail": {
+                                            "detailTypeCode": "399",
+                                            "detailAmount": "118100",
+                                            "detailFundsType": "",
+                                            "bankReferenceNumber": "AGN",
+                                            "customerReferenceNumber": "54",
+                                            "detailText": ""
+                                        }
+                                    },
+                                    {
+                                        "TransactionDetail": {
+                                            "detailTypeCode": "399",
+                                            "detailAmount": "139840",
+                                            "detailFundsType": "",
+                                            "bankReferenceNumber": "AGN",
+                                            "customerReferenceNumber": "935892",
+                                            "detailText": "POINT OF SALE"
+                                        }
+                                    }
+                                ],
+                                "AccountTrailer": {
+                                    "accountControlTotal": "13379837",
+                                    "numberofRecords": 12
+                                }
+                            }
+                        }
+                    ],
+                    "BankTrailer": {
+                        "groupControlTotal": 26407244,
+                        "numberofRecords": 27
+                    }
+                },
+                "FileTrailer": {
+                    "fileControlTotal": 26407244,
+                    "numberofBanks": 1,
+                    "numberofRecords": 29
+                }
+            }
+        }
     }
 }

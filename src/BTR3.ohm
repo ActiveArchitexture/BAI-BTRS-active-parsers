@@ -38,7 +38,8 @@ BTR3 {
     interimSameDay = "3"
     finalSameDay = "4"
 
-    BankTrailer = "98" delim groupControlTotal delim numberofAccounts delim numberofRecords eor
+    BankTrailer (Number of Accounts is in BTR3 but not in BAI2)
+                = "98" delim groupControlTotal delim (numberofAccounts delim)? numberofRecords eor
     groupControlTotal = optSignedN
     numberofAccounts = optPosN
 
