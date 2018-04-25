@@ -18,8 +18,9 @@ var semantics = btr3Grammar.createSemantics().addOperation('json', {
         return `{"${this.ctorName}": {${fh.json()} ${bank.json()}, ${ft.json()}}}`;
     },
 
-    FileHeader: function (_, _, sid, _, rid, _, fcd, _, fct, _, fid, _, _, _, _, _, vn, _) {
-        return `"${this.ctorName}": {${sid.json()}, ${rid.json()}, ${fcd.json()}, ${fct.json()}, ${fid.json()}, ${vn.json()}}`;
+    // FileHeader = "01" delim senderIdentification delim receiverIdentification delim fileCreationDate delim fileCreationTime delim fileIdentificationNumber delim physicalRecordLength delim blockSize delim versionNumber eor
+    FileHeader: function (_, _, sid, _, rid, _, fcd, _, fct, _, fidn, _, prl, _, bs, _, vn, _) {
+        return `"${this.ctorName}": {${sid.json()}, ${rid.json()}, ${fcd.json()}, ${fct.json()}, ${fidn.json()}, ${prl.json()}, ${bs.json()}, ${vn.json()}}`;
     },
 
     FileTrailer: function (_, _, fct, _, nob, _, nor, _) {
