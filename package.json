@@ -40,8 +40,8 @@
             "!test/files/*.js"
         ],
         "source": [
-            "src/**/*.{js,jsx}",
-            "test/files/**/*",
+            "src/**/*.{js,ohm}",
+            "test/**/*",
             "!dist/**/*"
         ],
         "concurrency": 5,
