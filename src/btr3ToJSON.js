@@ -3,14 +3,14 @@
     https://github.com/harc/ohm/blob/master/examples/csv/index.js
 
     https://x9.org/wp-content/uploads/2017/05/X9.121-2016-BTRS-Version-3.0.pdf
-    
-
 */
 var fs = require('fs');
 var path = require('path');
 var btr3Grammar = require('../src/btr3Grammar');
 
-
+/**
+ * 
+ */
 var semantics = btr3Grammar.createSemantics().addOperation('json', {
 
     // BTRSfile = FileHeader Bank* FileTrailer
@@ -76,7 +76,7 @@ var semantics = btr3Grammar.createSemantics().addOperation('json', {
     */
     BankTrailer: function (_, _, gct, _, noa, _, nor, _) {
         if (noa.sourceString == "") {
-            return `"${this.ctorName}": {${gct.json()}, ${nor.json()}}`;    
+            return `"${this.ctorName}": {${gct.json()}, ${nor.json()}}`;
         } else {
             return `"${this.ctorName}": {${gct.json()}, ${noa.json()}, ${nor.json()}}`;
         }
@@ -233,8 +233,6 @@ var semantics = btr3Grammar.createSemantics().addOperation('json', {
         return n.sourceString;
     },
 
-
-
     _nonterminal: function (n) {
         // console.log('-----');
         // console.log(this.ctorName);
@@ -268,7 +266,7 @@ function btr3Parser(source, startNode) {
     return btr3Grammar.match(source, startNode);
 }
 
-function getOutputFilename(inputFilename){
+function getOutputFilename(inputFilename) {
     let outputDirname = path.dirname(inputFilename);
     let outputExtname = path.extname(inputFilename);
     // let outputName = path.basename(inputFilename, outputExtname);
@@ -284,7 +282,7 @@ function getOutputFilename(inputFilename){
 
 
 /**
- * 
+ * Exports
  */
 var btr3ToJSON = module.exports = function (source, startNode) {
     var matchResult = btr3Parser(source, startNode);
@@ -295,7 +293,9 @@ var btr3ToJSON = module.exports = function (source, startNode) {
 };
 
 
-
+/**
+ * Main
+ */
 if (require.main === module) {
     var inputFilename = process.argv[2];
     outputFilename = getOutputFilename(inputFilename);
@@ -314,5 +314,4 @@ if (require.main === module) {
         fs.writeFileSync(outputFilename, result.message);
         process.exit(1);
     }
-    
 }
