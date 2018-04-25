@@ -94,8 +94,8 @@ BTR3 {
 
     detailAvailableAmount = optSign digit*
 
-    bankReferenceNumber = alnum*
-    customerReferenceNumber = alnum*
+    bankReferenceNumber = alphaNumeric*
+    customerReferenceNumber = alphaNumeric*
     detailText (Text relaxed for CBA BAI2 format does not contain , /  Optionally followed by /) 
                 = (~ eor any) *
 
@@ -115,8 +115,12 @@ BTR3 {
     dd = "0".."3" digit
     hh = ("0".."1" digit) | ("2" "0" .. "3")
     mm = "0".."5" digit
-    
+
     delim = ","
     eor = "/"
+
+    alphaNumeric (BTR3 Alphanumeric - string not containing comma or slash) 
+        = ~(delim | eor) any
+
     
 }
