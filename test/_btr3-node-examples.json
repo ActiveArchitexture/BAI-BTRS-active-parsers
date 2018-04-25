@@ -30,7 +30,7 @@
         "example": "99,1215450000,4,136/",
         "expected": {
             "FileTrailer": {
-                "fileControlTotal": 1215450000,
+                "fileControlTotal": "1215450000",
                 "numberofBanks": 4,
                 "numberofRecords": 136
             }
@@ -42,7 +42,7 @@
         "example": "99,+1215450000,+4,+136/",
         "expected": {
             "FileTrailer": {
-                "fileControlTotal": 1215450000,
+                "fileControlTotal": "1215450000",
                 "numberofBanks": 4,
                 "numberofRecords": 136
             }
@@ -54,7 +54,7 @@
         "example": "99,-1215450000,4,136/",
         "expected": {
             "FileTrailer": {
-                "fileControlTotal": -1215450000,
+                "fileControlTotal": "-1215450000",
                 "numberofBanks": 4,
                 "numberofRecords": 136
             }
@@ -65,7 +65,7 @@
         "startnode": "fileControlTotal",
         "example": "1215450000",
         "expected": {
-            "fileControlTotal": 1215450000
+            "fileControlTotal": "1215450000"
         }
     },
     "fileControlTotalPositive": {
@@ -73,7 +73,7 @@
         "startnode": "fileControlTotal",
         "example": "+1215450000",
         "expected": {
-            "fileControlTotal": 1215450000
+            "fileControlTotal": "1215450000"
         }
     },
     "fileControlTotalNegative": {
@@ -81,7 +81,7 @@
         "startnode": "fileControlTotal",
         "example": "-1215450000",
         "expected": {
-            "fileControlTotal": -1215450000
+            "fileControlTotal": "-1215450000"
         }
     },
     "numberofBanks": {
@@ -154,7 +154,7 @@
         "example": "98,118650000,2,126/",
         "expected": {
             "BankTrailer": {
-                "groupControlTotal": 118650000,
+                "groupControlTotal": "118650000",
                 "numberofAccounts": 2,
                 "numberofRecords": 126
             }
@@ -504,7 +504,7 @@
         "example": "98,26407244,27/",
         "expected": {
             "BankTrailer": {
-                "groupControlTotal": 26407244,
+                "groupControlTotal": "26407244",
                 "numberofRecords": 27
             }
         }

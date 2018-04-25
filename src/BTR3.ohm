@@ -21,7 +21,7 @@ BTR3 {
     numberofBanks = optPosN
     numberofRecords = optPosN
 
-    optSignedN = ("-" | "+")? digit+
+    optSignedN = ("-" | "+")? digit*
     optPosN = "+"? digit+
 
 

@@ -7,6 +7,7 @@
 
 */
 var fs = require('fs');
+var path = require('path');
 var btr3Grammar = require('../src/btr3Grammar');
 
 
@@ -33,7 +34,7 @@ var semantics = btr3Grammar.createSemantics().addOperation('json', {
     },
 
     fileControlTotal: function (d) {
-        let keyvalue = `"${this.ctorName}": ${d.json()}`;
+        let keyvalue = `"${this.ctorName}": "${d.json()}"`;
         return keyvalue;
     },
 
@@ -71,7 +72,7 @@ var semantics = btr3Grammar.createSemantics().addOperation('json', {
     },
 
     groupControlTotal: function (d) {
-        let keyvalue = `"${this.ctorName}": ${d.json()}`;
+        let keyvalue = `"${this.ctorName}": "${d.json()}"`;
         return keyvalue;
     },
 
@@ -250,7 +251,24 @@ function btr3Parser(source, startNode) {
     return btr3Grammar.match(source, startNode);
 }
 
+function getOutputFilename(inputFilename){
+    let outputDirname = path.dirname(inputFilename);
+    let outputExtname = path.extname(inputFilename);
+    // let outputName = path.basename(inputFilename, outputExtname);
+    let outputName = path.basename(inputFilename);
 
+    let outputFilename = path.format({
+        dir: outputDirname,
+        name: outputName,
+        ext: '.json'
+    });
+    return outputFilename;
+}
+
+
+/**
+ * 
+ */
 var btr3ToJSON = module.exports = function (source, startNode) {
     var matchResult = btr3Parser(source, startNode);
     if (matchResult.failed()) {
@@ -260,16 +278,24 @@ var btr3ToJSON = module.exports = function (source, startNode) {
 };
 
 
+
 if (require.main === module) {
-    var filename = process.argv[2];
-    var source = fs.readFileSync(filename).toString();
+    var inputFilename = process.argv[2];
+    outputFilename = getOutputFilename(inputFilename);
+
+    console.log(outputFilename);
+
+    var source = fs.readFileSync(inputFilename).toString();
     var result = btr3ToJSON(source, 'BTRSfile');
-    /* eslint-disable no-console, no-process-exit */
+
     if (typeof result === 'string') {
-        console.log(result);
+        // console.log(result);
+        fs.writeFileSync(outputFilename, result);
     } else {
-        console.error('Not a BTR3 file: ' + filename);
+        console.error('Not a BTR3 file: ' + inputFilename);
         console.error(result.message);
+        fs.writeFileSync(outputFilename, result.message);
         process.exit(1);
     }
+    
 }

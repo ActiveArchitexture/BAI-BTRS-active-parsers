@@ -19,7 +19,7 @@
                     "versionNumber": "3"
                 },
                 "FileTrailer": {
-                    "fileControlTotal": 0,
+                    "fileControlTotal": "0",
                     "numberofBanks": 0,
                     "numberofRecords": 2
                 }
@@ -46,7 +46,7 @@
                     "versionNumber": "3"
                 },
                 "FileTrailer": {
-                    "fileControlTotal": 0,
+                    "fileControlTotal": "0",
                     "numberofBanks": 0,
                     "numberofRecords": 3
                 }
@@ -128,13 +128,13 @@
                         }
                     ],
                     "BankTrailer": {
-                        "groupControlTotal": 109227097255,
+                        "groupControlTotal": "109227097255",
                         "numberofAccounts": 2,
                         "numberofRecords": 15
                     }
                 },
                 "FileTrailer": {
-                    "fileControlTotal": 109227097255,
+                    "fileControlTotal": "109227097255",
                     "numberofBanks": 1,
                     "numberofRecords": 8
                 }
@@ -289,13 +289,13 @@
                         }
                     ],
                     "BankTrailer": {
-                        "groupControlTotal": 109227097255,
+                        "groupControlTotal": "109227097255",
                         "numberofAccounts": 2,
                         "numberofRecords": 15
                     }
                 },
                 "FileTrailer": {
-                    "fileControlTotal": 109227097255,
+                    "fileControlTotal": "109227097255",
                     "numberofBanks": 1,
                     "numberofRecords": 8
                 }
@@ -593,12 +593,12 @@
                         }
                     ],
                     "BankTrailer": {
-                        "groupControlTotal": 26407244,
+                        "groupControlTotal": "26407244",
                         "numberofRecords": 27
                     }
                 },
                 "FileTrailer": {
-                    "fileControlTotal": 26407244,
+                    "fileControlTotal": "26407244",
                     "numberofBanks": 1,
                     "numberofRecords": 29
                 }
