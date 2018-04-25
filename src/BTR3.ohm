@@ -3,7 +3,7 @@ BTR3 {
 
     Bank = BankHeader Account* BankTrailer
 
-    Account = AccountHeader AccountTrailer
+    Account = AccountHeader TransactionDetail* AccountTrailer
 
     
     FileHeader = "01" delim senderIdentification delim receiverIdentification delim fileCreationDate delim fileCreationTime delim fileIdentificationNumber delim physicalRecordLength delim blockSize delim versionNumber eor

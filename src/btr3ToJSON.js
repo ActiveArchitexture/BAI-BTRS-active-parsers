@@ -72,9 +72,9 @@ var semantics = btr3Grammar.createSemantics().addOperation('json', {
         return keyvalue;
     },
 
-    // Account = AccountHeader AccountTrailer
-    Account: function (ah, at) {
-        return `{"${this.ctorName}": {${ah.json()}, ${at.json()}}}`;
+    // Account = AccountHeader TransactionDetail* AccountTrailer
+    Account: function (ah, td, at) {
+        return `{"${this.ctorName}": {${ah.json()}, "Transaction Details": [${td.json()}], ${at.json()}}}`;
     },
 
     // AccountHeader = "03" delim customerAccountNumber delim currencyCode delim statusOrSummaryCodeFormatOptRepeat eor

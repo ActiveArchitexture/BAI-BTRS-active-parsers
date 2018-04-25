@@ -119,6 +119,7 @@
                                         }
                                     ]
                                 },
+                                "TransactionDetails": [],
                                 "AccountTrailer": {
                                     "accountControlTotal": "109146269785",
                                     "numberofRecords": 9
@@ -208,6 +209,7 @@
                                         }
                                     ]
                                 },
+                                "TransactionDetails": [],
                                 "AccountTrailer": {
                                     "accountControlTotal": "109146269785",
                                     "numberofRecords": 9
@@ -278,6 +280,7 @@
                                         }
                                     ]
                                 },
+                                "TransactionDetails": [],
                                 "AccountTrailer": {
                                     "accountControlTotal": "80827470",
                                     "numberofRecords": 4
