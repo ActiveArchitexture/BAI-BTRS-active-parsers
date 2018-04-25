@@ -32,6 +32,10 @@ var semantics = btr3Grammar.createSemantics().addOperation('json', {
         return `"${this.ctorName}": "${d.json()}"`;
     },
 
+    fileCreationTime: function (t) {
+        return `"${this.ctorName}": "${t.json()}"`;
+    },
+
     fileControlTotal: function (d) {
         let keyvalue = `"${this.ctorName}": "${d.json()}"`;
         return keyvalue;
@@ -59,6 +63,10 @@ var semantics = btr3Grammar.createSemantics().addOperation('json', {
 
     asofDate: function (d) {
         return `"${this.ctorName}": "${d.json()}"`;
+    },
+
+    asofTime: function (t) {
+        return `"${this.ctorName}": "${t.json()}"`;
     },
 
     // BankTrailer = "98" delim groupControlTotal delim numberofAccounts delim numberofRecords eor
@@ -200,11 +208,17 @@ var semantics = btr3Grammar.createSemantics().addOperation('json', {
         return `"Amount": "${amountSigned(s.sourceString, n.sourceString)}"`;
     },
 
-    // 
+    // date = yy mo dd
     date: function (yy, mo, dd) {
         // Default Century to 20. So much for learning from Y2K.
         let dateString = `20${yy.sourceString}-${mo.sourceString}-${dd.sourceString}`;
         return dateString;
+    },
+
+    // time = hh mm
+    time: function (hh, mm) {
+        let timeString = `${hh.sourceString}:${mm.sourceString}`;
+        return timeString;
     },
 
     // optSignedN = ("-" | "+")? digit+

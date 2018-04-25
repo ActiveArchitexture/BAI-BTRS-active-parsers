@@ -8,7 +8,7 @@
                 "senderIdentification": "122099999",
                 "receiverIdentification": "123456789",
                 "fileCreationDate": "2015-06-23",
-                "fileCreationTime": "0200",
+                "fileCreationTime": "02:00",
                 "fileIdentificationNumber": "1",
                 "physicalRecordLength": "",
                 "blockSize": "",
@@ -142,7 +142,7 @@
                 "bankIdentification": "122099999",
                 "groupStatus": "1",
                 "asofDate": "2015-06-22",
-                "asofTime": "2359",
+                "asofTime": "23:59",
                 "currencyCodeBank": "",
                 "asofDateModifier": "2"
             }
@@ -389,7 +389,7 @@
                 "senderIdentification": "CBA",
                 "receiverIdentification": "CLIENTNM",
                 "fileCreationDate": "2012-01-07",
-                "fileCreationTime": "0137",
+                "fileCreationTime": "01:37",
                 "fileIdentificationNumber": "1",
                 "physicalRecordLength": "",
                 "blockSize": "",
