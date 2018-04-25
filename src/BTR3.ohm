@@ -31,7 +31,8 @@ BTR3 {
     groupStatus = "1"
     asofDate = date
     asofTime = time?
-    currencyCodeBank (Currency Code is null in BTR3 but not in BAI2) = letter*
+    currencyCodeBank    (Currency Code is null in BTR3 but not in BAI2) 
+                        = letter*
     asofDateModifier = finalPreviousDay | interimSameDay | finalSameDay
     
     finalPreviousDay = "2"
@@ -47,7 +48,8 @@ BTR3 {
     statusOrSummaryCodeFormatOptRepeat = statusOrSummaryCodeFormat (delim statusOrSummaryCodeFormat)*
     statusOrSummaryCodeFormat = statusCodeFormat | summaryCodeFormat
     customerAccountNumber = alnum *
-    currencyCodeAccount (Currency Code is mandatory in BTR3 but not in BAI2) = letter*
+    currencyCodeAccount (Currency Code is mandatory in BTR3 but not in BAI2) 
+                        = letter*
 
     statusCodeFormat = statusTypeCode delim amount delim itemCountNull delim fundsTypeNull
     statusTypeCode  = ("0" digit digit) -- zero99
@@ -55,7 +57,8 @@ BTR3 {
                     | ("9" "0" digit) -- nine09
                     | ("9" "1" digit) -- nine19
 
-    amount (Amount is mandatory in BTR3 but not in BAI2) = optSign digit*
+    amount  (Amount is mandatory in BTR3 but not in BAI2) 
+            = optSign digit*
     itemCountNull = ""
     fundsTypeNull = ""
 
@@ -79,9 +82,11 @@ BTR3 {
     TransactionDetail = "16" delim detailTypeCode delim detailAmount delim detailFundsType delim bankReferenceNumber delim customerReferenceNumber delim detailText eor?
     detailTypeCode = "1" .. "9" digit digit
     detailAmount = optPos digit*
-    detailFundsType (Funds Type is 0, 1, 2, Z OR S OR V in BTR3 but optional in BAI2) = detailFundsTypeS | detailFundsTypeV | detailFundsTypeZ012
+    detailFundsType (Funds Type is 0, 1, 2, Z OR S OR V in BTR3 but optional in BAI2) 
+                    = detailFundsTypeS | detailFundsTypeV | detailFundsTypeZ012
 
-    detailFundsTypeZ012 (Funds Type is 0, 1, 2, Z in BTR3 but optional in BAI2) = "Z" | "0" | "1" | "2" | ""
+    detailFundsTypeZ012 (Funds Type is 0, 1, 2, Z in BTR3 but optional in BAI2) 
+                        = "Z" | "0" | "1" | "2" | ""
 
     detailFundsTypeS = "S" delim availableImmediate delim available1Day delim available2PlusDays
     availableImmediate = detailAvailableAmount
@@ -96,9 +101,8 @@ BTR3 {
 
     bankReferenceNumber = alphaNumeric*
     customerReferenceNumber = alphaNumeric*
-    detailText (Text relaxed for CBA BAI2 format does not contain , /  Optionally followed by /) 
+    detailText  (Text relaxed for CBA BAI2 format does not contain , /  Optionally followed by /) 
                 = (~ eor any) *
-
 
     optPos = "+"?
     optSign = ("-" | "+")?
@@ -119,8 +123,7 @@ BTR3 {
     delim = ","
     eor = "/"
 
-    alphaNumeric (BTR3 Alphanumeric - string not containing comma or slash) 
-        = ~(delim | eor) any
+    alphaNumeric    (BTR3 Alphanumeric - string not containing comma or slash) 
+                    = ~(delim | eor) any
 
-    
 }
