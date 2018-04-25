@@ -75,7 +75,7 @@ BTR3 {
     AccountTrailer = "49" delim accountControlTotal delim numberofRecords eor
     accountControlTotal = optSignedN
 
-    TransactionDetail = "16" delim detailTypeCode delim detailAmount delim detailFundsType delim bankReferenceNumber delim customerReferenceNumber delim detailText eor
+    TransactionDetail = "16" delim detailTypeCode delim detailAmount delim detailFundsType delim bankReferenceNumber delim customerReferenceNumber delim detailText eor?
     detailTypeCode = "1" .. "9" digit digit
     detailAmount = optPos digit*
     detailFundsType (Funds Type is 0, 1, 2, Z OR S OR V in BTR3 but optional in BAI2) = detailFundsTypeS | detailFundsTypeV | detailFundsTypeZ012
@@ -95,7 +95,8 @@ BTR3 {
 
     bankReferenceNumber = alnum*
     customerReferenceNumber = alnum*
-    detailText = alnum*
+    detailText (Text relaxed for CBA BAI2 format does not contain , /  Optionally followed by /) 
+                = (~ eor any) *
 
 
     optPos = "+"?

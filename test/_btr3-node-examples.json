@@ -592,5 +592,20 @@
                 "detailText": "POINT OF SALE"
             }
         }
+    },
+    "CBA TransactionDetail with Text and no /": {
+        "description": "CBA Sample 16 Record from CommBiz 2.1 BAI2 Data Format Sample BAI2 file with Text without eor /",
+        "startnode": "TransactionDetail",
+        "example": "16,399,92272,,MIS,,9791112535 AMEX GR",
+        "expected": {
+            "TransactionDetail": {
+                "detailTypeCode": "399",
+                "detailAmount": "92272",
+                "detailFundsType": "",
+                "bankReferenceNumber": "MIS",
+                "customerReferenceNumber": "",
+                "detailText": "9791112535 AMEX GR"
+            }
+        }
     }
 }
