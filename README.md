@@ -20,11 +20,23 @@ The Ohm language is based on [parsing expression grammars](http://en.wikipedia.o
 which are a formal way of describing syntax, similar to regular expressions and context-free grammars.
 The Ohm library provides a JavaScript interface (known as Ohm/JS) for creating parsers, interpreters, and more from the grammars you write.
 
-## BTRS - Version of the standard implemented
+## BTRS
 
 [BTRS - Balance Transaction and Reporting Standard](https://x9.org/standards/btrs/)
 
 [X9.121 BTRS Version 3 – Format Guide](https://x9.org/wp-content/uploads/2017/05/X9.121-2016-BTRS-Version-3.0.pdf)
+
+Version History
+
+Version 3
+The Balance and Transaction Reporting Standard (BTRS) Version 3 is named “BTR3”. This was decided as a more effective branding as the industry moves from BAI2 to BTR3. The standard will still be named BTRS, but each release will incorporate the level. The next release will be BTR4, for example.
+
+Version 2
+The BTRS Version 2 was skipped to provide consistent versioning. The X9 Committee agreed that this naming convention provided better continuity when the industry moves from BAI2 to BTR3.
+
+Version 1
+The Balance and Transaction Reporting Standard (BTRS) is intended to increase standardization of and improve upon the Bank Administration Institute Reporting Specification version 2 (BAI2).
+The standard builds upon the BAI2 format while retaining forward compatibility. Although a BTRS file with the above changes could not be interpreted with a BAI2 reader, a BAI2 file could be interpreted with a BTRS reader. (Note: With some exceptions, a BAI2 file cannot be processed by a BTRS reader if deleted or repurposed codes were included in the BAI2 file.)
 
 [X9.121 BTRS Version 3.1 – Codes List](https://x9.org/wp-content/uploads/2013/10/X9-121-2017-BTRS-Version-3-1-Type-Codes.xlsx)
 
@@ -114,6 +126,8 @@ Which is equivalent to (without the verbosity flag):
 ### Creators and maintainers of Ohm
 
 ### Creators and maintainers of AVA
+
+[avajs/ava: Futuristic JavaScript test runner](https://github.com/avajs/ava)
 
 ### Peter Weber from the Aten Design Group
 

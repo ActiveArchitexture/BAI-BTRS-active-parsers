@@ -25,7 +25,7 @@ function macroSimpleNodeValue(t, startnode, input, expectedOutput, testTitle) {
 
 
 // grammar nodes that return strings
-test(macroSimpleNodeValue, 'senderID', '122099999', '"122099999"', 'senderID');
+test(macroSimpleNodeValue, 'senderIdentification', '122099999', '"122099999"', 'senderID');
 test(macroSimpleNodeValue, 'fileCreationDate', '201230', '"2020-12-30"', 'fileCreationDate');
 test(macroSimpleNodeValue, 'fileCreationTime', '0200', '"0200"', 'fileCreationTime');
 

@@ -5,11 +5,11 @@
         "example": "01,122099999,123456789,150623,0200,1,,,3/",
         "expected": {
             "FileHeader": {
-                "senderID": "122099999",
-                "receiverID": "123456789",
+                "senderIdentification": "122099999",
+                "receiverIdentification": "123456789",
                 "fileCreationDate": "2015-06-23",
                 "fileCreationTime": "0200",
-                "fileID": "1",
+                "fileIdentificationNumber": "1",
                 "versionNumber": "3"
             }
         }
@@ -120,8 +120,8 @@
         "example": "02,,122099999,1,150622,,,2/",
         "expected": {
             "BankHeader": {
-                "ultimateReceiverID": "",
-                "bankID": "122099999",
+                "ultimateReceiverIdentification": "",
+                "bankIdentification": "122099999",
                 "groupStatus": "1",
                 "asofDate": "150622",
                 "asofTime": "",
@@ -136,8 +136,8 @@
         "example": "02,SWXXXXXX,122099999,1,150622,2359,,2/",
         "expected": {
             "BankHeader": {
-                "ultimateReceiverID": "SWXXXXXX",
-                "bankID": "122099999",
+                "ultimateReceiverIdentification": "SWXXXXXX",
+                "bankIdentification": "122099999",
                 "groupStatus": "1",
                 "asofDate": "150622",
                 "asofTime": "2359",
@@ -440,6 +440,21 @@
                 "bankReferenceNumber": "0273646851TC",
                 "customerReferenceNumber": "CTAS32160120126",
                 "detailText": ""
+            }
+        }
+    },
+    "CBAFileHeader": {
+        "description": "(BTR3) 3.1.1 Sample 01 Record",
+        "startnode": "FileHeader",
+        "example": "01,CBA,CLIENTNM,120107,0137,1,,,2/",
+        "expected": {
+            "FileHeader": {
+                "senderIdentification": "CBA",
+                "receiverIdentification": "CLIENTNM",
+                "fileCreationDate": "2012-01-07",
+                "fileCreationTime": "0137",
+                "fileIdentificationNumber": "1",
+                "versionNumber": "2"
             }
         }
     }

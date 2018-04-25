@@ -9,11 +9,11 @@
         "expected": {
             "BTRSfile": {
                 "FileHeader": {
-                    "senderID": "123456789",
-                    "receiverID": "NAMENAME",
+                    "senderIdentification": "123456789",
+                    "receiverIdentification": "NAMENAME",
                     "fileCreationDate": "2015-07-16",
                     "fileCreationTime": "2100",
-                    "fileID": "11",
+                    "fileIdentificationNumber": "11",
                     "versionNumber": "3"
                 },
                 "FileTrailer": {
@@ -28,17 +28,17 @@
         "description": "Another Empty File",
         "startnode": "BTRSfile",
         "examplelines": [
-            "01,senderID,Receiver,160605,1200,87,,,3/",
+            "01,senderIdentification,Receiver,160605,1200,87,,,3/",
             "99,0,0,3/"
         ],
         "expected": {
             "BTRSfile": {
                 "FileHeader": {
-                    "senderID": "senderID",
-                    "receiverID": "Receiver",
+                    "senderIdentification": "senderIdentification",
+                    "receiverIdentification": "Receiver",
                     "fileCreationDate": "2016-06-05",
                     "fileCreationTime": "1200",
-                    "fileID": "87",
+                    "fileIdentificationNumber": "87",
                     "versionNumber": "3"
                 },
                 "FileTrailer": {
@@ -63,17 +63,17 @@
         "expected": {
             "BTRSfile": {
                 "FileHeader": {
-                    "senderID": "123456789",
-                    "receiverID": "NAMENAME",
+                    "senderIdentification": "123456789",
+                    "receiverIdentification": "NAMENAME",
                     "fileCreationDate": "2015-04-30",
                     "fileCreationTime": "1201",
-                    "fileID": "970",
+                    "fileIdentificationNumber": "970",
                     "versionNumber": "3"
                 },
                 "Bank": {
                     "BankHeader": {
-                        "ultimateReceiverID": "AAAAAAAAAA",
-                        "bankID": "123456789",
+                        "ultimateReceiverIdentification": "AAAAAAAAAA",
+                        "bankIdentification": "123456789",
                         "groupStatus": "1",
                         "asofDate": "150429",
                         "asofTime": "1201",
@@ -150,17 +150,17 @@
         "expected": {
             "BTRSfile": {
                 "FileHeader": {
-                    "senderID": "123456789",
-                    "receiverID": "NAMENAME",
+                    "senderIdentification": "123456789",
+                    "receiverIdentification": "NAMENAME",
                     "fileCreationDate": "2015-04-30",
                     "fileCreationTime": "1201",
-                    "fileID": "970",
+                    "fileIdentificationNumber": "970",
                     "versionNumber": "3"
                 },
                 "Bank": {
                     "BankHeader": {
-                        "ultimateReceiverID": "AAAAAAAAAA",
-                        "bankID": "123456789",
+                        "ultimateReceiverIdentification": "AAAAAAAAAA",
+                        "bankIdentification": "123456789",
                         "groupStatus": "1",
                         "asofDate": "150429",
                         "asofTime": "1201",

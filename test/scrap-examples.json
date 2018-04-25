@@ -38,5 +38,184 @@
                 }
             }
         }
+    },
+    "CommBizAppendix2.1SampleBAI2file": {
+        "description": "CommBiz 2.1 BAI2 Data Format Sample BAI2 file (using alpha transaction codes for the Bank Reference Number field)",
+        "startnode": "BTRSfile",
+        "examplelines": [
+            "01,CBA,CLIENTNM,120107,0137,1,,,2/",
+            "02,,CBA,1,120106,,AUD,2/",
+            "03,301010011001,,015,7898196,,,100,2321053,8,,400,240850,3,,900,000,,,901,000,,,902,000,,,903,000,,,904,,,,905,,,/",
+            "16,399,118100,,AGN,54,/",
+            "16,399,139840,,AGN,935892,POINT OF SALE/",
+            "16,399,1100325,,AGN,935914,POINT OF SALE/",
+            "16,399,26500,,AGN,54,1/",
+            "16,399,350550,,AGN,54,3/",
+            "16,399,412498,,AGN,54,10/",
+            "16,399,92272,,MIS,,9791112535 AMEX GR",
+            "16,399,80968,,MIS,,9791112535 AMEX GR",
+            "16,699,15300,,CHQ,000000160,/",
+            "16,699,200000,,CHQ,000000161,/",
+            "16,699,25550,,CHQ,000000708,/",
+            "49,13027407,13/",
+            "03,300010011010,,015,8200918,,,100,2167770,7,,400,417131,3,,900,000,,,901,000,,,902,000,,,903,000,,,904,,,,905,,,/",
+            "16,399,78150,,AGN,52,POINT OF SALE/",
+            "16,399,240040,,AGN,54,POINT OF SALE/",
+            "16,399,274305,,AGN,54,/",
+            "16,399,1051426,,AGN,52,1/",
+            "16,399,430810,,AGN,54,1/",
+            "16,399,29501,,MIS,,9791020654 AMEX GR",
+            "16,399,63538,,MIS,,1100154002 DINERS",
+            "16,699,299462,,CHQ,000000536,/",
+            "16,699,81149,,CHQ,000000504,/",
+            "16,699,36520,,CHQ,000000505,/",
+            "49,13379837,12/",
+            "98,26407244,27/",
+            "99,26407244,1,29/"
+        ],
+        "expected": {
+            "BTRSfile": {
+                "FileHeader": {
+                    "senderID": "123456789",
+                    "receiverID": "NAMENAME",
+                    "fileCreationDate": "2015-04-30",
+                    "fileCreationTime": "1201",
+                    "fileID": "970",
+                    "versionNumber": "3"
+                },
+                "Bank": {
+                    "BankHeader": {
+                        "ultimateReceiverID": "AAAAAAAAAA",
+                        "bankID": "123456789",
+                        "groupStatus": "1",
+                        "asofDate": "150429",
+                        "asofTime": "1201",
+                        "currencyCodeNull": "",
+                        "asofDateModifier": "2"
+                    },
+                    "Accounts": [
+                        {
+                            "Account": {
+                                "AccountHeader": {
+                                    "customerAccountNumber": "000000099999999",
+                                    "currencyCode": "USD",
+                                    "AccountStatusesSummaries": [
+                                        {
+                                            "AccountStatus": {
+                                                "TypeCode": "010",
+                                                "Amount": "7121731010",
+                                                "itemCount": "",
+                                                "fundsType": ""
+                                            }
+                                        },
+                                        {
+                                            "AccountStatus": {
+                                                "TypeCode": "015",
+                                                "Amount": "7671175795",
+                                                "itemCount": "",
+                                                "fundsType": ""
+                                            }
+                                        },
+                                        {
+                                            "AccountStatus": {
+                                                "TypeCode": "035",
+                                                "Amount": "7640058756",
+                                                "itemCount": "",
+                                                "fundsType": ""
+                                            }
+                                        }
+                                    ]
+                                },
+                                "AccountTrailer": {
+                                    "accountControlTotal": "109146269785",
+                                    "numberofRecords": 9
+                                }
+                            }
+                        },
+                        {
+                            "Account": {
+                                "AccountHeader": {
+                                    "customerAccountNumber": "000000088888888",
+                                    "currencyCode": "USD",
+                                    "AccountStatusesSummaries": [
+                                        {
+                                            "AccountStatus": {
+                                                "TypeCode": "010",
+                                                "Amount": "0",
+                                                "itemCount": "",
+                                                "fundsType": ""
+                                            }
+                                        },
+                                        {
+                                            "AccountStatus": {
+                                                "TypeCode": "015",
+                                                "Amount": "0",
+                                                "itemCount": "",
+                                                "fundsType": ""
+                                            }
+                                        },
+                                        {
+                                            "AccountStatus": {
+                                                "TypeCode": "035",
+                                                "Amount": "0",
+                                                "itemCount": "",
+                                                "fundsType": ""
+                                            }
+                                        },
+                                        {
+                                            "AccountStatus": {
+                                                "TypeCode": "040",
+                                                "Amount": "0",
+                                                "itemCount": "",
+                                                "fundsType": ""
+                                            }
+                                        },
+                                        {
+                                            "AccountStatus": {
+                                                "TypeCode": "045",
+                                                "Amount": "0",
+                                                "itemCount": "",
+                                                "fundsType": ""
+                                            }
+                                        },
+                                        {
+                                            "AccountStatus": {
+                                                "TypeCode": "050",
+                                                "Amount": "0",
+                                                "itemCount": "",
+                                                "fundsType": ""
+                                            }
+                                        },
+                                        {
+                                            "AccountStatus": {
+                                                "TypeCode": "055",
+                                                "Amount": "0",
+                                                "itemCount": "",
+                                                "fundsType": ""
+                                            }
+                                        }
+                                    ]
+                                },
+                                "AccountTrailer": {
+                                    "accountControlTotal": "80827470",
+                                    "numberofRecords": 4
+                                }
+                            }
+                        }
+                    ],
+                    "BankTrailer": {
+                        "groupControlTotal": 109227097255,
+                        "numberofAccounts": 2,
+                        "numberofRecords": 15
+                    }
+                },
+                "FileTrailer": {
+                    "fileControlTotal": 109227097255,
+                    "numberofBanks": 1,
+                    "numberofRecords": 8
+                }
+            }
+        }
     }
+
 }
