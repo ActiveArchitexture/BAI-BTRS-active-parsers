@@ -127,7 +127,7 @@
                 "groupStatus": "1",
                 "asofDate": "150622",
                 "asofTime": "",
-                "currencyCodeNull": "",
+                "currencyCodeBank": "",
                 "asofDateModifier": "2"
             }
         }
@@ -143,7 +143,7 @@
                 "groupStatus": "1",
                 "asofDate": "150622",
                 "asofTime": "2359",
-                "currencyCodeNull": "",
+                "currencyCodeBank": "",
                 "asofDateModifier": "2"
             }
         }
@@ -167,7 +167,7 @@
         "expected": {
             "AccountHeader": {
                 "customerAccountNumber": "0987654321",
-                "currencyCode": "GBP",
+                "currencyCodeAccount": "GBP",
                 "AccountStatusesSummaries": [
                     {
                         "AccountSummary": {
@@ -188,7 +188,7 @@
         "expected": {
             "AccountHeader": {
                 "customerAccountNumber": "987654321",
-                "currencyCode": "CAD",
+                "currencyCodeAccount": "CAD",
                 "AccountStatusesSummaries": [
                     {
                         "AccountStatus": {
@@ -209,7 +209,7 @@
         "expected": {
             "AccountHeader": {
                 "customerAccountNumber": "987654321",
-                "currencyCode": "CAD",
+                "currencyCodeAccount": "CAD",
                 "AccountStatusesSummaries": [
                     {
                         "AccountSummary": {
@@ -230,7 +230,7 @@
         "expected": {
             "AccountHeader": {
                 "customerAccountNumber": "987654321",
-                "currencyCode": "CAD",
+                "currencyCodeAccount": "CAD",
                 "AccountStatusesSummaries": [
                     {
                         "AccountStatus": {
@@ -259,7 +259,7 @@
         "expected": {
             "AccountHeader": {
                 "customerAccountNumber": "1234567890",
-                "currencyCode": "USD",
+                "currencyCodeAccount": "USD",
                 "AccountStatusesSummaries": [
                     {
                         "AccountStatus": {
@@ -446,7 +446,7 @@
         }
     },
     "CBAFileHeader": {
-        "description": "(BTR3) 3.1.1 Sample 01 Record",
+        "description": "CBA Sample 01 Record from CommBiz 2.1 BAI2 Data Format Sample BAI2 file",
         "startnode": "FileHeader",
         "example": "01,CBA,CLIENTNM,120107,0137,1,,,2/",
         "expected": {
@@ -459,6 +459,137 @@
                 "physicalRecordLength": "",
                 "blockSize": "",
                 "versionNumber": "2"
+            }
+        }
+    },
+    "CBA BankHeader": {
+        "description": "CBA Sample 02 Record from CommBiz 2.1 BAI2 Data Format Sample BAI2 file",
+        "startnode": "BankHeader",
+        "example": "02,,CBA,1,120106,,AUD,2/",
+        "expected": {
+            "BankHeader": {
+                "ultimateReceiverIdentification": "",
+                "bankIdentification": "CBA",
+                "groupStatus": "1",
+                "asofDate": "120106",
+                "asofTime": "",
+                "currencyCodeBank": "AUD",
+                "asofDateModifier": "2"
+            }
+        }
+    },
+    "CBA AccountHeader": {
+        "description": "CBA Sample 03 Record from CommBiz 2.1 BAI2 Data Format Sample BAI2 file",
+        "startnode": "AccountHeader",
+        "example": "03,301010011001,,015,7898196,,,100,2321053,8,,400,240850,3,,900,000,,,901,000,,,902,000,,,903,000,,,904,,,,905,,,/",
+        "expected": {
+            "AccountHeader": {
+                "customerAccountNumber": "301010011001",
+                "currencyCodeAccount": "",
+                "AccountStatusesSummaries": [
+                    {
+                        "AccountStatus": {
+                            "TypeCode": "015",
+                            "Amount": "7898196",
+                            "itemCount": "",
+                            "fundsType": ""
+                        }
+                    },
+                    {
+                        "AccountSummary": {
+                            "TypeCode": "100",
+                            "Amount": "2321053",
+                            "itemCount": "8",
+                            "fundsType": ""
+                        }
+                    },
+                    {
+                        "AccountSummary": {
+                            "TypeCode": "400",
+                            "Amount": "240850",
+                            "itemCount": "3",
+                            "fundsType": ""
+                        }
+                    },
+                    {
+                        "AccountStatus": {
+                            "TypeCode": "900",
+                            "Amount": "000",
+                            "itemCount": "",
+                            "fundsType": ""
+                        }
+                    },
+                    {
+                        "AccountStatus": {
+                            "TypeCode": "901",
+                            "Amount": "000",
+                            "itemCount": "",
+                            "fundsType": ""
+                        }
+                    },
+                    {
+                        "AccountStatus": {
+                            "TypeCode": "902",
+                            "Amount": "000",
+                            "itemCount": "",
+                            "fundsType": ""
+                        }
+                    },
+                    {
+                        "AccountStatus": {
+                            "TypeCode": "903",
+                            "Amount": "000",
+                            "itemCount": "",
+                            "fundsType": ""
+                        }
+                    },
+                    {
+                        "AccountStatus": {
+                            "TypeCode": "904",
+                            "Amount": "",
+                            "itemCount": "",
+                            "fundsType": ""
+                        }
+                    },
+                    {
+                        "AccountStatus": {
+                            "TypeCode": "905",
+                            "Amount": "",
+                            "itemCount": "",
+                            "fundsType": ""
+                        }
+                    }
+                ]
+            }
+        }
+    },
+    "CBA TransactionDetail without Text": {
+        "description": "CBA Sample 16 Record from CommBiz 2.1 BAI2 Data Format Sample BAI2 file without Text",
+        "startnode": "TransactionDetail",
+        "example": "16,399,118100,,AGN,54,/",
+        "expected": {
+            "TransactionDetail": {
+                "detailTypeCode": "399",
+                "detailAmount": "118100",
+                "detailFundsType": "",
+                "bankReferenceNumber": "AGN",
+                "customerReferenceNumber": "54",
+                "detailText": ""
+            }
+        }
+    },
+    "CBA TransactionDetail with Text and /": {
+        "description": "CBA Sample 16 Record from CommBiz 2.1 BAI2 Data Format Sample BAI2 file with Text and /",
+        "startnode": "TransactionDetail",
+        "example": "16,399,139840,,AGN,935892,POINT OF SALE/",
+        "expected": {
+            "TransactionDetail": {
+                "detailTypeCode": "399",
+                "detailAmount": "139840",
+                "detailFundsType": "",
+                "bankReferenceNumber": "AGN",
+                "customerReferenceNumber": "935892",
+                "detailText": "POINT OF SALE"
             }
         }
     }

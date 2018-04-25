@@ -83,7 +83,7 @@
                         "groupStatus": "1",
                         "asofDate": "150429",
                         "asofTime": "1201",
-                        "currencyCodeNull": "",
+                        "currencyCodeBank": "",
                         "asofDateModifier": "2"
                     },
                     "Accounts": [
@@ -91,7 +91,7 @@
                             "Account": {
                                 "AccountHeader": {
                                     "customerAccountNumber": "000000099999999",
-                                    "currencyCode": "USD",
+                                    "currencyCodeAccount": "USD",
                                     "AccountStatusesSummaries": [
                                         {
                                             "AccountStatus": {
@@ -172,7 +172,7 @@
                         "groupStatus": "1",
                         "asofDate": "150429",
                         "asofTime": "1201",
-                        "currencyCodeNull": "",
+                        "currencyCodeBank": "",
                         "asofDateModifier": "2"
                     },
                     "Accounts": [
@@ -180,7 +180,7 @@
                             "Account": {
                                 "AccountHeader": {
                                     "customerAccountNumber": "000000099999999",
-                                    "currencyCode": "USD",
+                                    "currencyCodeAccount": "USD",
                                     "AccountStatusesSummaries": [
                                         {
                                             "AccountStatus": {
@@ -218,7 +218,7 @@
                             "Account": {
                                 "AccountHeader": {
                                     "customerAccountNumber": "000000088888888",
-                                    "currencyCode": "USD",
+                                    "currencyCodeAccount": "USD",
                                     "AccountStatusesSummaries": [
                                         {
                                             "AccountStatus": {
