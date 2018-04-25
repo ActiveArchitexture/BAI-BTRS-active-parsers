@@ -125,7 +125,7 @@
                 "ultimateReceiverIdentification": "",
                 "bankIdentification": "122099999",
                 "groupStatus": "1",
-                "asofDate": "150622",
+                "asofDate": "2015-06-22",
                 "asofTime": "",
                 "currencyCodeBank": "",
                 "asofDateModifier": "2"
@@ -141,7 +141,7 @@
                 "ultimateReceiverIdentification": "SWXXXXXX",
                 "bankIdentification": "122099999",
                 "groupStatus": "1",
-                "asofDate": "150622",
+                "asofDate": "2015-06-22",
                 "asofTime": "2359",
                 "currencyCodeBank": "",
                 "asofDateModifier": "2"
@@ -406,7 +406,7 @@
                 "ultimateReceiverIdentification": "",
                 "bankIdentification": "CBA",
                 "groupStatus": "1",
-                "asofDate": "120106",
+                "asofDate": "2012-01-06",
                 "asofTime": "",
                 "currencyCodeBank": "AUD",
                 "asofDateModifier": "2"

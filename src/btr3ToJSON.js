@@ -29,8 +29,7 @@ var semantics = btr3Grammar.createSemantics().addOperation('json', {
     },
 
     fileCreationDate: function (d) {
-        let keyvalue = `"${this.ctorName}": "${d.json()}"`;
-        return keyvalue;
+        return `"${this.ctorName}": "${d.json()}"`;
     },
 
     fileControlTotal: function (d) {
@@ -56,6 +55,10 @@ var semantics = btr3Grammar.createSemantics().addOperation('json', {
     // BankHeader = "02" delim ultimateReceiverID delim bankID delim groupStatus delim asofDate delim asofTime delim currencyCode delim asofDateModifier eor
     BankHeader: function (_, _, urid, _, bid, _, gs, _, asod, _, asot, _, cc, _, asodm, _) {
         return `"${this.ctorName}": {${urid.json()}, ${bid.json()}, ${gs.json()}, ${asod.json()}, ${asot.json()}, ${cc.json()}, ${asodm.json()}}`;
+    },
+
+    asofDate: function (d) {
+        return `"${this.ctorName}": "${d.json()}"`;
     },
 
     // BankTrailer = "98" delim groupControlTotal delim numberofAccounts delim numberofRecords eor
