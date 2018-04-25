@@ -25,13 +25,13 @@ BTR3 {
     optPosN = "+"? digit+
 
 
-    BankHeader = "02" delim ultimateReceiverIdentification delim bankIdentification delim groupStatus delim asofDate delim asofTime delim currencyCodeNull delim asofDateModifier eor
+    BankHeader = "02" delim ultimateReceiverIdentification delim bankIdentification delim groupStatus delim asofDate delim asofTime delim currencyCodeOpt delim asofDateModifier eor
     ultimateReceiverIdentification = alnum *
     bankIdentification = alnum +
     groupStatus = "1"
     asofDate = date
     asofTime = time?
-    currencyCodeNull = ""
+    currencyCodeOpt (Currency Code is null in BTR3 but not in BAI2) = letter*
     asofDateModifier = finalPreviousDay | interimSameDay | finalSameDay
     
     finalPreviousDay = "2"
