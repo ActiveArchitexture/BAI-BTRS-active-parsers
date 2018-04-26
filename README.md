@@ -20,7 +20,7 @@ The Ohm language is based on [parsing expression grammars](http://en.wikipedia.o
 which are a formal way of describing syntax, similar to regular expressions and context-free grammars.
 The Ohm library provides a JavaScript interface (known as Ohm/JS) for creating parsers, interpreters, and more from the grammars you write.
 
-## BTRS
+## BTRS Standard
 
 [BTRS - Balance Transaction and Reporting Standard](https://x9.org/standards/btrs/)
 
@@ -42,33 +42,42 @@ The standard builds upon the BAI2 format while retaining forward compatibility. 
 
 [Download ANSI X9.121-2012 Balance and Transaction Reporting Standard](https://x9.org/standards/btrs/download-btrs/)
 
-### BTRS Validator for BAI2 and BTRS
+### A brief history of the BAI file format
+
+[X9 BTRS FAQs 6. How did the BAI file format get established?](https://x9.org/standards/btrs/faqs/)
+
+### Online BTRS Validator for BAI2 and BTRS
 
 [BTRS Validator | X9](https://x9.org/standards/btrs/btrs-validator/)
 
-This validator provides a structured view of a file or message contents. The interface is not useful if the format is not valid.
+This validator provides a structured view of a file or message contents. IMHO the interface is not useful if the format is not valid.
 
-## BAI2
+## BAI2 Specification
 
 [Cash Management Balance Reporting Specifications Version 2 - Technical Reference Manual](https://www.bai.org/docs/default-source/libraries/site-general-downloads/cash_management_2005.pdf)
 
-## Other Guides
+## Other BAI2 Guides
 
 [SEPA - BAI2 Format Specification](http://www.sepaforcorporates.com/swift-for-corporates/bai2-format-specification/)
 
-## Bank Examples
+## Individual Bank - File Specifications and Examples
+
+### CBA
+
+[CommBiz File Spec - Account Information BAI2](doc/CBA/CommBiz File Spec - Account Information BAI2.pdf)
+[CommBiz Transaction Codes for BAI2](doc/CBA/CommBiz Transaction Codes for BAI2.pdf)
+
+### TD Bank
 
 [TD Bank](https://www.tdcommercialbanking.com/document/PDF/bai.pdf)
+
+### RBS
 
 [RBS - Bankline export file layout guide – BAI v2 format](https://www.business.rbs.co.uk/content/dam/rbs_co_uk/Business_and_Content/PDFs/Export-file-layout-guide-BAI-v2-format.pdf)
 
     Note 1: Continuation record - The “Record Code” field is followed by a continuation of the preceding record. The format is exactly the same as in the preceding record. If the preceding record ended within a text field, the text continues in the 88 record. If the preceding record did not end within the text field, the 88 record continues with whatever field follows the final field in the preceding physical record. Do not split nontext fields between records. If a nontext field is begun in one record, it must be completed in that record. The following 88 record may continue with the next field.
     Note 2: Date fields are held in the format yymmdd.
     Note 3: Conforms to BAIv2 standard whereby “/” delimiter only present when Continuation Record (88) required.
-
-### A brief history of the BAI file format
-
-[X9 BTRS FAQs 6. How did the BAI file format get established?](https://x9.org/standards/btrs/faqs/)
 
 ## Running Scripts
 
@@ -84,8 +93,7 @@ The following scripts are in package.json:
         "BTRS-valid": "node src/btr3ToJSON.js 'test/files/BAI2 BTRS Validator samples/valid/BTRS_valid.txt'",
         "BAI2-valid": "node src/btr3ToJSON.js 'test/files/BAI2 BTRS Validator samples/valid/BAI2_valid.txt'",
         "BAI2-valid-mod": "node src/btr3ToJSON.js 'test/files/BAI2_valid_modified.txt'",
-        "empty1": "node src/btr3ToJSON.js test/files/emptyfile.txt",
-        "CBA01": "node src/btr3ToJSON.js test/confidential/180328.c01"
+        "empty1": "node src/btr3ToJSON.js test/files/emptyfile.txt"
     }
 
 ### Tests
