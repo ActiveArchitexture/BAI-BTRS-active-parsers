@@ -2,14 +2,12 @@
 
 BAI-BTRS-active-parsers can be used to convert [BTRS - Balance Transaction and Reporting Standard](https://x9.org/standards/btrs/) files.
 
-BAI-BTRS-active-parsers:
-
-- Input files are parsed using an [Ohm grammar](TODO local ref) to represent [BTRS Version 3 files](TODO local github ref) slightly relaxed to also permit parsing of [BAI2 files](TODO local github ref).
-- Each output format is generated using a [Semantics](TODO) of the Ohm grammar.
+- Input files are parsed using an [Ohm](#Ohm) grammar to represent [BTRS](#BTRS) files, slightly relaxed to also permit parsing of [BAI2](#BAI2) files.
+- Each output format is generated using a Semantics of the [Ohm grammar](src/BTR3.ohm).
 
 The output formats supported are:
 
-- [JSON](http://json.org/)
+- [JSON](http://json.org/) [JSON Semantics](/src/btr3ToJSON.js)
 - PDF (TODO)
 
 ## Ohm
@@ -20,21 +18,21 @@ The Ohm language is based on [parsing expression grammars](http://en.wikipedia.o
 which are a formal way of describing syntax, similar to regular expressions and context-free grammars.
 The Ohm library provides a JavaScript interface (known as Ohm/JS) for creating parsers, interpreters, and more from the grammars you write.
 
-## BTRS Standard
+## BTRS
 
 [BTRS - Balance Transaction and Reporting Standard](https://x9.org/standards/btrs/)
 
 [X9.121 BTRS Version 3 – Format Guide](https://x9.org/wp-content/uploads/2017/05/X9.121-2016-BTRS-Version-3.0.pdf)
 
-Version History
+### Version History
 
-Version 3
+#### Version 3
 The Balance and Transaction Reporting Standard (BTRS) Version 3 is named “BTR3”. This was decided as a more effective branding as the industry moves from BAI2 to BTR3. The standard will still be named BTRS, but each release will incorporate the level. The next release will be BTR4, for example.
 
-Version 2
+#### Version 2
 The BTRS Version 2 was skipped to provide consistent versioning. The X9 Committee agreed that this naming convention provided better continuity when the industry moves from BAI2 to BTR3.
 
-Version 1
+#### Version 1
 The Balance and Transaction Reporting Standard (BTRS) is intended to increase standardization of and improve upon the Bank Administration Institute Reporting Specification version 2 (BAI2).
 The standard builds upon the BAI2 format while retaining forward compatibility. Although a BTRS file with the above changes could not be interpreted with a BAI2 reader, a BAI2 file could be interpreted with a BTRS reader. (Note: With some exceptions, a BAI2 file cannot be processed by a BTRS reader if deleted or repurposed codes were included in the BAI2 file.)
 
@@ -52,7 +50,7 @@ The standard builds upon the BAI2 format while retaining forward compatibility. 
 
 This validator provides a structured view of a file or message contents. IMHO the interface is not useful if the format is not valid.
 
-## BAI2 Specification
+## BAI2
 
 [Cash Management Balance Reporting Specifications Version 2 - Technical Reference Manual](https://www.bai.org/docs/default-source/libraries/site-general-downloads/cash_management_2005.pdf)
 
@@ -64,8 +62,9 @@ This validator provides a structured view of a file or message contents. IMHO th
 
 ### CBA
 
-[CommBiz File Spec - Account Information BAI2](doc/CBA/CommBiz File Spec - Account Information BAI2.pdf)
-[CommBiz Transaction Codes for BAI2](doc/CBA/CommBiz Transaction Codes for BAI2.pdf)
+[CommBiz File Spec - Account Information BAI2](doc/CBA/CommBizFileSpec-AccountInformationBAI2.pdf)
+
+[CommBiz Transaction Codes for BAI2](CommBizTransactionCodesforBAI2.pdf)
 
 ### TD Bank
 
@@ -85,16 +84,18 @@ Tests are implemented using [AVA the futuristic JavaScript test runner](https://
 
 The following scripts are in package.json:
 
-    "scripts": {
-        "test": "ava test/**/*.js --verbose",
-        "test:watch": "ava test/**/*.js --verbose --watch",
-        "test:file-examples": "ava test/test-btr3ToJSON-file-examples.js --verbose",
-        "ava": "ava --verbose",
-        "BTRS-valid": "node src/btr3ToJSON.js 'test/files/BAI2 BTRS Validator samples/valid/BTRS_valid.txt'",
-        "BAI2-valid": "node src/btr3ToJSON.js 'test/files/BAI2 BTRS Validator samples/valid/BAI2_valid.txt'",
-        "BAI2-valid-mod": "node src/btr3ToJSON.js 'test/files/BAI2_valid_modified.txt'",
-        "empty1": "node src/btr3ToJSON.js test/files/emptyfile.txt"
-    }
+```js
+"scripts": {
+    "test": "ava test/**/*.js --verbose",
+    "test:watch": "ava test/**/*.js --verbose --watch",
+    "test:file-examples": "ava test/test-btr3ToJSON-file-examples.js --verbose",
+    "ava": "ava --verbose",
+    "BTRS-valid": "node src/btr3ToJSON.js 'test/files/BAI2 BTRS Validator samples/valid/BTRS_valid.txt'",
+    "BAI2-valid": "node src/btr3ToJSON.js 'test/files/BAI2 BTRS Validator samples/valid/BAI2_valid.txt'",
+    "BAI2-valid-mod": "node src/btr3ToJSON.js 'test/files/BAI2_valid_modified.txt'",
+    "empty1": "node src/btr3ToJSON.js test/files/emptyfile.txt"
+}
+```
 
 ### Tests
 
