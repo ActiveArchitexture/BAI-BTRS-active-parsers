@@ -4,7 +4,7 @@ BAI-BTRS-active-parsers can be used to convert [BTRS - Balance Transaction and R
 
 BAI-BTRS-active-parsers:
 
-- Input files are parsed using an [Ohm grammar](TODO) to implement the [X9.121 BTRS Version 3 - Format Guide](https://x9.org/wp-content/uploads/2017/05/X9.121-2016-BTRS-Version-3.0.pdf).
+- Input files are parsed using an [Ohm grammar](TODO local ref) to represent [BTRS Version 3 files](TODO local github ref) slightly relaxed to also permit parsing of [BAI2 files](TODO local github ref).
 - Each output format is generated using a [Semantics](TODO) of the Ohm grammar.
 
 The output formats supported are:
