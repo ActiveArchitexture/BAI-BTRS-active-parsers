@@ -443,7 +443,7 @@
                                             "detailFundsType": "",
                                             "bankReferenceNumber": "AGN",
                                             "customerReferenceNumber": "935892",
-                                            "detailText": "POINT OF SALE"
+                                            "detailText": "POINT OF SALE/"
                                         }
                                     },
                                     {
@@ -453,7 +453,7 @@
                                             "detailFundsType": "",
                                             "bankReferenceNumber": "AGN",
                                             "customerReferenceNumber": "54",
-                                            "detailText": "1"
+                                            "detailText": "1/"
                                         }
                                     },
                                     {
@@ -463,7 +463,7 @@
                                             "detailFundsType": "",
                                             "bankReferenceNumber": "MIS",
                                             "customerReferenceNumber": "",
-                                            "detailText": "9791112535 AMEX GR"
+                                            "detailText": "9791112535 AMEX GR/"
                                         }
                                     },
                                     {
@@ -581,7 +581,7 @@
                                             "detailFundsType": "",
                                             "bankReferenceNumber": "AGN",
                                             "customerReferenceNumber": "935892",
-                                            "detailText": "POINT OF SALE"
+                                            "detailText": "POINT OF SALE/"
                                         }
                                     }
                                 ],
@@ -601,6 +601,185 @@
                     "fileControlTotal": "26407244",
                     "numberofBanks": 1,
                     "numberofRecords": 29
+                }
+            }
+        }
+    },
+    "SVBSampleBAI2file": {
+        "description": "Sample BAI2 file from SVB",
+        "startnode": "BTRSfile",
+        "examplelines": [
+            "01,121140399,121140399,180130,0452,1,,,2/",
+            "02,,121140399,1,180129,,USD,2/",
+            "03,XXXXXXXXXX,USD,010,000,,,015,000,,/",
+            "88,040,000,,,045,000,,/",
+            "88,072,000,,,074,000,,/",
+            "88,100,171431234,2,,400,171431234,1,/",
+            "16,201,7348559,,6,0/",
+            "88,CASH SWEEP REDEMPTION",
+            "16,495,171437001,,20180XXXX41234,20180129L1B00D0C001234/",
+            "88,SENDER BNK:=SIL VLY BK SCLA;",
+            "88, SENDER ID:=XXXX40399;",
+            "88, SENDER REF:=20180XXXX42000;",
+            "88, ORG ID:=XXXXXXXXXX;",
+            "88, ORG:=XYZ COMPANY;",
+            "88, ORG ADDRESS:=12345 FOLSOM ST., SAN FRANCISCO, CA 94107;",
+            "88, BNF ID:=10000XXXXX783;",
+            "88, BNF NAME:=SUNTRUST BANK;",
+            "88, BNF ADDRESS:=XXXXXXX XXX SERVICES OPERATING ATTN: DKHJ WHHHH RE:AAAA ",
+            "88,XYZ COMPANY;",
+            "88, REC FI:=SUXXXXXX ATL;",
+            "88, REC ID:=099000909;",
+            "16,142,164088442,,2,0/",
+            "88,ZXXXXX INC Sweep SABCDEFB8880123 sxx_txxt_spv",
+            "49,685741234,22/",
+            "98,685741234,1,24/",
+            "99,685741234,1,26/"
+        ],
+        "expected": {
+            "BTRSfile": {
+                "FileHeader": {
+                    "senderIdentification": "121140399",
+                    "receiverIdentification": "121140399",
+                    "fileCreationDate": "2018-01-30",
+                    "fileCreationTime": "04:52",
+                    "fileIdentificationNumber": "1",
+                    "physicalRecordLength": "",
+                    "blockSize": "",
+                    "versionNumber": "2"
+                },
+                "Bank": {
+                    "BankHeader": {
+                        "ultimateReceiverIdentification": "",
+                        "bankIdentification": "121140399",
+                        "groupStatus": "1",
+                        "asofDate": "2018-01-29",
+                        "asofTime": "",
+                        "currencyCodeBank": "USD",
+                        "asofDateModifier": "2"
+                    },
+                    "Accounts": [
+                        {
+                            "Account": {
+                                "AccountHeader": {
+                                    "customerAccountNumber": "XXXXXXXXXX",
+                                    "currencyCodeAccount": "USD",
+                                    "AccountStatusesSummaries": [
+                                        {
+                                            "AccountStatus": {
+                                                "TypeCode": "010",
+                                                "Amount": "000",
+                                                "itemCount": "",
+                                                "fundsType": ""
+                                            }
+                                        },
+                                        {
+                                            "AccountStatus": {
+                                                "TypeCode": "015",
+                                                "Amount": "000",
+                                                "itemCount": "",
+                                                "fundsType": ""
+                                            }
+                                        },
+                                        {
+                                            "AccountStatus": {
+                                                "TypeCode": "040",
+                                                "Amount": "000",
+                                                "itemCount": "",
+                                                "fundsType": ""
+                                            }
+                                        },
+                                        {
+                                            "AccountStatus": {
+                                                "TypeCode": "045",
+                                                "Amount": "000",
+                                                "itemCount": "",
+                                                "fundsType": ""
+                                            }
+                                        },
+                                        {
+                                            "AccountStatus": {
+                                                "TypeCode": "072",
+                                                "Amount": "000",
+                                                "itemCount": "",
+                                                "fundsType": ""
+                                            }
+                                        },
+                                        {
+                                            "AccountStatus": {
+                                                "TypeCode": "074",
+                                                "Amount": "000",
+                                                "itemCount": "",
+                                                "fundsType": ""
+                                            }
+                                        },
+                                        {
+                                            "AccountSummary": {
+                                                "TypeCode": "100",
+                                                "Amount": "171431234",
+                                                "itemCount": "2",
+                                                "fundsType": ""
+                                            }
+                                        },
+                                        {
+                                            "AccountSummary": {
+                                                "TypeCode": "400",
+                                                "Amount": "171431234",
+                                                "itemCount": "1",
+                                                "fundsType": ""
+                                            }
+                                        }
+                                    ]
+                                },
+                                "TransactionDetails": [
+                                    {
+                                        "TransactionDetail": {
+                                        "detailTypeCode": "201",
+                                        "detailAmount": "7348559",
+                                        "detailFundsType": "",
+                                        "bankReferenceNumber": "6",
+                                        "customerReferenceNumber": "0",
+                                        "detailText": "CASHSWEEPREDEMPTION"
+                                        }
+                                    },
+                                    {
+                                        "TransactionDetail": {
+                                        "detailTypeCode": "495",
+                                        "detailAmount": "171437001",
+                                        "detailFundsType": "",
+                                        "bankReferenceNumber": "20180XXXX41234",
+                                        "customerReferenceNumber": "20180129L1B00D0C001234",
+                                        "detailText": "SENDERBNK:=SILVLYBKSCLA;88,SENDERID:=XXXX40399;88,SENDERREF:=20180XXXX42000;88,ORGID:=XXXXXXXXXX;88,ORG:=XYZCOMPANY;88,ORGADDRESS:=12345FOLSOMST.,SANFRANCISCO,CA94107;88,BNFID:=10000XXXXX783;88,BNFNAME:=SUNTRUSTBANK;88,BNFADDRESS:=XXXXXXXXXXSERVICESOPERATINGATTN:DKHJWHHHHRE:AAAA88,XYZCOMPANY;88,RECFI:=SUXXXXXXATL;88,RECID:=099000909;"
+                                        }
+                                    },
+                                    {
+                                        "TransactionDetail": {
+                                        "detailTypeCode": "142",
+                                        "detailAmount": "164088442",
+                                        "detailFundsType": "",
+                                        "bankReferenceNumber": "2",
+                                        "customerReferenceNumber": "0",
+                                        "detailText": "ZXXXXXINCSweepSABCDEFB8880123sxx_txxt_spv"
+                                        }
+                                    }
+                                ],
+                                "AccountTrailer": {
+                                    "accountControlTotal": "685741234",
+                                    "numberofRecords": 22
+                                }
+                            }
+                        }
+                    ],
+                    "BankTrailer": {
+                        "groupControlTotal": "685741234",
+                        "numberofAccounts": 1,
+                        "numberofRecords": 24
+                    }
+                },
+                "FileTrailer": {
+                    "fileControlTotal": "685741234",
+                    "numberofBanks": 1,
+                    "numberofRecords": 26
                 }
             }
         }
